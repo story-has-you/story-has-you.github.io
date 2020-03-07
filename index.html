@@ -240,6 +240,210 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/07/rabbitmq-delay-queue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="[故事有你]">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="story-has-you">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/07/rabbitmq-delay-queue/" itemprop="url">RabbitMQ延迟队列</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-07T14:29:35+08:00">
+                2020-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="什么是延迟队列"><a href="#什么是延迟队列" class="headerlink" title="什么是延迟队列"></a>什么是延迟队列</h2><p>延迟队列就是进入该队列的消息会被延迟消费的队列。而一般的队列，消息一旦入队了之后就会被消费者马上消费。</p>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><ul>
+<li>用户生成订单之后，需要过一段时间校验订单的支付状态，如果订单仍未支付则需要及时地关闭订单。</li>
+<li>用户注册成功之后，需要过一段时间比如一周后校验用户的使用情况，如果发现用户活跃度较低，则发送邮件或者短信来提醒用户使用。</li>
+</ul>
+<p>如果不使用延迟队列，那么我们只能通过一个轮询扫描程序去完成。这种方案既不优雅，也不方便做成统一的服务便于开发人员使用。但是使用延迟队列的话，我们就可以轻而易举地完成</p>
+<h2 id="RabbitMQ的两个特性"><a href="#RabbitMQ的两个特性" class="headerlink" title="RabbitMQ的两个特性"></a>RabbitMQ的两个特性</h2><h3 id="Time-To-Live-Extensions"><a href="#Time-To-Live-Extensions" class="headerlink" title="Time-To-Live Extensions"></a>Time-To-Live Extensions</h3><p>RabbitMQ允许我们为消息或者队列设置TTL（time to live），也就是过期时间。TTL表明了一条消息可在队列中存活的最大时间，单位为毫秒。也就是说，当某条消息被设置了TTL或者当某条消息进入了设置了TTL的队列时，这条消息会在经过TTL秒后“死亡”，成为Dead Letter。如果既配置了消息的TTL，又配置了队列的TTL，那么较小的那个值会被取用。</p>
+<h3 id="Dead-Letter-Exchange"><a href="#Dead-Letter-Exchange" class="headerlink" title="Dead Letter Exchange"></a>Dead Letter Exchange</h3><p>刚才提到了，被设置了TTL的消息在过期后会成为Dead Letter。其实在RabbitMQ中，一共有三种消息的“死亡”形式：</p>
+<ul>
+<li>消息被拒绝。通过调用basic.reject或者basic.nack并且设置的requeue参数为false。</li>
+<li>消息因为设置了TTL而过期。</li>
+<li>消息进入了一条已经达到最大长度的队列。</li>
+</ul>
+<p>如果队列设置了Dead Letter Exchange（DLX），那么这些Dead Letter就会被重新publish到Dead Letter Exchange，通过Dead Letter Exchange路由到其他队列。</p>
+<h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><p>将RabbitMQ的TTL和DLX特性结合在一起，实现一个延迟队列。</p>
+<p>延迟消费是延迟队列最为常用的使用模式。如下图所示，生产者产生的消息首先会进入缓冲队列（图中红色队列）。通过RabbitMQ提供的TTL扩展，这些消息会被设置过期时间，也就是延迟消费的时间。等消息过期之后，这些消息会通过配置好的DLX转发到实际消费队列（图中蓝色队列），以此达到延迟消费的效果</p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/zu1j3.png" alt=""></p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>首先我们在Intellij中创建一个Spring Boot工程，并且添加<code>spring-boot-starter-amqp</code>扩展。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-amqp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>application.yml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">rabbitmq:</span></span><br><span class="line">    <span class="attr">addresses:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:5672</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">admin</span></span><br><span class="line">    <span class="attr">password:</span> <span class="number">123456</span></span><br><span class="line">    <span class="attr">connection-timeout:</span> <span class="number">15000</span></span><br><span class="line">    <span class="comment"># 生产者配置: 启动消息确认模式</span></span><br><span class="line">    <span class="attr">publisher-confirm-type:</span> <span class="string">correlated</span></span><br><span class="line">    <span class="attr">listener:</span></span><br><span class="line">      <span class="attr">direct:</span></span><br><span class="line">        <span class="attr">acknowledge-mode:</span> <span class="string">manual</span></span><br><span class="line">      <span class="attr">simple:</span></span><br><span class="line">        <span class="comment"># 消费者配置: 表示消费成功之后需要手工进行签收(ack)，默认为auto</span></span><br><span class="line">        <span class="attr">acknowledge-mode:</span> <span class="string">manual</span></span><br><span class="line">        <span class="attr">concurrency:</span> <span class="number">5</span></span><br><span class="line">        <span class="attr">max-concurrency:</span> <span class="number">10</span></span><br><span class="line">        <span class="comment"># 消费者配置: 批量消息消费则一条条的消费</span></span><br><span class="line">        <span class="attr">prefetch:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>从上述的流程图中我们可以看到，一个延迟队列的实现，需要一个缓冲队列以及一个实际的消费队列。</p>
+<p>MqConstant</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">String DELAY_QUEUE = <span class="string">"test-delay-queue"</span>; <span class="comment">// 实际的消费队列</span></span><br><span class="line">String DEAD_QUEUE = <span class="string">"dead-letter-queue"</span>;  <span class="comment">// 缓冲队列</span></span><br><span class="line"></span><br><span class="line">String DEAD_EXCHANGE = <span class="string">"dead-letter-exchange"</span>; <span class="comment">// 缓冲队列exchange</span></span><br><span class="line"></span><br><span class="line">String DELAY_ROUTING_KEY = <span class="string">"test-delay-routingKey.*"</span>; <span class="comment">// 实际消费队列routing-key</span></span><br><span class="line">String DEAD_ROUTING_KEY = <span class="string">"dead-letter-routingKey.*"</span>; <span class="comment">// 缓冲队列routing-key</span></span><br></pre></td></tr></table></figure>
+
+<p>创建缓冲队列:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Queue <span class="title">deadLetterQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    HashMap&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">2</span>);</span><br><span class="line">    <span class="comment">// 出现dead letter之后将dead letter重新发送到指定exchange</span></span><br><span class="line">    map.put(<span class="string">"x-dead-letter-exchange"</span>, MqConstant.DEAD_EXCHANGE);</span><br><span class="line">    <span class="comment">// 出现dead letter之后将dead letter重新按照指定的routing-key发送</span></span><br><span class="line">    map.put(<span class="string">"x-dead-letter-routing-key"</span>, MqConstant.DELAY_ROUTING_KEY);</span><br><span class="line">    <span class="keyword">return</span> QueueBuilder.nonDurable(MqConstant.DEAD_QUEUE).withArguments(map).build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>创建缓冲队列交换机</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Exchange <span class="title">deadLetterExchange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> ExchangeBuilder.directExchange(MqConstant.DEAD_EXCHANGE).durable(<span class="keyword">true</span>).build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>绑定缓冲队列和缓冲队列交换机</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Binding <span class="title">deadLetterBinding</span><span class="params">(Queue deadLetterQueue, Exchange deadLetterExchange)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> BindingBuilder.bind(deadLetterQueue).to(deadLetterExchange).with(MqConstant.DEAD_ROUTING_KEY).noargs();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>创建实际消费队列</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Queue <span class="title">redirectQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> QueueBuilder.nonDurable(MqConstant.DELAY_QUEUE).build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将实际消费队列与缓冲队列的交换机绑定</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Binding <span class="title">redirectBinding</span><span class="params">(Queue redirectQueue, Exchange deadLetterExchange)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> BindingBuilder.bind(redirectQueue).to(deadLetterExchange).with(MqConstant.DELAY_ROUTING_KEY).noargs();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>消息消费者，监听实际消费队列</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RabbitListener</span>(queues = MqConstant.DELAY_QUEUE)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delay</span><span class="params">(Message&lt;String&gt; message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG)</span> <span class="keyword">long</span> tag) <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    log.info(<span class="string">"延迟队列: &#123;&#125;"</span>, message.getPayload());</span><br><span class="line">    channel.basicAck(tag, <span class="keyword">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>发送消息, 向缓冲队列发送</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RabbitMQExampleApplicationTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RabbitTemplate rabbitTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Message&lt;String&gt; msg = MessageBuilder.withPayload(<span class="string">"hello delay"</span>).build();</span><br><span class="line">        CorrelationData correlationData = <span class="keyword">new</span> CorrelationData(UUID.randomUUID().toString());</span><br><span class="line">        rabbitTemplate.convertAndSend(</span><br><span class="line">                MqConstant.DEAD_EXCHANGE,</span><br><span class="line">                MqConstant.DEAD_ROUTING_KEY,</span><br><span class="line">                msg,</span><br><span class="line">                message -&gt; &#123;</span><br><span class="line">                    <span class="comment">// 设置该消息的延迟时间</span></span><br><span class="line">                    <span class="keyword">long</span> millis = TimeUnit.SECONDS.toMillis(<span class="number">10</span>);</span><br><span class="line">                    message.getMessageProperties().setExpiration(String.valueOf(millis));</span><br><span class="line">                    <span class="keyword">return</span> message;</span><br><span class="line">                &#125;,</span><br><span class="line">                correlationData);</span><br><span class="line">        log.info(<span class="string">"已发送延迟队列消息"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">14:17:14.534  INFO 9400 --- [           main] c.s.e.r.RabbitMQExampleApplicationTest   : 已发送延迟队列消息</span><br><span class="line">&#x2F;&#x2F; 10s 后</span><br><span class="line">14:17:24.586  INFO 9396 --- [ntContainer#1-1] c.s.e.rabbitmq.receive.RabbitReceive     : 延迟队列: hello delay</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/07/singleton/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1363,7 +1567,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1376,7 +1580,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1437,7 +1641,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">10.6k</span>
+    <span title="Site words total count">11.8k</span>
   
 </div>
 
