@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="什么是延迟队列延迟队列就是进入该队列的消息会被延迟消费的队列。而一般的队列，消息一旦入队了之后就会被消费者马上消费。 使用场景 用户生成订单之后，需要过一段时间校验订单的支付状态，如果订单仍未支付则需要及时地关闭订单。 用户注册成功之后，需要过一段时间比如一周后校验用户的使用情况，如果发现用户活跃度较低，则发送邮件或者短信来提醒用户使用。  如果不使用延迟队列，那么我们只能通过一个轮询扫描程序去完">
+<meta name="description" content="什么是延迟队列延迟队列就是进入该队列的消息会被延迟消费的队列。而一般的队列，消息一旦入队了之后就会被消费者马上消费。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RabbitMQ延迟队列">
 <meta property="og:url" content="http://yoursite.com/2020/03/07/rabbitmq-delay-queue/index.html">
 <meta property="og:site_name" content="story-has-you">
-<meta property="og:description" content="什么是延迟队列延迟队列就是进入该队列的消息会被延迟消费的队列。而一般的队列，消息一旦入队了之后就会被消费者马上消费。 使用场景 用户生成订单之后，需要过一段时间校验订单的支付状态，如果订单仍未支付则需要及时地关闭订单。 用户注册成功之后，需要过一段时间比如一周后校验用户的使用情况，如果发现用户活跃度较低，则发送邮件或者短信来提醒用户使用。  如果不使用延迟队列，那么我们只能通过一个轮询扫描程序去完">
+<meta property="og:description" content="什么是延迟队列延迟队列就是进入该队列的消息会被延迟消费的队列。而一般的队列，消息一旦入队了之后就会被消费者马上消费。">
 <meta property="og:image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/zu1j3.png">
 <meta property="article:published_time" content="2020-03-07T06:29:35.000Z">
-<meta property="article:modified_time" content="2020-03-07T06:30:41.479Z">
+<meta property="article:modified_time" content="2020-03-07T06:45:50.599Z">
 <meta property="article:author" content="[故事有你]">
 <meta property="article:tag" content="中间件">
 <meta name="twitter:card" content="summary">
@@ -343,6 +343,9 @@
 
       
         <h2 id="什么是延迟队列"><a href="#什么是延迟队列" class="headerlink" title="什么是延迟队列"></a>什么是延迟队列</h2><p>延迟队列就是进入该队列的消息会被延迟消费的队列。而一般的队列，消息一旦入队了之后就会被消费者马上消费。</p>
+<a id="more"></a>
+
+
 <h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><ul>
 <li>用户生成订单之后，需要过一段时间校验订单的支付状态，如果订单仍未支付则需要及时地关闭订单。</li>
 <li>用户注册成功之后，需要过一段时间比如一周后校验用户的使用情况，如果发现用户活跃度较低，则发送邮件或者短信来提醒用户使用。</li>
