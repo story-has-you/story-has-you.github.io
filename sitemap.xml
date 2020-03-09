@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://story-has-you.github.io/2020/03/09/proxy/</loc>
+    
+    <lastmod>2020-03-09T07:10:05.895Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://story-has-you.github.io/2020/03/09/flyweight/</loc>
+    
+    <lastmod>2020-03-09T07:00:36.844Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://story-has-you.github.io/2020/03/09/decorator/</loc>
+    
+    <lastmod>2020-03-09T06:54:53.267Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://story-has-you.github.io/2020/03/09/combination/</loc>
+    
+    <lastmod>2020-03-09T06:50:08.852Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://story-has-you.github.io/2020/03/09/rate-limiter/</loc>
+    
+    <lastmod>2020-03-09T06:41:50.560Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://story-has-you.github.io/404.html</loc>
     
     <lastmod>2020-03-08T05:34:53.813Z</lastmod>
