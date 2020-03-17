@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, story" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="定义模板模式（Template Pattern）又被称作模板方法模式（Template Method Pattern），它是一种简单的、常见的且应用非常广泛的模式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模板模式">
+<meta property="og:url" content="https://story-has-you.github.io/posts/14568/index.html">
+<meta property="og:site_name" content="story-has-you">
+<meta property="og:description" content="定义模板模式（Template Pattern）又被称作模板方法模式（Template Method Pattern），它是一种简单的、常见的且应用非常广泛的模式。">
+<meta property="og:image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/ewr01.jpg">
+<meta property="article:published_time" content="2020-03-17T11:25:25.000Z">
+<meta property="article:modified_time" content="2020-03-17T11:27:10.977Z">
+<meta property="article:author" content="[故事有你]">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/ewr01.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://story-has-you.github.io/posts/14568/"/>
+
+
+
+
+
+  <title>模板模式 | story-has-you</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">story-has-you</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://story-has-you.github.io/posts/14568/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="[故事有你]">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/zwqen.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="story-has-you">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">模板模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-17T19:25:25+08:00">
+                2020-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>模板模式（Template Pattern）又被称作模板方法模式（Template Method Pattern），它是一种简单的、常见的且应用非常广泛的模式。</p>
+<a id="more"></a>
+
+<blockquote>
+<p>Define the skeleton of an algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm’s structure.</p>
+</blockquote>
+<p>意思是：定义一个操作中的算法的框架，而将一些步骤延迟到子类中。使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。</p>
+<p>简单来说，就是为子类设计一个模板，以便在子类中可以复用这些方法。</p>
+<h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p>模板模式包含如下角色：</p>
+<ul>
+<li>抽象模板（Abstract Template）角色：该角色定义一个或多个抽象操作，以便让子类实现；这些抽象操作是基本操作，是一个顶级逻辑的组成步骤，该角色还需要定义一个或几个模板方法（模板方法的介绍，请看下文）；</li>
+<li>具体模板（Concrete Template）角色：该角色实现抽象模板中定义的一个或多个抽象方法，每一个抽象模板角色都可以有任意多个具体模板角色与之对应，而每一个具体模板角色都可以给出这些抽象方法的不同实现，从而使得顶级逻辑的实现各不相同。</li>
+</ul>
+<p>角色之间的 UML 关系图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/ewr01.jpg" alt=""></p>
+<h2 id="模板模式代码实现"><a href="#模板模式代码实现" class="headerlink" title="模板模式代码实现"></a>模板模式代码实现</h2><h3 id="抽象模板"><a href="#抽象模板" class="headerlink" title="抽象模板"></a>抽象模板</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 抽象模板</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractTemplate</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 模板方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">templateMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//（所有）基本方法</span></span><br><span class="line">        abstractMethod();</span><br><span class="line">        hookMethod();</span><br><span class="line">        concreteMethod();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 抽象方法，必须有子类实现</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">abstractMethod</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 钩子方法，子类可以选择重写或不重写</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">hookMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 具体方法，子类不可修改</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">concreteMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"抽象类中的具体方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="具体模板-A"><a href="#具体模板-A" class="headerlink" title="具体模板 A"></a>具体模板 A</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 具体模板 A 类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteTemplateA</span> <span class="keyword">extends</span> <span class="title">AbstractTemplate</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">abstractMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"A 子类中重写的抽象方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="具体模板-B"><a href="#具体模板-B" class="headerlink" title="具体模板 B"></a>具体模板 B</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 具体模板 B 类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteTemplateB</span> <span class="keyword">extends</span> <span class="title">AbstractTemplate</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">abstractMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"B 子类中重写的抽象方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="调用"><a href="#调用" class="headerlink" title="调用"></a>调用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        AbstractTemplate tp = <span class="keyword">new</span> ConcreteTemplateA();</span><br><span class="line">        <span class="comment">// 调用子类 A 的模板方法</span></span><br><span class="line">        tp.templateMethod();</span><br><span class="line">        tp = <span class="keyword">new</span> ConcreteTemplateB();</span><br><span class="line">        <span class="comment">// 调用子类 B 的模板方法</span></span><br><span class="line">        tp.templateMethod();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序执行结果如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A 子类中重写的抽象方法</span><br><span class="line"></span><br><span class="line">抽象类中的具体方法</span><br><span class="line"></span><br><span class="line">B 子类中重写的抽象方法</span><br><span class="line"></span><br><span class="line">抽象类中的具体方法</span><br></pre></td></tr></table></figure>
+
+<p>从以上代码可以看出，在模板模式中，方法分为两类：模版方法和基本方法，而基本方法又分为：抽象方法，具体方法，钩子方法。</p>
+<ul>
+<li>抽象方法：一个抽象方法由抽象类声明，由具体子类实现。在 Java 语言里抽象方法以 abstract 关键字声明；</li>
+<li>具体方法：一个具体方法由抽象类声明并实现，而子类并不能修改或重写，此方法通常会被声明为 final；</li>
+<li>钩子方法：在抽象类中预留一个 “钩子”，也就是实现一个空方法，作为方法的默认实现，子类可以选择重写（重新构建）或者不重写。</li>
+</ul>
+<blockquote>
+<p>小贴士：一个模板方法是定义在抽象类中的，把基本操作方法组合在一起形成一个总算法或一个总行为的方法。<br>一个抽象类可以有任意多个模板方法，而不限于一个，每一个模板方法都可以调用任意多个具体方法。</p>
+</blockquote>
+<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>模板模式的优点：</p>
+<ul>
+<li>提高了代码的复用性，将相同部分的代码放在抽象的父类中；</li>
+<li>提高了拓展性：将不同的代码放入不同的子类中，通过对子类的扩展增加新的行为；</li>
+<li>符合开闭原则：行为由父类控制，通过子类扩展新的行为。</li>
+</ul>
+<p>模板模式的缺点：</p>
+<ul>
+<li>每个不同的行为都要新增一个子类来完成，抽象类中的抽象方法越多，子类增加成本就越高。而且新增的子类越多，系统就越复杂。</li>
+</ul>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>模板模式的典型应用场景如下：</p>
+<ul>
+<li>多个子类有公共方法，并且逻辑基本相同时；</li>
+<li>可以把重要的、复杂的、核心算法设计为模板方法，其他的相关细节功能则由各个子类实现；</li>
+<li>重构时，模板方法模式是一个经常使用的模式，把相同的代码抽取到父类中，然后通过钩子函数约束其行为。</li>
+</ul>
+<h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2><p>以生活中上班的过程为例，我们上班的通常流程是：起床洗漱 -&gt; 通勤（开车、坐公交、打车） -&gt; 到达公司。从以上步骤可以看出，只有通勤部分是不一样的，其他都一样，因为开车可能会被限号，就只能打车或坐公交去公司了，下面我们用代码（模板模式）来实现一下。</p>
+<h3 id="上班抽象类"><a href="#上班抽象类" class="headerlink" title="上班抽象类"></a>上班抽象类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 上班抽象（模板）类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractWork</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 模板方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">gotoWork</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        getup();</span><br><span class="line">        commute();</span><br><span class="line">        arrive();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 起床洗漱</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"1.起床洗漱"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 通勤</span></span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">commute</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 到达公司</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">arrive</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"3.到达公司"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="开车上班"><a href="#开车上班" class="headerlink" title="开车上班"></a>开车上班</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 开车上班</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DriveToWork</span> <span class="keyword">extends</span> <span class="title">AbstractWork</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">commute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"2.开车去公司"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="坐公交上班"><a href="#坐公交上班" class="headerlink" title="坐公交上班"></a>坐公交上班</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 坐公交上班</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BusToWork</span> <span class="keyword">extends</span> <span class="title">AbstractWork</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">commute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"2.坐公交去公司"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        AbstractWork work = <span class="keyword">new</span> DriveToWork();</span><br><span class="line">        <span class="comment">// 开车上班</span></span><br><span class="line">        work.gotoWork();</span><br><span class="line">        work = <span class="keyword">new</span> BusToWork();</span><br><span class="line">        <span class="comment">// 坐公交上班</span></span><br><span class="line">        work.gotoWork();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序执行结果如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>. 起床洗漱</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>. 开车去公司</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>. 到达公司</span><br><span class="line"></span><br><span class="line"><span class="number">1</span>. 起床洗漱</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>. 坐公交去公司</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>. 到达公司</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>模板模式的精髓是复用抽象类中的公共方法，重写抽象类中的基础（抽象）方法，选择性使用抽象类中的钩子（hook Method）方法。使用模板模式的关键是：子类可以置换掉父类的可变部分，但是子类却不可以改变模板方法所代表的顶级逻辑。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/58639/" rel="next" title="策略模式">
+                <i class="fa fa-chevron-left"></i> 策略模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/14565/" rel="prev" title="模板模式">
+                模板模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/zwqen.gif"
+                alt="[故事有你]" />
+            
+              <p class="site-author-name" itemprop="name">[故事有你]</p>
+              <p class="site-description motion-element" itemprop="description">略懂Java</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/story-has-you" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/story_has_you" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.instagram.com/love_inori/" target="_blank" title="Instagram">
+                      
+                        <i class="fa fa-fw fa-instagram"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组成角色"><span class="nav-number">2.</span> <span class="nav-text">组成角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模板模式代码实现"><span class="nav-number">3.</span> <span class="nav-text">模板模式代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象模板"><span class="nav-number">3.1.</span> <span class="nav-text">抽象模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体模板-A"><span class="nav-number">3.2.</span> <span class="nav-text">具体模板 A</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#具体模板-B"><span class="nav-number">3.3.</span> <span class="nav-text">具体模板 B</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调用"><span class="nav-number">3.4.</span> <span class="nav-text">调用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优缺点"><span class="nav-number">4.</span> <span class="nav-text">优缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用场景"><span class="nav-number">5.</span> <span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用实例"><span class="nav-number">6.</span> <span class="nav-text">使用实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#上班抽象类"><span class="nav-number">6.1.</span> <span class="nav-text">上班抽象类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开车上班"><span class="nav-number">6.2.</span> <span class="nav-text">开车上班</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#坐公交上班"><span class="nav-number">6.3.</span> <span class="nav-text">坐公交上班</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端"><span class="nav-number">6.4.</span> <span class="nav-text">客户端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">[故事有你]</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">48.8k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
+<!-- 页面点击心形 -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<!--崩溃欺骗-->
+<script type="text/javascript" src="/js/crash_cheat.js"></script>
