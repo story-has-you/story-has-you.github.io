@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, story" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="定义MVC 全称是 Model-View-Controller（模型 - 视图 - 控制器） ，是一种软件设计典范，用一种业务逻辑、数据、界面进行分离的开发模式。MVC 模式是一种经典的设计模式，被广泛地应用在程序开发当中，例如，目前比较知名的经典框架：Spring MVC、ASP.NET MVC、Struts2 等，都是基于 MVC 模式实现的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MVC模式">
+<meta property="og:url" content="https://story-has-you.github.io/posts/12522/index.html">
+<meta property="og:site_name" content="story-has-you">
+<meta property="og:description" content="定义MVC 全称是 Model-View-Controller（模型 - 视图 - 控制器） ，是一种软件设计典范，用一种业务逻辑、数据、界面进行分离的开发模式。MVC 模式是一种经典的设计模式，被广泛地应用在程序开发当中，例如，目前比较知名的经典框架：Spring MVC、ASP.NET MVC、Struts2 等，都是基于 MVC 模式实现的。">
+<meta property="og:image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/4516q.jpg">
+<meta property="article:published_time" content="2020-03-18T10:53:41.000Z">
+<meta property="article:modified_time" content="2020-03-18T10:54:02.409Z">
+<meta property="article:author" content="[故事有你]">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/4516q.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://story-has-you.github.io/posts/12522/"/>
+
+
+
+
+
+  <title>MVC模式 | story-has-you</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">story-has-you</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://story-has-you.github.io/posts/12522/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="[故事有你]">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/zwqen.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="story-has-you">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MVC模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-18T18:53:41+08:00">
+                2020-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>MVC 全称是 Model-View-Controller（模型 - 视图 - 控制器） ，是一种软件设计典范，用一种业务逻辑、数据、界面进行分离的开发模式。<br>MVC 模式是一种经典的设计模式，被广泛地应用在程序开发当中，例如，目前比较知名的经典框架：Spring MVC、ASP.NET MVC、Struts2 等，都是基于 MVC 模式实现的。</p>
+<a id="more"></a>
+
+
+<h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p>MVC 模式包含如下角色：</p>
+<ul>
+<li>Model（模型）：用于存储和操作数据（库）的类，可以是存储容器，也可以带有逻辑，用于返回结果给控制器；</li>
+<li>View（视图）：展示给用户的界面，用于展示和操作；</li>
+<li>Controller（控制器）：用于连接模型层和视图层的中间控制器。</li>
+</ul>
+<p>角色之间的执行流程图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/4516q.jpg" alt=""></p>
+<h2 id="MVC-模式代码实现"><a href="#MVC-模式代码实现" class="headerlink" title="MVC 模式代码实现"></a>MVC 模式代码实现</h2><p>本文并不打算使用现成的 MVC 框架来做演示，比如 Spring MVC 框架等，因为本身框架太重，且已经是封装好的，不便于读者理解，所以本文会用代码的方式，手动实现 MVC 模式。</p>
+<h3 id="模型层"><a href="#模型层" class="headerlink" title="模型层"></a>模型层</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模型层（伪代码）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Model</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"I'm Model."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="视图层"><a href="#视图层" class="headerlink" title="视图层"></a>视图层</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 视图层（伪代码）</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">View</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"I'm View."</span>);</span><br><span class="line">        Controller.doController();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="客户端调用"><a href="#客户端调用" class="headerlink" title="客户端调用"></a>客户端调用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 客户端调用（伪代码）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 打开页面</span></span><br><span class="line">        View view = <span class="keyword">new</span> View();</span><br><span class="line">        <span class="comment">// 执行查询，并展现结果</span></span><br><span class="line">        view.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序执行结果如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">I’m View.</span><br><span class="line"></span><br><span class="line">I’m Controller.</span><br><span class="line"></span><br><span class="line">I’m Model.</span><br></pre></td></tr></table></figure>
+
+<p>以上模型层、视图层、客户端调用都是伪代码，模拟的是用户打开页面，再执行查询、展示的流程，程序的实际执行流程是：用户先调用视图层（页面），视图层再调用控制器，控制器再调用模型层，最终再把结果返回给用户的过程。</p>
+<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>MVC 模式的优点：</p>
+<ul>
+<li>分工明确：有利于团队开发分工协作和质量控制，降低开发成本；</li>
+<li>耦合性低：模块间相互比较独立，比如，在业务流程和交互方式不变的情况下，可以任意调整前端页面的样式，而不影响其他模块；</li>
+<li>重用性高：以模型层来说，可以提供给多个控制器来使用。<br>MVC 模式的缺点：</li>
+<li>增加了系统实现的复杂性，对于简单的应用并不适用；</li>
+<li>减低了系统的运行性能，因为程序的执行经过的层数过多，所以会带来一定的性能损耗。<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2>MVC 模式典型应用场景如下：</li>
+<li>Web 开发领域：由于 Web 开发的特殊性，采用 MVC 进行结构划分，一方面会提升团队的协同开发效率，专人干专事，另一方面也有利于日后软件产品的维护和升级，同时能够提升软件模块的复用性；</li>
+<li>移动互联开发：目前移动互联开发，比如：Android、iOS 开发也在采用 MVC 框架，对于这种展示层修改频率比较高的应用，采用 MVC 的方式，使得修改展示层更加的高效；</li>
+<li>实用型工具类程序：与前两种开发不同，实用型工具类程序，更多修改的是展示层之外的代码，这种在不更改用户操作习惯的方式下，静默地调整和升级代码的方式，也比较适合用 MVC 设计模式。</li>
+</ul>
+<h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2><p>以图书馆中查询书籍简介为例，比如，我们在图书馆的电脑上，输入书名再点击查询，就会在数据库中查询书籍信息，并展示给用户，具体实现代码如下。</p>
+<h3 id="模型层-1"><a href="#模型层-1" class="headerlink" title="模型层"></a>模型层</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模型层</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MvcModel</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String desc;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getDesc</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> desc;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDesc</span><span class="params">(String desc)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.desc = desc;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="前端页面（视图层）"><a href="#前端页面（视图层）" class="headerlink" title="前端页面（视图层）"></a>前端页面（视图层）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 视图层</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MvcView</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MvcView</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"页面展示"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 接收用户请求，调用控制器</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">find</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 调用控制器，输出结果</span></span><br><span class="line">        System.out.println(<span class="string">"输出结果："</span> + <span class="keyword">new</span> MvcController().getDesc(name));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 控制器（层）</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MvcController</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 简介内容</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Description</span> 根据名称获取简介</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Param</span> name 名称</span></span><br><span class="line"><span class="comment">     **/</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getDesc</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 最终返回的结果</span></span><br><span class="line">        String result = <span class="string">"暂无"</span>;</span><br><span class="line">        <span class="comment">// 以模型层为基础，通过数据层，查询到相关的数据</span></span><br><span class="line">        MvcModel mvcModel = MvcDB.findByName(name);</span><br><span class="line">        <span class="keyword">if</span> (mvcModel != <span class="keyword">null</span>) &#123;</span><br><span class="line">            result = mvcModel.getDesc();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="数据层（提供数据）"><a href="#数据层（提供数据）" class="headerlink" title="数据层（提供数据）"></a>数据层（提供数据）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">**</span><br><span class="line"> * 数据层</span><br><span class="line"> **/</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MvcDB</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Description</span> 根据书名返回数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Param</span> name 书名</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 模型对象数据</span></span><br><span class="line"><span class="comment">     **/</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> MvcModel <span class="title">findByName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        MvcModel model = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">switch</span> (name) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"Java"</span>:</span><br><span class="line">                model = <span class="keyword">new</span> MvcModel();</span><br><span class="line">                model.setName(<span class="string">"Java面试全解析"</span>);</span><br><span class="line">                model.setDesc(<span class="string">"这是一本包含了 505 道面试题的 Java 书籍。"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"MySQL"</span>:</span><br><span class="line">                model = <span class="keyword">new</span> MvcModel();</span><br><span class="line">                model.setName(<span class="string">"MySQL面试金典"</span>);</span><br><span class="line">                model.setDesc(<span class="string">"这是一本包含了 208 道面试题的 MySQL 书籍。"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> model;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="客户端调用-1"><a href="#客户端调用-1" class="headerlink" title="客户端调用"></a>客户端调用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 打开页面</span></span><br><span class="line">        MvcView mvcView = <span class="keyword">new</span> MvcView();</span><br><span class="line">        <span class="comment">// 输入书名：Java</span></span><br><span class="line">        mvcView.name = <span class="string">"Java"</span>;</span><br><span class="line">        <span class="comment">// 点击查询，执行相关流程并展示结果</span></span><br><span class="line">        mvcView.find();</span><br><span class="line">        <span class="comment">// 输入书名：MySQL</span></span><br><span class="line">        mvcView.name = <span class="string">"MySQL"</span>;</span><br><span class="line">        <span class="comment">// 点击查询，执行相关流程并展示结果</span></span><br><span class="line">        mvcView.find();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序执行结果如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">页面展示</span><br><span class="line"></span><br><span class="line">输出结果：这是一本包含了 <span class="number">505</span> 道面试题的 Java 书籍。</span><br><span class="line"></span><br><span class="line">输出结果：这是一本包含了 <span class="number">208</span> 道面试题的 MySQL 书籍。</span><br></pre></td></tr></table></figure>
+
+<p>细心的读者可能会发现，这个实例中又多了一个数据层，其实它并没有特殊的含义，只是为整个实例提供数据来源而已。在这个实例中，模型层相对来说功能比较单一，只是一个数据载体（数据容器）而已，但广义上来说 MVC 模式中的模型层，也可以是业务模型层，并带有逻辑判断代码，就相当于这个例子中的 MvcModel 类 + MvcDB 类的合体。但设计模式只是一种思想，并没有严格的实现标准，这同时也是学习设计模式的精髓，读者可以根据实际情况，灵活变通，只要符合程序设计的七大经典原则即可。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>MVC 模式 Model-View-Controller（模型 - 视图 - 控制器），可以有效地将程序分层，提高了开发效率，让专业的人干专业的事，同时降低了代码间的耦合，提升了代码的复用性，但也因此减低了程序的执行性能，拉长了程序调试的流程，增加了开发的难度。所以对于中小型系统来说，要谨慎地使用 MVC 模式，不要死记硬套，要学会变通地使用各种设计模式。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/14565/" rel="next" title="访问者模式">
+                <i class="fa fa-chevron-left"></i> 访问者模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/39308/" rel="prev" title="业务代表模式">
+                业务代表模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/zwqen.gif"
+                alt="[故事有你]" />
+            
+              <p class="site-author-name" itemprop="name">[故事有你]</p>
+              <p class="site-description motion-element" itemprop="description">略懂Java</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/story-has-you" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/story_has_you" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.instagram.com/love_inori/" target="_blank" title="Instagram">
+                      
+                        <i class="fa fa-fw fa-instagram"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组成角色"><span class="nav-number">2.</span> <span class="nav-text">组成角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVC-模式代码实现"><span class="nav-number">3.</span> <span class="nav-text">MVC 模式代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模型层"><span class="nav-number">3.1.</span> <span class="nav-text">模型层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视图层"><span class="nav-number">3.2.</span> <span class="nav-text">视图层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端调用"><span class="nav-number">3.3.</span> <span class="nav-text">客户端调用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优缺点"><span class="nav-number">4.</span> <span class="nav-text">优缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用场景"><span class="nav-number">5.</span> <span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用实例"><span class="nav-number">6.</span> <span class="nav-text">使用实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模型层-1"><span class="nav-number">6.1.</span> <span class="nav-text">模型层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前端页面（视图层）"><span class="nav-number">6.2.</span> <span class="nav-text">前端页面（视图层）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#控制器"><span class="nav-number">6.3.</span> <span class="nav-text">控制器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据层（提供数据）"><span class="nav-number">6.4.</span> <span class="nav-text">数据层（提供数据）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端调用-1"><span class="nav-number">6.5.</span> <span class="nav-text">客户端调用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">[故事有你]</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">55.5k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
+<!-- 页面点击心形 -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<!--崩溃欺骗-->
+<script type="text/javascript" src="/js/crash_cheat.js"></script>
