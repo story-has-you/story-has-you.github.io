@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, story" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="CompletableFuture是1.8引入的新特性，一些比较复杂的异步计算场景，尤其是需要串联多个异步计算单元的场景，可以考虑使用 CompletableFuture 来实现。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过 CompletableFuture 组装异步计算单元">
+<meta property="og:url" content="https://www.story-has-you.top/posts/41791/index.html">
+<meta property="og:site_name" content="story-has-you">
+<meta property="og:description" content="CompletableFuture是1.8引入的新特性，一些比较复杂的异步计算场景，尤其是需要串联多个异步计算单元的场景，可以考虑使用 CompletableFuture 来实现。">
+<meta property="og:image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/a9udw.jpg">
+<meta property="og:image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/5hw1e.jpg">
+<meta property="og:image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/z9ce1.jpg">
+<meta property="article:published_time" content="2020-04-06T14:20:18.000Z">
+<meta property="article:modified_time" content="2020-04-06T14:21:58.071Z">
+<meta property="article:author" content="[故事有你]">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/a9udw.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.story-has-you.top/posts/41791/"/>
+
+
+
+
+
+  <title>通过 CompletableFuture 组装异步计算单元 | story-has-you</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">story-has-you</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.story-has-you.top/posts/41791/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="[故事有你]">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/zwqen.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="story-has-you">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">通过 CompletableFuture 组装异步计算单元</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-06T22:20:18+08:00">
+                2020-04-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.8k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CompletableFuture是1.8引入的新特性，一些比较复杂的异步计算场景，尤其是需要串联多个异步计算单元的场景，可以考虑使用 CompletableFuture 来实现。</p>
+<a id="more"></a>
+
+
+<h2 id="CompletableFuture-介绍"><a href="#CompletableFuture-介绍" class="headerlink" title="CompletableFuture 介绍"></a>CompletableFuture 介绍</h2><p>在现实世界中，我们需要解决的复杂问题都是要分为若干步骤。就像我们的代码一样，一个复杂的逻辑方法中，会调用多个方法来一步一步实现。</p>
+<p>设想如下场景，植树节要进行植树，分为下面几个步骤：</p>
+<ol>
+<li>挖坑 10 分钟</li>
+<li>拿树苗 5 分钟</li>
+<li>种树苗 20 分钟</li>
+<li>浇水 5 分钟</li>
+</ol>
+<p>其中 1 和 2 可以并行，1 和 2 都完成了才能进行步骤 3，然后才能进行步骤 4。</p>
+<p>我们有如下几种实现方式：</p>
+<h3 id="只有一个人种树"><a href="#只有一个人种树" class="headerlink" title="只有一个人种树"></a>只有一个人种树</h3><p>如果现在只有一个人植树，要种 100 棵树，那么只能按照如下顺序执行：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/a9udw.jpg" alt=""></p>
+<p>图中仅列举种三棵树示意。可以看到串行执行，只能种完一棵树再种一棵，那么种完 100 棵树需要 <code>40 * 100 = 4000 分钟</code>。<br>这种方式对应到程序，就是单线程同步执行。</p>
+<h3 id="三个人同时种树，每个人负责种一棵树"><a href="#三个人同时种树，每个人负责种一棵树" class="headerlink" title="三个人同时种树，每个人负责种一棵树"></a>三个人同时种树，每个人负责种一棵树</h3><p>如何缩短种树时长呢？你肯定想这还不好办，学习了这么久的并发，这肯定难不倒我。不是要种 100 棵树吗？那我找 100 个人一块种，每个人种一棵。那么只需要 40 分钟就可以种完 100 棵树了。</p>
+<p>没错，如果你的程序有个方法叫做 plantTree，里面包含了如上四部，那么你起 100 个线程就可以了。但是，请注意，100 个线程的创建和销毁需要消耗大量的系统资源。并且创建和销毁线程都有时间消耗。此外CPU的核数并不能真的支持100个线程并发。如果我们要种1万棵树呢？总不能起一万个线程吧？</p>
+<p>所以这只是理想情况，我们一般是通过线程池来执行，并不会真的启动100个线程。</p>
+<h3 id="多个人同时种树。种每一棵树的时候，不依赖的步骤可以分不同的人并行干"><a href="#多个人同时种树。种每一棵树的时候，不依赖的步骤可以分不同的人并行干" class="headerlink" title="多个人同时种树。种每一棵树的时候，不依赖的步骤可以分不同的人并行干"></a>多个人同时种树。种每一棵树的时候，不依赖的步骤可以分不同的人并行干</h3><p>这种方式可以进一步缩短种树的时长，因为第一步挖坑和第二步拿树苗可以两个人并行去做，所以每棵树只需要35 分钟。如下图：</p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/5hw1e.jpg" alt=""></p>
+<p>如果程序还是 100 个主线程并发运行 plantTree 方法，那么只需要 35 分钟种完 100 颗树。<br>这里需要注意每个线程中，由于还要并发两个线程去做 1，2 两个步骤。实际运行中会又 100 x 3 = 300 个线程参与植树。但是负责 1，2 步骤的线程只会短暂参与，然后就闲置了。</p>
+<p>这种方法和第二种方式也存在大量创建线程的问题。所以也只是理想情况。</p>
+<h3 id="假如只有-4-个人植树，每个人只负责自己的步骤"><a href="#假如只有-4-个人植树，每个人只负责自己的步骤" class="headerlink" title="假如只有 4 个人植树，每个人只负责自己的步骤"></a>假如只有 4 个人植树，每个人只负责自己的步骤</h3><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/z9ce1.jpg" alt=""></p>
+<p>可以看到一开始小王挖完第一个坑后，小李已经取回两个树苗，但此时小张才能开始种第一个树苗。此后小张就可以一个接一个的去种树苗了，并且在他种下一棵树苗的时候，小赵可以并行浇水。按照这个流程走下来，种完 100 颗树苗需要 10+20x100+5=2015 分钟。比单线程的4000分钟好了很多，但是远远比不上 100 个线程并发种树的速度。不过不要忘记 100 个线程并发只是理想情况，而本方法只用了 4 个线程。</p>
+<p>我们再对分工做下调整。每个人不只干自己的工作，一旦自己的工作做完了就看有没有其他工作可以做。比如小王挖坑完后，发现可以种树苗，那么他就去种树苗。小李拿树苗完成后也可以去挖坑或者种树苗。这样整体的效率就会更高了。如果基于这种思想，那么我们实际上把任务分成了 4 类，每类 100 件，一共 400 件任务。400 件任务全部完成，意味着整个任务就完成了。那么任务的参与者只需要知道任务的依赖，然后不断领取可以执行的任务去执行。这样的效率将会是最高的。</p>
+<p>前文说到我们不可能通过100个线程并发来执行任务，所以一般情况下我们都会使用线程池，这和上面的设计思想不谋而合。使用线程池后，由于第四种方式把步骤拆的更细，提高了并发的可能性。因此速度会比第二种方式更快。那么和第三种比起来，哪种更快呢？如果线程数量可以无穷大，这两个方法能达到的最短时间是一样的，都是 35 分钟。不过在线程有限的情况下，第四种方式对线程的使用率会更高，因为每个步骤都可以并行执行（参与种树的人完成自己的工作后，都可以去帮助其他人），线程的调度更为灵活，所以线程池中的线程很难闲下来，一直保持在运转之中。是的，谁都不能偷懒。而第三种由于只能并发在 plantTree 方法及挖坑和拿树苗，所以不如第四种方式灵活</p>
+<p>上文讲了这么多，主要是要说明 CompletableFuture 出现的原因。他用来把复杂任务拆解为一个个衔接的异步执行步骤，从而提升整体的效率。我们回一下小节题目：谁都不能偷懒。没错，这就是 CompletableFuture 要达到的效果，通过对计算单元的抽象，让线程能够高效的并发参与每一个步骤。同步的代码通过 CompletableFuture 可以完全改造为异步代码。下面我们就来看看如何使用 CompletableFuture。</p>
+<h2 id="CompletableFuture-使用"><a href="#CompletableFuture-使用" class="headerlink" title="CompletableFuture 使用"></a>CompletableFuture 使用</h2><p>CompletableFuture 实现了 Future 接口并且实现了 CompletionStage 接口。Future 接口我们已经很熟悉了，而CompletionStage 接口定了异步计算步骤之间的规范，这样确保一步一步能够衔接上。CompletionStage 定义了38 个 public 的方法用于异步计算步骤间的衔接。接下来我们会挑选一些常用的，相对使用频率较高的方法，来看看如何使用。</p>
+<h3 id="已知计算结果"><a href="#已知计算结果" class="headerlink" title="已知计算结果"></a>已知计算结果</h3><p>如果你已经知道 CompletableFuture 的计算结果，可以使用静态方法 completedFuture。传入计算结果，声明CompletableFuture 对象。在调用 get 方法时会立即返回传入的计算结果，不会被阻塞，如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">    CompletableFuture&lt;String&gt; completableFuture = CompletableFuture.completedFuture(<span class="string">"Hello World"</span>);</span><br><span class="line">    System.out.println(<span class="string">"result is "</span> + completableFuture.get());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// result is Hello World</span></span><br></pre></td></tr></table></figure>
+
+<p>是不是觉得这种用法没有什么意义？既然知道计算结果了，直接使用就好了，为什么还要通过 CompletableFuture 进行包装？这是因为异步计算单元需要通过 CompletableFuture 进行衔接，所以有的时候我们即使已经知道计算结果，也需要包装为 CompletableFuture，才能融入到异步计算的流程之中。</p>
+<h3 id="封装有返回值的异步计算逻辑"><a href="#封装有返回值的异步计算逻辑" class="headerlink" title="封装有返回值的异步计算逻辑"></a>封装有返回值的异步计算逻辑</h3><p>这是我们最常用的方式。把需要异步计算的逻辑封装为一个计算单元，交由 CompletableFuture 去运行。如下面的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    CompletableFuture&lt;String&gt; completableFuture = CompletableFuture.supplyAsync(() -&gt; <span class="string">"挖坑完成"</span>);</span><br><span class="line">    System.out.println(<span class="string">"result is "</span> + completableFuture.get());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// result is 挖坑完成</span></span><br></pre></td></tr></table></figure>
+
+<p>这里我们使用了 CompletableFuture 的 supplyAsync 方法，以 lambda 表达式的方式向其传递了一个 supplier 接口的实现。</p>
+<p>可见 <code>completableFuture.get()</code> 拿到的计算结果就是你传入函数执行后 return 的值。那么如果你有需要异步计算的逻辑，那么就可以放到 supplyAsync 传入的函数体中。这段函数是如何被异步执行的呢？如果你跟入代码可以看到其实 supplyAsync 是通过 Executor，也就是线程池来运行这段函数的。completableFuture 默认使用的是ForkJoinPool，当然你也可以通过为 supplyAsync 指定其他 Excutor，通过第二个参数传入 supplyAsync 方法。</p>
+<p>supplyAsync 使用场景非常多，举个简单的例子，主程序需要调用多个微服务的接口请求数据，那么就可以启动多个 CompletableFuture，调用 supplyAsync，函数体中是关于不同接口的调用逻辑。这样不同的接口请求就可以异步同时运行，最后再等全部接口返回时，执行后面的逻辑。</p>
+<h3 id="封装无返回值的异步计算逻辑"><a href="#封装无返回值的异步计算逻辑" class="headerlink" title="封装无返回值的异步计算逻辑"></a>封装无返回值的异步计算逻辑</h3><p>supplyAsync 接收的函数是有返回值的。有些情况我们只是一段计算过程，并不需要返回值。这就像 Runnable 的run 方法，并没有返回值。这种情况我们可以使用 runAsync方法，如下面的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    CompletableFuture&lt;Void&gt; completableFuture = CompletableFuture.runAsync(() -&gt; System.out.println(<span class="string">"挖坑完成"</span>));</span><br><span class="line">    completableFuture.get();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 挖坑完成</span></span><br></pre></td></tr></table></figure>
+
+<p>runAsync 接收 runnable 接口的函数。所以并无返回值。栗子中的逻辑只是打印“挖坑完成”。</p>
+<h3 id="进一步处理异步返回的结果，并返回新的计算结果"><a href="#进一步处理异步返回的结果，并返回新的计算结果" class="headerlink" title="进一步处理异步返回的结果，并返回新的计算结果"></a>进一步处理异步返回的结果，并返回新的计算结果</h3><p>当我们通过 supplyAsync 完成了异步计算，返回 CompletableFuture，此时可以继续对返回结果进行加工，如下面的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    CompletableFuture&lt;String&gt; completableFuture = CompletableFuture.supplyAsync(() -&gt; <span class="string">"挖坑完成"</span>)</span><br><span class="line">            .thenApply(s -&gt; s + <span class="string">", 并且归还铁锹"</span>)</span><br><span class="line">            .thenApply(s -&gt; s + <span class="string">", 全部完成。"</span>);</span><br><span class="line">    System.out.println(<span class="string">"result is "</span> + completableFuture.get());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// result is 挖坑完成, 并且归还铁锹, 全部完成。</span></span><br></pre></td></tr></table></figure>
+
+<p>在调用 supplyAsync 后，我们两次链式调用 thenApply 方法。s 是前一步 supplyAsync 返回的计算结结果，我们对结算结果进行了两次再加工。我们可以通过 thenApply 不断对计算结果进行加工处理。<br>如果想异步运行 thenApply 的逻辑，可以使用 thenApplyAsync。使用方法相同，只不过会通过线程池异步运行。</p>
+<h3 id="进一步处理异步返回的结果，无返回"><a href="#进一步处理异步返回的结果，无返回" class="headerlink" title="进一步处理异步返回的结果，无返回"></a>进一步处理异步返回的结果，无返回</h3><p>这种场景你可以使用thenApply。这个方法可以让你处理上一步的返回结果，但无返回值。参照如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    CompletableFuture&lt;Void&gt; completableFuture = CompletableFuture.supplyAsync(() -&gt; <span class="string">"挖坑完成"</span>)</span><br><span class="line">            .thenAccept(s -&gt; System.out.println(s + <span class="string">", 并且归还铁锹"</span>));</span><br><span class="line">    completableFuture.get();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里可以看到 thenAccept 接收的函数没有返回值，只有业务逻辑。处理后返回 CompletableFuture 类型对象。</p>
+<h3 id="既不需要返回值，也不需要上一步计算结果，只想在执行结束后再执行一段代码"><a href="#既不需要返回值，也不需要上一步计算结果，只想在执行结束后再执行一段代码" class="headerlink" title="既不需要返回值，也不需要上一步计算结果，只想在执行结束后再执行一段代码"></a>既不需要返回值，也不需要上一步计算结果，只想在执行结束后再执行一段代码</h3><p>此时你可以使用 thenRun 方法，他接收 Runnable 的函数，没有输入也没有输出，仅仅是在异步计算结束后回调一段逻辑，比如记录 log 等。参照下面代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    CompletableFuture&lt;Void&gt; completableFuture = CompletableFuture.supplyAsync(() -&gt; <span class="string">"挖坑完成"</span>)</span><br><span class="line">            .thenAccept(s -&gt; System.out.println(s + <span class="string">", 并且归还铁锹"</span>))</span><br><span class="line">            .thenRun(() -&gt; System.out.println(<span class="string">"挖坑工作已经全部完成"</span>));</span><br><span class="line">    completableFuture.get();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 挖坑完成, 并且归还铁锹</span></span><br><span class="line"><span class="comment">// 挖坑工作已经全部完成</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到在 thenAccept 之后继续调用了 thenRun，仅仅是打印了日志而已</p>
+<h3 id="组合-Future-处理逻辑"><a href="#组合-Future-处理逻辑" class="headerlink" title="组合 Future 处理逻辑"></a>组合 Future 处理逻辑</h3><p>我们可以把两个 CompletableFuture 组合起来使用，如下面的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    CompletableFuture&lt;String&gt; completableFuture = CompletableFuture.supplyAsync(() -&gt; <span class="string">"挖坑完成"</span>)</span><br><span class="line">            .thenCompose(s -&gt; CompletableFuture.supplyAsync(() -&gt; s + <span class="string">", 并且归还铁锹"</span>));</span><br><span class="line">    System.out.println(<span class="string">"result is "</span> + completableFuture.get());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// result is 挖坑完成, 并且归还铁锹</span></span><br></pre></td></tr></table></figure>
+
+<p>thenApply 和 thenCompose 的关系就像 stream中的 map 和 flatmap。从上面的例子来看，thenApply 和thenCompose 都可以实现同样的功能。但是如果你使用一个第三方的库，有一个API返回的是CompletableFuture 类型，那么你就只能使用 thenCompose方法。</p>
+<h3 id="组合Futurue结果"><a href="#组合Futurue结果" class="headerlink" title="组合Futurue结果"></a>组合Futurue结果</h3><p>如果你有两个异步操作互相没有依赖，但是第三步操作依赖前两部计算的结果，那么你可以使用 thenCombine 方法来实现，如下面代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    CompletableFuture&lt;String&gt; completableFuture = CompletableFuture.supplyAsync(() -&gt; <span class="string">"挖坑完成"</span>)</span><br><span class="line">            .thenCombine(CompletableFuture.supplyAsync(() -&gt; <span class="string">", 拿树苗完成"</span>), (x, y) -&gt; x + y + <span class="string">"植树完成"</span>);</span><br><span class="line">    System.out.println(<span class="string">"result is "</span> + completableFuture.get());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// result is 挖坑完成, 拿树苗完成植树完成</span></span><br></pre></td></tr></table></figure>
+
+<p>挖坑和拿树苗可以同时进行，但是第三步植树则祖尧前两步完成后才能进行。</p>
+<p>可以看到符合我们的预期。使用场景之前也提到过。我们调用多个微服务的接口时，可以使用这种方式进行组合。处理接口调用间的依赖关系。<br>当你需要两个 Future 的结果，但是不需要再加工后向下游传递计算结果时，可以使用 thenAcceptBoth，用法一样，只不过接收的函数没有返回值。</p>
+<h3 id="并行处理多个-Future"><a href="#并行处理多个-Future" class="headerlink" title="并行处理多个 Future"></a>并行处理多个 Future</h3><p>假如我们对微服务接口的调用不止两个，并且还有一些其它可以异步执行的逻辑。主流程需要等待这些所有的异步操作都返回时，才能继续往下执行。此时我们可以使用 CompletableFuture.allOf 方法。它接收 n 个 CompletableFuture，返回一个 CompletableFuture。对其调用 get 方法后，只有所有的 CompletableFuture 全完成时才会继续后面的逻辑。我们看下面示例代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    CompletableFuture&lt;Void&gt; future1 = CompletableFuture.runAsync(() -&gt; &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            TimeUnit.SECONDS.sleep(<span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"挖坑完成"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    CompletableFuture&lt;Void&gt; future2 = CompletableFuture.runAsync(() -&gt; &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            TimeUnit.SECONDS.sleep(<span class="number">5</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"取树苗完成"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    CompletableFuture&lt;Void&gt; future3 = CompletableFuture.runAsync(() -&gt; &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            TimeUnit.SECONDS.sleep(<span class="number">3</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"取肥料完成"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    CompletableFuture.allOf(future1, future2, future3).get();</span><br><span class="line">    System.out.println(<span class="string">"植树准备工作完成！"</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 挖坑完成</span></span><br><span class="line"><span class="comment">// 取肥料完成</span></span><br><span class="line"><span class="comment">// 取树苗完成</span></span><br><span class="line"><span class="comment">// 植树准备工作完成！</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h3><p>在异步计算链中的异常处理可以采用 handle 方法，它接收两个参数，第一个参数是计算及过，第二个参数是异步计算链中抛出的异常。使用方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    CompletableFuture&lt;String&gt; completableFuture = CompletableFuture.supplyAsync(() -&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="number">1</span> == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Computation error"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"挖坑完成"</span>;</span><br><span class="line">    &#125;).handle((result, throwable) -&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (result == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"挖坑异常"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;);</span><br><span class="line">    System.out.println(<span class="string">"result is "</span> + completableFuture.get());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// result is 挖坑异常</span></span><br></pre></td></tr></table></figure>
+
+<p>代码中会抛出一个 RuntimeException，抛出这个异常时 result 为 null，而 throwable 不为null。根据这些信息你可以在 handle 中进行处理，如果抛出的异常种类很多，你可以判断 throwable 的类型，来选择不同的处理逻辑。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>CompletableFuture它的方法远不止这些，其它的方法大家可以参照文档进行学习。在实际开发中，我推荐使用 CompletableFuture 进行异步计算，它更为灵活，并且可以采用 lambda 表达式进行函数式编程，代码更为简洁，可读性也更高。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/13992/" rel="next" title="大型网站架构演化">
+                <i class="fa fa-chevron-left"></i> 大型网站架构演化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/zwqen.gif"
+                alt="[故事有你]" />
+            
+              <p class="site-author-name" itemprop="name">[故事有你]</p>
+              <p class="site-description motion-element" itemprop="description">略懂Java</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/story-has-you" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://twitter.com/story_has_you" target="_blank" title="Twitter">
+                      
+                        <i class="fa fa-fw fa-twitter"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.instagram.com/love_inori/" target="_blank" title="Instagram">
+                      
+                        <i class="fa fa-fw fa-instagram"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CompletableFuture-介绍"><span class="nav-number">1.</span> <span class="nav-text">CompletableFuture 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#只有一个人种树"><span class="nav-number">1.1.</span> <span class="nav-text">只有一个人种树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三个人同时种树，每个人负责种一棵树"><span class="nav-number">1.2.</span> <span class="nav-text">三个人同时种树，每个人负责种一棵树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多个人同时种树。种每一棵树的时候，不依赖的步骤可以分不同的人并行干"><span class="nav-number">1.3.</span> <span class="nav-text">多个人同时种树。种每一棵树的时候，不依赖的步骤可以分不同的人并行干</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#假如只有-4-个人植树，每个人只负责自己的步骤"><span class="nav-number">1.4.</span> <span class="nav-text">假如只有 4 个人植树，每个人只负责自己的步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CompletableFuture-使用"><span class="nav-number">2.</span> <span class="nav-text">CompletableFuture 使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#已知计算结果"><span class="nav-number">2.1.</span> <span class="nav-text">已知计算结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封装有返回值的异步计算逻辑"><span class="nav-number">2.2.</span> <span class="nav-text">封装有返回值的异步计算逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封装无返回值的异步计算逻辑"><span class="nav-number">2.3.</span> <span class="nav-text">封装无返回值的异步计算逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进一步处理异步返回的结果，并返回新的计算结果"><span class="nav-number">2.4.</span> <span class="nav-text">进一步处理异步返回的结果，并返回新的计算结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进一步处理异步返回的结果，无返回"><span class="nav-number">2.5.</span> <span class="nav-text">进一步处理异步返回的结果，无返回</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#既不需要返回值，也不需要上一步计算结果，只想在执行结束后再执行一段代码"><span class="nav-number">2.6.</span> <span class="nav-text">既不需要返回值，也不需要上一步计算结果，只想在执行结束后再执行一段代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组合-Future-处理逻辑"><span class="nav-number">2.7.</span> <span class="nav-text">组合 Future 处理逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组合Futurue结果"><span class="nav-number">2.8.</span> <span class="nav-text">组合Futurue结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并行处理多个-Future"><span class="nav-number">2.9.</span> <span class="nav-text">并行处理多个 Future</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常处理"><span class="nav-number">2.10.</span> <span class="nav-text">异常处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">[故事有你]</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">63.4k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/hibiki.model.json"},"display":{"position":"left","width":150,"height":350},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
+<!-- 页面点击心形 -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+<!--崩溃欺骗-->
+<script type="text/javascript" src="/js/crash_cheat.js"></script>
+<!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>
