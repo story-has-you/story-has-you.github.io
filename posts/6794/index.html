@@ -87,7 +87,7 @@
 <meta property="og:description" content="什么是延迟队列延迟队列就是进入该队列的消息会被延迟消费的队列。而一般的队列，消息一旦入队了之后就会被消费者马上消费。">
 <meta property="og:image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/zu1j3.png">
 <meta property="article:published_time" content="2020-03-07T06:29:35.000Z">
-<meta property="article:modified_time" content="2020-03-13T05:02:11.787Z">
+<meta property="article:modified_time" content="2020-04-22T11:45:37.946Z">
 <meta property="article:author" content="[故事有你]">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="spring">
@@ -372,7 +372,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.3k
+                  1.4k
                 </span>
               
 
@@ -388,7 +388,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  6
                 </span>
               
             </div>
@@ -466,6 +466,14 @@
 <p>结果</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">14:17:14.534  INFO 9400 --- [           main] c.s.e.r.RabbitMQExampleApplicationTest   : 已发送延迟队列消息</span><br><span class="line">&#x2F;&#x2F; 10s 后</span><br><span class="line">14:17:24.586  INFO 9396 --- [ntContainer#1-1] c.s.e.rabbitmq.receive.RabbitReceive     : 延迟队列: hello delay</span><br></pre></td></tr></table></figure>
 
+
+<h2 id="使用RabbitMQ插件实现延迟队列"><a href="#使用RabbitMQ插件实现延迟队列" class="headerlink" title="使用RabbitMQ插件实现延迟队列"></a>使用RabbitMQ插件实现延迟队列</h2><p>首先去rabbitmq官网下载插件: <a href="https://www.rabbitmq.com/community-plugins.html" target="_blank" rel="noopener">https://www.rabbitmq.com/community-plugins.html</a>, 找到<code>rabbitmq_delayed_message_exchange</code>下载<br>安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq-plugins enable rabbitmq_delayed_message_exchange</span><br></pre></td></tr></table></figure>
+
+<p>需要改一下RabbitMQ的Java配置文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DelayedConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> String QUEUE_NAME = <span class="string">"delayed.goods.order"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> String EXCHANGE_NAME = <span class="string">"delayedec"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Queue <span class="title">queue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> QueueBuilder.nonDurable(DelayedConfig.QUEUE_NAME).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 默认交换机</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> CustomExchange <span class="title">customExchange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; args = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        args.put(<span class="string">"x-delayed-type"</span>, <span class="string">"direct"</span>);</span><br><span class="line">        <span class="comment">//参数二为类型：必须是x-delayed-message</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CustomExchange(DelayedConfig.EXCHANGE_NAME, <span class="string">"x-delayed-message"</span>, <span class="keyword">true</span>, <span class="keyword">false</span>, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 绑定队列到交换器</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> queue</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> exchange</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Binding <span class="title">binding</span><span class="params">(Queue queue, CustomExchange exchange)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(queue).to(exchange).with(DelayedConfig.QUEUE_NAME).noargs();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其他不变，和上面的保持一致</p>
 
       
     </div>
@@ -601,7 +609,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -612,7 +620,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -669,7 +677,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是延迟队列"><span class="nav-number">1.</span> <span class="nav-text">什么是延迟队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">2.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RabbitMQ的两个特性"><span class="nav-number">3.</span> <span class="nav-text">RabbitMQ的两个特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Time-To-Live-Extensions"><span class="nav-number">3.1.</span> <span class="nav-text">Time-To-Live Extensions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dead-Letter-Exchange"><span class="nav-number">3.2.</span> <span class="nav-text">Dead Letter Exchange</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流程图"><span class="nav-number">4.</span> <span class="nav-text">流程图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现"><span class="nav-number">5.</span> <span class="nav-text">代码实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是延迟队列"><span class="nav-number">1.</span> <span class="nav-text">什么是延迟队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">2.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RabbitMQ的两个特性"><span class="nav-number">3.</span> <span class="nav-text">RabbitMQ的两个特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Time-To-Live-Extensions"><span class="nav-number">3.1.</span> <span class="nav-text">Time-To-Live Extensions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dead-Letter-Exchange"><span class="nav-number">3.2.</span> <span class="nav-text">Dead Letter Exchange</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流程图"><span class="nav-number">4.</span> <span class="nav-text">流程图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现"><span class="nav-number">5.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用RabbitMQ插件实现延迟队列"><span class="nav-number">6.</span> <span class="nav-text">使用RabbitMQ插件实现延迟队列</span></a></li></ol></div>
             
 
           </div>
@@ -703,7 +711,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">67.1k</span>
+    <span title="Site words total count">70.1k</span>
   
 </div>
 
