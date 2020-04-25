@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="story-has-you">
 <meta property="og:description" content="今天在家水群的时候，发现群里在讨论关于注册中心的选择，Zookeeper，Nacos，Eureka到底是用哪个。有人说用Zookeeper好，有人说Nacos好，各有各的说法。具体怎么好，也没人说上来。其实说来说去，就是在CAP定理中，选择AP还是CP。只要仔细想想注册中心的职责，就该知道如何选择了。">
 <meta property="article:published_time" content="2020-04-25T14:37:18.000Z">
-<meta property="article:modified_time" content="2020-04-25T14:43:11.054Z">
+<meta property="article:modified_time" content="2020-04-25T14:51:52.280Z">
 <meta property="article:author" content="[故事有你]">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="spring">
@@ -375,7 +375,7 @@
 
 <h2 id="注册中心是-CP-还是-AP-系统"><a href="#注册中心是-CP-还是-AP-系统" class="headerlink" title="注册中心是 CP 还是 AP 系统"></a>注册中心是 CP 还是 AP 系统</h2><p>CAP 和 BASE 理论已经耳熟能详，其业已成了指导分布式系统及互联网应用构建的关键原则之一，在此不再赘述其理论。<br>注册中心的本质功能可以当成一个函数 <code>Si = F(service-name)</code>。service-name是查询参数，ip和port(以下简称endpoints)是返回值。</p>
 <h3 id="C不满足"><a href="#C不满足" class="headerlink" title="C不满足"></a>C不满足</h3><p>先来分析一下endpoints不一致带来的影响，即CAP中C不满足带来的后果。</p>
-<p>假设我们有一个ServiceA 服务部署了3个节点，其中1个节点刚刚启动。此时有ServiceB调用ServiceA，那么 ServiceB 肯定会先去注册中心获取 ServiceA 的endpoint信息。这时候，会用两种返回值: <code>Si = f(ServiceA1, ServiceA2)</code>$ 和 $<code>Si = f(ServiceA1, ServiceA2, ServiceA3)</code></p>
+<p>假设我们有一个ServiceA 服务部署了3个节点，其中1个节点刚刚启动。此时有ServiceB调用ServiceA，那么 ServiceB 肯定会先去注册中心获取 ServiceA 的endpoint信息。这时候，会用两种返回值: <code>Si = f(ServiceA1, ServiceA2)</code> 和 <code>Si = f(ServiceA1, ServiceA2, ServiceA3)</code></p>
 <p>那么这次不一致带来的影响是什么？ServiceA的各个节点流量会有一点不均衡，因为ServiceA3节点刚刚启动，注册中心的数据还没有全部同步。所以，打在ServiceA3中的流量会少一点。</p>
 <p>在分布式系统中，即使对等部署的服务，因为请求到达的时间，硬件的状态，操作系统的调度，虚拟机的GC等，都会导致在任一时间点这些对等的服务状态也不可能完全一致。注册中心都会有一个SLA承诺时间，比如1S内将数据完全同步，即最终一致性，这一点我们可以完全接受。</p>
 <h3 id="A不满足"><a href="#A不满足" class="headerlink" title="A不满足"></a>A不满足</h3><p>下面分析一下注册中心不可用对服务调用产生的影响，即CAP中A不满足时带来的后果。</p>
