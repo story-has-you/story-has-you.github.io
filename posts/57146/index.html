@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="对于技术人员来说，“架构”是一个再常见不过的词了。我们会对新员工培训整个系统的架构，参加架构设计评审，学习业界开源系统（例如，MySQL、Hadoop）的架构，研究大公司的架构实现（例如，微信架构、淘宝架构）……虽然“架构”这个词常见，但如果深究一下“架构”到底指什么，大部分人也许并不一定能够准确地回答。">
+<meta name="description" content="今天在家水群的时候，发现群里在讨论关于注册中心的选择，Zookeeper，Nacos，Eureka到底是用哪个。有人说用Zookeeper好，有人说Nacos好，各有各的说法。具体怎么好，也没人说上来。其实说来说去，就是在CAP定理中，选择AP还是CP。只要仔细想想注册中心的职责，就该知道如何选择了。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="大型网站架构演化">
-<meta property="og:url" content="https://www.story-has-you.top/posts/13992/index.html">
+<meta property="og:title" content="关于注册中心的一些讨论">
+<meta property="og:url" content="https://www.story-has-you.top/posts/57146/index.html">
 <meta property="og:site_name" content="story-has-you">
-<meta property="og:description" content="对于技术人员来说，“架构”是一个再常见不过的词了。我们会对新员工培训整个系统的架构，参加架构设计评审，学习业界开源系统（例如，MySQL、Hadoop）的架构，研究大公司的架构实现（例如，微信架构、淘宝架构）……虽然“架构”这个词常见，但如果深究一下“架构”到底指什么，大部分人也许并不一定能够准确地回答。">
-<meta property="article:published_time" content="2020-03-31T11:49:29.000Z">
-<meta property="article:modified_time" content="2020-04-25T14:37:25.691Z">
+<meta property="og:description" content="今天在家水群的时候，发现群里在讨论关于注册中心的选择，Zookeeper，Nacos，Eureka到底是用哪个。有人说用Zookeeper好，有人说Nacos好，各有各的说法。具体怎么好，也没人说上来。其实说来说去，就是在CAP定理中，选择AP还是CP。只要仔细想想注册中心的职责，就该知道如何选择了。">
+<meta property="article:published_time" content="2020-04-25T14:37:18.000Z">
+<meta property="article:modified_time" content="2020-04-25T14:43:11.054Z">
 <meta property="article:author" content="[故事有你]">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="spring">
@@ -126,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="https://www.story-has-you.top/posts/13992/"/>
+  <link rel="canonical" href="https://www.story-has-you.top/posts/57146/"/>
 
 
 
 
 
-  <title>大型网站架构演化 | story-has-you</title>
+  <title>关于注册中心的一些讨论 | story-has-you</title>
   
 
 
@@ -249,7 +249,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.story-has-you.top/posts/13992/">
+    <link itemprop="mainEntityOfPage" href="https://www.story-has-you.top/posts/57146/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="[故事有你]">
@@ -266,7 +266,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">大型网站架构演化</h2>
+          <h2 class="post-title" itemprop="name headline">关于注册中心的一些讨论</h2>
         
 
         <div class="post-meta">
@@ -278,8 +278,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-31T19:49:29+08:00">
-                2020-03-31
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-25T22:37:18+08:00">
+                2020-04-25
               </time>
             
 
@@ -332,7 +332,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k
+                  1.2k
                 </span>
               
 
@@ -348,7 +348,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  4
                 </span>
               
             </div>
@@ -369,32 +369,22 @@
       
 
       
-        <p>对于技术人员来说，“架构”是一个再常见不过的词了。我们会对新员工培训整个系统的架构，参加架构设计评审，学习业界开源系统（例如，MySQL、Hadoop）的架构，研究大公司的架构实现（例如，微信架构、淘宝架构）……虽然“架构”这个词常见，但如果深究一下“架构”到底指什么，大部分人也许并不一定能够准确地回答。</p>
+        <p>今天在家水群的时候，发现群里在讨论关于注册中心的选择，Zookeeper，Nacos，Eureka到底是用哪个。有人说用Zookeeper好，有人说Nacos好，各有各的说法。具体怎么好，也没人说上来。其实说来说去，就是在CAP定理中，选择AP还是CP。只要仔细想想注册中心的职责，就该知道如何选择了。</p>
 <a id="more"></a>
 
 
-<h2 id="大型网站软件系统的特点"><a href="#大型网站软件系统的特点" class="headerlink" title="大型网站软件系统的特点"></a>大型网站软件系统的特点</h2><ul>
-<li>高并发、大流量：需要面对高并发用户，大流量访问。</li>
-<li>高可用：系统 7x24小时不间断服务。</li>
-<li>海量数据：需要存储、管理海量数据，需要使用大量的服务器。</li>
-<li>用户分布广泛，网络情况复杂：很多大型互联网服务的用户都是全球各地的，而且各个运营商之间的通信也是难题。</li>
-<li>安全环境恶劣：互联网的开放性，使得有很多网站遭受攻击。</li>
-<li>需求快速变更，发布频繁：和传统软件不同，互联网项目为了快速适应市场，满足用户需求，其发布的速度是极高的。</li>
-<li>渐进式发展：很多大型的互联网都是从一个小网站开始的，逐渐的发展起来的。</li>
-</ul>
-<h2 id="大型网站架构演化发展历程"><a href="#大型网站架构演化发展历程" class="headerlink" title="大型网站架构演化发展历程"></a>大型网站架构演化发展历程</h2><ol>
-<li>初始阶段的网站架构：应用程序、数据库、文件等所有的资源都放在一个服务器上，通常是Linux。用户一多导致性能越来越差。</li>
-<li>应用服务和数据服务分离：应用程序、数据库、文件分别放在三个不同的服务器上。用户多了会导致数据库压力太大，影响整个性能。</li>
-<li>使用缓存改善网站性能：网站访问也遵循着二八定律：80%的业务访问集中在20%的数据上。我们可以将一小部分数据缓存在内存中，就可以减少数据库的压力，改善数据库的写入性能。</li>
-<li>使用应用服务器集群改善网络的并发处理能力：一个服务部署多个节点，通过负载均衡，可以将单台服务器的压力分散到多个服务器上。</li>
-<li>数据库读写分离：大部分主流数据库提供热备功能，通过配置两台数据库的主从关系，可以将一台数据库服务器的数据同步到另一台上。写数据访问主数据库，读数据访问从数据库。</li>
-<li>使用反向代理和CDN加速响应：CDN和反向代理其实都是缓存，区别在于CDN部署在网络提供商的机房，可以在用户访问的时候访问所在最近的机房获取数据；用户首先访问反向代理服务器，如果服务器上有用户请求的资源，可以直接返回给用户。</li>
-<li>使用分布式文件系统和分布式数据库系统：可以使用云上的OSS系统，数据量如果很多，采用分库分表的方式访问。</li>
-<li>使用NoSQL和搜索引擎：随着业务的发展，对数据的存储和检索也很复杂，网站需要一些NoSQL和非数据库查询手段。</li>
-<li>业务拆分：业务越来越多的时候，通过使用分而治之的手段将这个业务分拆不同的产品线，如大型的电商可以分为首页、商铺、订单、买家、卖家等。</li>
-<li>分布式服务：可以将许多相同的业务操作，如用户管理，商品管理等这些公共等业务抽取出来，独立部署。</li>
-</ol>
-<h2 id="大型网站演化的价值观"><a href="#大型网站演化的价值观" class="headerlink" title="大型网站演化的价值观"></a>大型网站演化的价值观</h2><p>没有什么网站一开始就是大型网站，都是从小型网站发展过来的，淘宝、京东也是如此。大型网站架构要做到可变形，随着网站所要的需求灵活应对。驱动大型网站架构发展的力量是网站的业务发展。不要一味这追随大公司的解救方案，学会借鉴大公司的经验成功模式，而不是跟着抄。也不要盲目追求最新的技术，适合就行。</p>
+<h2 id="注册中心是-CP-还是-AP-系统"><a href="#注册中心是-CP-还是-AP-系统" class="headerlink" title="注册中心是 CP 还是 AP 系统"></a>注册中心是 CP 还是 AP 系统</h2><p>CAP 和 BASE 理论已经耳熟能详，其业已成了指导分布式系统及互联网应用构建的关键原则之一，在此不再赘述其理论。<br>注册中心的本质功能可以当成一个函数 <code>Si = F(service-name)</code>。service-name是查询参数，ip和port(以下简称endpoints)是返回值。</p>
+<h3 id="C不满足"><a href="#C不满足" class="headerlink" title="C不满足"></a>C不满足</h3><p>先来分析一下endpoints不一致带来的影响，即CAP中C不满足带来的后果。</p>
+<p>假设我们有一个ServiceA 服务部署了3个节点，其中1个节点刚刚启动。此时有ServiceB调用ServiceA，那么 ServiceB 肯定会先去注册中心获取 ServiceA 的endpoint信息。这时候，会用两种返回值: <code>Si = f(ServiceA1, ServiceA2)</code>$ 和 $<code>Si = f(ServiceA1, ServiceA2, ServiceA3)</code></p>
+<p>那么这次不一致带来的影响是什么？ServiceA的各个节点流量会有一点不均衡，因为ServiceA3节点刚刚启动，注册中心的数据还没有全部同步。所以，打在ServiceA3中的流量会少一点。</p>
+<p>在分布式系统中，即使对等部署的服务，因为请求到达的时间，硬件的状态，操作系统的调度，虚拟机的GC等，都会导致在任一时间点这些对等的服务状态也不可能完全一致。注册中心都会有一个SLA承诺时间，比如1S内将数据完全同步，即最终一致性，这一点我们可以完全接受。</p>
+<h3 id="A不满足"><a href="#A不满足" class="headerlink" title="A不满足"></a>A不满足</h3><p>下面分析一下注册中心不可用对服务调用产生的影响，即CAP中A不满足时带来的后果。</p>
+<p>一个典型的Zookeeper3机房3节点(zk1, zk2, zk3)部署，其中zk1是leader。假设其中一个节点机房zk3出现网络分区，虽然Zookeeper服务是可用的，但是zk3是不可写的，因为联系不上leader。也就是说，这时候部署在机房3的服务是不可以重新部署，扩容的。站在服务调用的角度上看，机房3的服务虽然无法调用机房1和机房2的服务，但是与自己本机房的服务网络明明是通的啊。为什么在同一个机房内的服务却不能调用？？？</p>
+<p>熟悉Zookeeper的人应该都知道Zookeeper中有个脑裂的概念，Zookeeper自身为了保脑裂(CAP中的P)下的数据一致性(C)而放弃了可用性(A)，导致了同一个机房的服务无法相互调用。可以说，这是绝对不允许的。<strong><em>在实践中，注册中心不能因为自身的任何原因破坏服务之间本身的可连通性，这是注册中心设计应该遵循的铁律！</em></strong></p>
+<p>同时我们再考虑一下这种情况下的数据不一致性(AP)，如果机房1，2，3之间都成了孤岛，那么如果每个机房的服务都只拿到本机房的服务的ip列表，也即在各机房的服务列表数据完全不一致，影响是什么？在这种情况下，会全部变成同机房调用。设计注册中心的时候，有时候甚至会主动利用这种注册中心的数据可以不一致性，来帮助应用主动做到同机房调用。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>通过以上分析，可以看到，注册中心的可用性比数据强一致性更宝贵，所以整体设计更应该偏向 AP，而非 CP，数据不一致在可接受范围，而P下舍弃A却完全违反了注册中心不能因为自身的任何原因破坏服务本身的可连通性的原则。</p>
+<p>这篇文章并不是全盘否定Zookeeper，Zookeeper本职是分布式协调服务器，注册中心只是他的功能之一，在粗粒度分布式锁，分布式选主，主备高可用切换等不需要高TPS 支持的场景下有不可替代的作用。</p>
+<p>只是，在进行架构设计中，选择正确的注册中心，对整个微服务架构是至关重要的。这只是我对如何选择注册中心的一个总结，希望对以后如何正确的使用Zookeeper，如何自己设计一个注册中心有个参考依据。条条大路通罗马，祝愿你的注册中心直接就诞生在罗马。</p>
 
       
     </div>
@@ -415,7 +405,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://www.story-has-you.top/posts/13992/" title="大型网站架构演化">https://www.story-has-you.top/posts/13992/</a>
+    <a href="https://www.story-has-you.top/posts/57146/" title="关于注册中心的一些讨论">https://www.story-has-you.top/posts/57146/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -437,8 +427,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/18252/" rel="next" title="线程池详解">
-                <i class="fa fa-chevron-left"></i> 线程池详解
+              <a href="/posts/35376/" rel="next" title="LVS+Keepalived+nginx实现负载均衡集群">
+                <i class="fa fa-chevron-left"></i> LVS+Keepalived+nginx实现负载均衡集群
               </a>
             
           </div>
@@ -446,10 +436,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/posts/41791/" rel="prev" title="通过 CompletableFuture 组装异步计算单元">
-                通过 CompletableFuture 组装异步计算单元 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -598,7 +584,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#大型网站软件系统的特点"><span class="nav-number">1.</span> <span class="nav-text">大型网站软件系统的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大型网站架构演化发展历程"><span class="nav-number">2.</span> <span class="nav-text">大型网站架构演化发展历程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大型网站演化的价值观"><span class="nav-number">3.</span> <span class="nav-text">大型网站演化的价值观</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#注册中心是-CP-还是-AP-系统"><span class="nav-number">1.</span> <span class="nav-text">注册中心是 CP 还是 AP 系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C不满足"><span class="nav-number">1.1.</span> <span class="nav-text">C不满足</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A不满足"><span class="nav-number">1.2.</span> <span class="nav-text">A不满足</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">2.</span> <span class="nav-text">结语</span></a></li></ol></div>
             
 
           </div>
