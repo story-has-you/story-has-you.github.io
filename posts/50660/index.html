@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="对于技术人员来说，“架构”是一个再常见不过的词了。我们会对新员工培训整个系统的架构，参加架构设计评审，学习业界开源系统（例如，MySQL、Hadoop）的架构，研究大公司的架构实现（例如，微信架构、淘宝架构）……虽然“架构”这个词常见，但如果深究一下“架构”到底指什么，大部分人也许并不一定能够准确地回答。">
+<meta name="description" content="“架构”到底指什么对于开发人员来说，架构是一个最常见不过的名词了: 给新员工介绍软件整体架构，参加架构设计评审，学习优秀的架构设计。那么深究一下架构是什么，很多人都回答不上来。 我们先理清以下的几个概念，再来回答架构是什么。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="大型网站架构演化">
-<meta property="og:url" content="https://www.story-has-you.top/posts/13992/index.html">
+<meta property="og:title" content="软件架构基础">
+<meta property="og:url" content="https://www.story-has-you.top/posts/50660/index.html">
 <meta property="og:site_name" content="story-has-you">
-<meta property="og:description" content="对于技术人员来说，“架构”是一个再常见不过的词了。我们会对新员工培训整个系统的架构，参加架构设计评审，学习业界开源系统（例如，MySQL、Hadoop）的架构，研究大公司的架构实现（例如，微信架构、淘宝架构）……虽然“架构”这个词常见，但如果深究一下“架构”到底指什么，大部分人也许并不一定能够准确地回答。">
-<meta property="article:published_time" content="2020-03-31T11:49:29.000Z">
-<meta property="article:modified_time" content="2020-04-25T14:37:25.691Z">
+<meta property="og:description" content="“架构”到底指什么对于开发人员来说，架构是一个最常见不过的名词了: 给新员工介绍软件整体架构，参加架构设计评审，学习优秀的架构设计。那么深究一下架构是什么，很多人都回答不上来。 我们先理清以下的几个概念，再来回答架构是什么。">
+<meta property="article:published_time" content="2020-04-26T14:36:18.000Z">
+<meta property="article:modified_time" content="2020-04-26T14:37:42.297Z">
 <meta property="article:author" content="[故事有你]">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="spring">
@@ -126,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="https://www.story-has-you.top/posts/13992/"/>
+  <link rel="canonical" href="https://www.story-has-you.top/posts/50660/"/>
 
 
 
 
 
-  <title>大型网站架构演化 | story-has-you</title>
+  <title>软件架构基础 | story-has-you</title>
   
 
 
@@ -249,7 +249,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.story-has-you.top/posts/13992/">
+    <link itemprop="mainEntityOfPage" href="https://www.story-has-you.top/posts/50660/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="[故事有你]">
@@ -266,7 +266,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">大型网站架构演化</h2>
+          <h2 class="post-title" itemprop="name headline">软件架构基础</h2>
         
 
         <div class="post-meta">
@@ -278,8 +278,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-31T19:49:29+08:00">
-                2020-03-31
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-26T22:36:18+08:00">
+                2020-04-26
               </time>
             
 
@@ -332,7 +332,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k
+                  901
                 </span>
               
 
@@ -369,32 +369,47 @@
       
 
       
-        <p>对于技术人员来说，“架构”是一个再常见不过的词了。我们会对新员工培训整个系统的架构，参加架构设计评审，学习业界开源系统（例如，MySQL、Hadoop）的架构，研究大公司的架构实现（例如，微信架构、淘宝架构）……虽然“架构”这个词常见，但如果深究一下“架构”到底指什么，大部分人也许并不一定能够准确地回答。</p>
+        <h2 id="“架构”到底指什么"><a href="#“架构”到底指什么" class="headerlink" title="“架构”到底指什么"></a>“架构”到底指什么</h2><p>对于开发人员来说，架构是一个最常见不过的名词了: 给新员工介绍软件整体架构，参加架构设计评审，学习优秀的架构设计。那么深究一下架构是什么，很多人都回答不上来。</p>
+<p>我们先理清以下的几个概念，再来回答架构是什么。</p>
 <a id="more"></a>
 
-
-<h2 id="大型网站软件系统的特点"><a href="#大型网站软件系统的特点" class="headerlink" title="大型网站软件系统的特点"></a>大型网站软件系统的特点</h2><ul>
-<li>高并发、大流量：需要面对高并发用户，大流量访问。</li>
-<li>高可用：系统 7x24小时不间断服务。</li>
-<li>海量数据：需要存储、管理海量数据，需要使用大量的服务器。</li>
-<li>用户分布广泛，网络情况复杂：很多大型互联网服务的用户都是全球各地的，而且各个运营商之间的通信也是难题。</li>
-<li>安全环境恶劣：互联网的开放性，使得有很多网站遭受攻击。</li>
-<li>需求快速变更，发布频繁：和传统软件不同，互联网项目为了快速适应市场，满足用户需求，其发布的速度是极高的。</li>
-<li>渐进式发展：很多大型的互联网都是从一个小网站开始的，逐渐的发展起来的。</li>
-</ul>
-<h2 id="大型网站架构演化发展历程"><a href="#大型网站架构演化发展历程" class="headerlink" title="大型网站架构演化发展历程"></a>大型网站架构演化发展历程</h2><ol>
-<li>初始阶段的网站架构：应用程序、数据库、文件等所有的资源都放在一个服务器上，通常是Linux。用户一多导致性能越来越差。</li>
-<li>应用服务和数据服务分离：应用程序、数据库、文件分别放在三个不同的服务器上。用户多了会导致数据库压力太大，影响整个性能。</li>
-<li>使用缓存改善网站性能：网站访问也遵循着二八定律：80%的业务访问集中在20%的数据上。我们可以将一小部分数据缓存在内存中，就可以减少数据库的压力，改善数据库的写入性能。</li>
-<li>使用应用服务器集群改善网络的并发处理能力：一个服务部署多个节点，通过负载均衡，可以将单台服务器的压力分散到多个服务器上。</li>
-<li>数据库读写分离：大部分主流数据库提供热备功能，通过配置两台数据库的主从关系，可以将一台数据库服务器的数据同步到另一台上。写数据访问主数据库，读数据访问从数据库。</li>
-<li>使用反向代理和CDN加速响应：CDN和反向代理其实都是缓存，区别在于CDN部署在网络提供商的机房，可以在用户访问的时候访问所在最近的机房获取数据；用户首先访问反向代理服务器，如果服务器上有用户请求的资源，可以直接返回给用户。</li>
-<li>使用分布式文件系统和分布式数据库系统：可以使用云上的OSS系统，数据量如果很多，采用分库分表的方式访问。</li>
-<li>使用NoSQL和搜索引擎：随着业务的发展，对数据的存储和检索也很复杂，网站需要一些NoSQL和非数据库查询手段。</li>
-<li>业务拆分：业务越来越多的时候，通过使用分而治之的手段将这个业务分拆不同的产品线，如大型的电商可以分为首页、商铺、订单、买家、卖家等。</li>
-<li>分布式服务：可以将许多相同的业务操作，如用户管理，商品管理等这些公共等业务抽取出来，独立部署。</li>
+<h3 id="系统与子系统"><a href="#系统与子系统" class="headerlink" title="系统与子系统"></a>系统与子系统</h3><blockquote>
+<p>系统（英语：system；德语：system；法语：système；西班牙语：sistema）泛指由一群有关联的个体组成，根据某种规则运作，能完成个别元件不能单独完成的工作的群体。——维基百科</p>
+</blockquote>
+<p>提炼一下关键字</p>
+<ol>
+<li>关联: 一群有关联的个体组成，没有关联的个体不能成为一个系统。</li>
+<li>规则: 系统内部按照指定的规则运作，而不是个个各自为政。规则规定了系统内的个体分工和协作方式。</li>
+<li>能力: 系统能力与个体能力有本质的差别，系统能力不是个体能力之和，而是产生了新的能力。</li>
 </ol>
-<h2 id="大型网站演化的价值观"><a href="#大型网站演化的价值观" class="headerlink" title="大型网站演化的价值观"></a>大型网站演化的价值观</h2><p>没有什么网站一开始就是大型网站，都是从小型网站发展过来的，淘宝、京东也是如此。大型网站架构要做到可变形，随着网站所要的需求灵活应对。驱动大型网站架构发展的力量是网站的业务发展。不要一味这追随大公司的解救方案，学会借鉴大公司的经验成功模式，而不是跟着抄。也不要盲目追求最新的技术，适合就行。</p>
+<p>子系统的定义与系统是一样的，只是观察角度不同。一个系统可能是另外更大的系统的子系统。</p>
+<h3 id="模块与组件"><a href="#模块与组件" class="headerlink" title="模块与组件"></a>模块与组件</h3><p>模块和组件容易混淆，先看看维基百科的定义。<br>【模块】</p>
+<blockquote>
+<p>软件模块（Software Module）是一套一致而互相有紧密关连的软件组织。包含了程序和数据结构两个部分。</p>
+</blockquote>
+<p>【组件】</p>
+<blockquote>
+<p>定义为自包含的、可编程的、可重用的、与语言无关的软件单元。</p>
+</blockquote>
+<p>这两个定义看起来毫不关联，因为软件模块和软件组件都是系统的组成部分，他们只是从不同的角度拆分系统而已。</p>
+<p>从逻辑角度上拆分后得到的是“模块”，从物理角度上拆分后得到的是“组件”。</p>
+<p>假设一个电商项目，从逻辑角度上拆分，可以分为“订单模块”，“商品模块”，“购物车模块”。从物理角度上拆分，可以分为“Nignx”，“Web服务器”，“MySQL”，“Redis”等。</p>
+<h3 id="框架与架构"><a href="#框架与架构" class="headerlink" title="框架与架构"></a>框架与架构</h3><p>还是先看维基百科上对框架的定义</p>
+<blockquote>
+<p>软件框架（software framework），通常指的是为了实现某个业界标准或完成特定基本任务的软件组件规范，也指为了实现某个软件组件规范时，提供规范所要求之基础功能的软件产品。</p>
+</blockquote>
+<p>提炼一下关键字</p>
+<ol>
+<li>软件组件规范。例如MVC规范，MVP，MVVM之类的。</li>
+<li>提供基础功能。例如Spring框架中的SpringMVC满足了MVC开发规范，Spring还提供了很多功能帮助我们实现功能。</li>
+</ol>
+<p>再看看维基百科对架构的定义</p>
+<blockquote>
+<p>软件架构是有关软件整体结构与组件的抽象描述，用于指导大型软件系统各个方面的设计。</p>
+</blockquote>
+<p>从定义上看，框架和架构还是有区别的，框架关注的是“规范”，架构关注的是“结构”。</p>
+<h2 id="重新定义架构"><a href="#重新定义架构" class="headerlink" title="重新定义架构"></a>重新定义架构</h2><p>我们可以将软件架构重新定义: 软件架构是软件系统的顶层结构。</p>
+<p>系统是有一群关联的个体组成，这些“个体”可以是“子系统”，“模块”，“组件”等，架构需要明确系统包含哪些“个体”；系统个体需要“根据某种规则”运作，架构需要明确个体之间写作文的规则；整体结构换成“顶层结构”，可以更好的区分系统和子系统。</p>
 
       
     </div>
@@ -415,7 +430,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://www.story-has-you.top/posts/13992/" title="大型网站架构演化">https://www.story-has-you.top/posts/13992/</a>
+    <a href="https://www.story-has-you.top/posts/50660/" title="软件架构基础">https://www.story-has-you.top/posts/50660/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -437,8 +452,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/18252/" rel="next" title="线程池详解">
-                <i class="fa fa-chevron-left"></i> 线程池详解
+              <a href="/posts/57146/" rel="next" title="关于注册中心的一些讨论">
+                <i class="fa fa-chevron-left"></i> 关于注册中心的一些讨论
               </a>
             
           </div>
@@ -447,8 +462,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/41791/" rel="prev" title="通过 CompletableFuture 组装异步计算单元">
-                通过 CompletableFuture 组装异步计算单元 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/29199/" rel="prev" title="架构设计目的">
+                架构设计目的 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -598,7 +613,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#大型网站软件系统的特点"><span class="nav-number">1.</span> <span class="nav-text">大型网站软件系统的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大型网站架构演化发展历程"><span class="nav-number">2.</span> <span class="nav-text">大型网站架构演化发展历程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大型网站演化的价值观"><span class="nav-number">3.</span> <span class="nav-text">大型网站演化的价值观</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#“架构”到底指什么"><span class="nav-number">1.</span> <span class="nav-text">“架构”到底指什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统与子系统"><span class="nav-number">1.1.</span> <span class="nav-text">系统与子系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块与组件"><span class="nav-number">1.2.</span> <span class="nav-text">模块与组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#框架与架构"><span class="nav-number">1.3.</span> <span class="nav-text">框架与架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新定义架构"><span class="nav-number">2.</span> <span class="nav-text">重新定义架构</span></a></li></ol></div>
             
 
           </div>

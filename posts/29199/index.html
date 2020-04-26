@@ -79,14 +79,16 @@
 
 
 
-<meta name="description" content="对于技术人员来说，“架构”是一个再常见不过的词了。我们会对新员工培训整个系统的架构，参加架构设计评审，学习业界开源系统（例如，MySQL、Hadoop）的架构，研究大公司的架构实现（例如，微信架构、淘宝架构）……虽然“架构”这个词常见，但如果深究一下“架构”到底指什么，大部分人也许并不一定能够准确地回答。">
+<meta name="description" content="了解了架构是什么，那就想想为什么需要软件架构。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="大型网站架构演化">
-<meta property="og:url" content="https://www.story-has-you.top/posts/13992/index.html">
+<meta property="og:title" content="架构设计目的">
+<meta property="og:url" content="https://www.story-has-you.top/posts/29199/index.html">
 <meta property="og:site_name" content="story-has-you">
-<meta property="og:description" content="对于技术人员来说，“架构”是一个再常见不过的词了。我们会对新员工培训整个系统的架构，参加架构设计评审，学习业界开源系统（例如，MySQL、Hadoop）的架构，研究大公司的架构实现（例如，微信架构、淘宝架构）……虽然“架构”这个词常见，但如果深究一下“架构”到底指什么，大部分人也许并不一定能够准确地回答。">
-<meta property="article:published_time" content="2020-03-31T11:49:29.000Z">
-<meta property="article:modified_time" content="2020-04-25T14:37:25.691Z">
+<meta property="og:description" content="了解了架构是什么，那就想想为什么需要软件架构。">
+<meta property="og:image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/md4dc.png">
+<meta property="og:image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/9y28e.png">
+<meta property="article:published_time" content="2020-04-26T14:37:18.000Z">
+<meta property="article:modified_time" content="2020-04-26T14:38:49.978Z">
 <meta property="article:author" content="[故事有你]">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="spring">
@@ -97,6 +99,7 @@
 <meta property="article:tag" content="[故事有你]">
 <meta property="article:tag" content="story-has-you">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/md4dc.png">
 
 
 
@@ -126,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="https://www.story-has-you.top/posts/13992/"/>
+  <link rel="canonical" href="https://www.story-has-you.top/posts/29199/"/>
 
 
 
 
 
-  <title>大型网站架构演化 | story-has-you</title>
+  <title>架构设计目的 | story-has-you</title>
   
 
 
@@ -249,7 +252,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.story-has-you.top/posts/13992/">
+    <link itemprop="mainEntityOfPage" href="https://www.story-has-you.top/posts/29199/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="[故事有你]">
@@ -266,7 +269,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">大型网站架构演化</h2>
+          <h2 class="post-title" itemprop="name headline">架构设计目的</h2>
         
 
         <div class="post-meta">
@@ -278,8 +281,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-31T19:49:29+08:00">
-                2020-03-31
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-26T22:37:18+08:00">
+                2020-04-26
               </time>
             
 
@@ -332,7 +335,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k
+                  3.2k
                 </span>
               
 
@@ -348,7 +351,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  10
                 </span>
               
             </div>
@@ -369,32 +372,80 @@
       
 
       
-        <p>对于技术人员来说，“架构”是一个再常见不过的词了。我们会对新员工培训整个系统的架构，参加架构设计评审，学习业界开源系统（例如，MySQL、Hadoop）的架构，研究大公司的架构实现（例如，微信架构、淘宝架构）……虽然“架构”这个词常见，但如果深究一下“架构”到底指什么，大部分人也许并不一定能够准确地回答。</p>
+        <p>了解了架构是什么，那就想想为什么需要软件架构。</p>
 <a id="more"></a>
 
-
-<h2 id="大型网站软件系统的特点"><a href="#大型网站软件系统的特点" class="headerlink" title="大型网站软件系统的特点"></a>大型网站软件系统的特点</h2><ul>
-<li>高并发、大流量：需要面对高并发用户，大流量访问。</li>
-<li>高可用：系统 7x24小时不间断服务。</li>
-<li>海量数据：需要存储、管理海量数据，需要使用大量的服务器。</li>
-<li>用户分布广泛，网络情况复杂：很多大型互联网服务的用户都是全球各地的，而且各个运营商之间的通信也是难题。</li>
-<li>安全环境恶劣：互联网的开放性，使得有很多网站遭受攻击。</li>
-<li>需求快速变更，发布频繁：和传统软件不同，互联网项目为了快速适应市场，满足用户需求，其发布的速度是极高的。</li>
-<li>渐进式发展：很多大型的互联网都是从一个小网站开始的，逐渐的发展起来的。</li>
+<p>随着互联网项目越来越庞大，需求越来越多也越来越复杂。在计算机软件的发展史中可以看出，软件的发展史其实就是一直与“复杂度”作斗争，架构的出现也不例外。所以，架构出现的目的就是为了解决这些复杂度而提出的方案。一句话来说: <strong>架构设计的主要目的就是为了解决复杂度带来的问题</strong>。</p>
+<p>在进行架构设计时，想想这句话，可以让新手架构师心里有数，而不是怎么牛逼怎么来。也可以让有经验的架构师有舍有得，而不是贪大求全。</p>
+<h2 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h2><p>既然架构设计是为了解决复杂度带来的问题。那么，什么是复杂度？他是怎么出现的？</p>
+<p>个人理解，软件复杂度就是需求不断的变化，变大所带来的结果。一般会从以下方便带来复杂度</p>
+<ul>
+<li>高性能</li>
+<li>高可用</li>
+<li>可扩展</li>
+<li>成本</li>
+<li>安全</li>
 </ul>
-<h2 id="大型网站架构演化发展历程"><a href="#大型网站架构演化发展历程" class="headerlink" title="大型网站架构演化发展历程"></a>大型网站架构演化发展历程</h2><ol>
-<li>初始阶段的网站架构：应用程序、数据库、文件等所有的资源都放在一个服务器上，通常是Linux。用户一多导致性能越来越差。</li>
-<li>应用服务和数据服务分离：应用程序、数据库、文件分别放在三个不同的服务器上。用户多了会导致数据库压力太大，影响整个性能。</li>
-<li>使用缓存改善网站性能：网站访问也遵循着二八定律：80%的业务访问集中在20%的数据上。我们可以将一小部分数据缓存在内存中，就可以减少数据库的压力，改善数据库的写入性能。</li>
-<li>使用应用服务器集群改善网络的并发处理能力：一个服务部署多个节点，通过负载均衡，可以将单台服务器的压力分散到多个服务器上。</li>
-<li>数据库读写分离：大部分主流数据库提供热备功能，通过配置两台数据库的主从关系，可以将一台数据库服务器的数据同步到另一台上。写数据访问主数据库，读数据访问从数据库。</li>
-<li>使用反向代理和CDN加速响应：CDN和反向代理其实都是缓存，区别在于CDN部署在网络提供商的机房，可以在用户访问的时候访问所在最近的机房获取数据；用户首先访问反向代理服务器，如果服务器上有用户请求的资源，可以直接返回给用户。</li>
-<li>使用分布式文件系统和分布式数据库系统：可以使用云上的OSS系统，数据量如果很多，采用分库分表的方式访问。</li>
-<li>使用NoSQL和搜索引擎：随着业务的发展，对数据的存储和检索也很复杂，网站需要一些NoSQL和非数据库查询手段。</li>
-<li>业务拆分：业务越来越多的时候，通过使用分而治之的手段将这个业务分拆不同的产品线，如大型的电商可以分为首页、商铺、订单、买家、卖家等。</li>
-<li>分布式服务：可以将许多相同的业务操作，如用户管理，商品管理等这些公共等业务抽取出来，独立部署。</li>
+<h3 id="高性能"><a href="#高性能" class="headerlink" title="高性能"></a>高性能</h3><p>人们对性能的追求是一直在持续的。从蒸汽火车到高铁，从第一代iPhone到iPhone11，从电子管计算机到超大规模集成电路。当然技术的发展带来了性能提升，但是不一定会带来复杂度的提升。例如从磁盘到SSD，从几十KB的网络到移动网络，这些并对我们没有带来复杂度的增加，只有新的技术替代旧的技术，我们直接使用新技术即可。只有那些不是替代旧技术，而是开辟了新的领域的技术，才会带来复杂度。好比在出行方面，汽车无法替代火车，火车无法替代飞机。这样会使得我们在如何选择出行方式时，会带来复杂度。价格啊，舒适度啊，速度啊之类的我们都需要考虑。</p>
+<p>软件系统中高性能带来的复杂度主要体现在两个方面</p>
+<ul>
+<li>单台计算机内部为了高性能带来的复杂度。</li>
+<li>多台计算机集群为了高性能带来的复杂度。</li>
+</ul>
+<p>单机复杂度主要在多进程、多线程、进程间通信、多线程并发等，这些技术并不是最新的就是最好的，也不是非此即彼的选择。在架构设计中，需要花费较大的精力来结合业务判断，选择，这个过程也同样很复杂。就好比，Nginx可以多线程，可以多进程提高性能，Redis是用单进程提高性能，Memcache使用多线程提高性能。他们虽然都能提高性能，但是内部实现差异却很大。</p>
+<p>集群复杂度是我们的重点讨论对象，就好比春节微信抢红包，阿里双11剁手节。面对这种复杂的业务，单机是无论如何也无法支撑的，必须采用集群，增加机器的方式解决，但是通过大量的机器来提高性能，并不仅仅是增加几台机器那么简单，让多台机器配合工作达到高性能的目的，是一个复杂的任务。</p>
+<p>业界常见的让多个机器相互协作的方式有以下几种</p>
+<ol>
+<li>任务分配，意思是将每台机器都可以完成的任务，不同的任务分配到不同的机器上执行。但是服务器的增加也带来了复杂度的问题，示意图如下<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/md4dc.png" alt=""></li>
 </ol>
-<h2 id="大型网站演化的价值观"><a href="#大型网站演化的价值观" class="headerlink" title="大型网站演化的价值观"></a>大型网站演化的价值观</h2><p>没有什么网站一开始就是大型网站，都是从小型网站发展过来的，淘宝、京东也是如此。大型网站架构要做到可变形，随着网站所要的需求灵活应对。驱动大型网站架构发展的力量是网站的业务发展。不要一味这追随大公司的解救方案，学会借鉴大公司的经验成功模式，而不是跟着抄。也不要盲目追求最新的技术，适合就行。</p>
+<p>1台服务器变成2台服务器后，架构上明显复杂了很多，主要体现在</p>
+<ul>
+<li>需要添加一个任务调度器，可以是Nginx、F5、交换机等。选择合适的任务调度器也是一件复杂的事情，需要考虑性能，成本，可维护性等之类的因素。</li>
+<li>任务调度器与服务器之间需要有合适的连接方式，选择合适的连接方式也是一件复杂的事情，并且还要对连接方式进行管理，如连接中断之后如何恢复等。</li>
+<li>任务调度器还需要增加调度算法，是轮询，还是权重，又或者是一致性哈希。这也是需要考虑的一件事情，选择合适的算法也是一件复杂的事情。</li>
+<li>假设随着任务越来越多，单台任务调度器也可能会带来性能瓶颈问题，所以任务调度器也需要考虑集群。任务调度器变成了集群方式，同时也就意味着需要将不同用户分配到不同的任务调度器上，这也需要选择一个合适的方案，DNS轮询，CDN分发等。</li>
+<li>随着任务调度器的增多，服务器的增多。任务调度器和服务器的状态管理，故障恢复处理等复杂度也会大大的提升，同时服务器的成本也是个问题。</li>
+</ul>
+<ol start="2">
+<li>任务分解<br>通过任务分配的方式可以解决单台机器性能瓶颈的问题，但是业务本身越来越复杂，单纯的增加机器的收益也会越来越低。这时候就需要任务分解来解决问题，我们可以将任务分解成不同的子任务。假设一个天猫系统的示意图如下<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/9y28e.png" alt=""></li>
+</ol>
+<p>通过上面架构示意图可以看出，后台架构从逻辑上将各个业务拆分成了订单、购物车、商品、登录、其他等子业务。通过这种方式，把一个庞大的业务系统单个需要多个系统配合的业务系统。从业务角度上看，任务分解功能并不会减少功能，也不会减少代码量（事实上也可能会增多代码量），那为什么就可以提升性能了呢？主要有下面几个因素</p>
+<ol>
+<li>越是简单的系统更容易做到高性能，系统简单，影响的功能点少，更容易有针对性的进行优化。</li>
+<li>可以针对单个任务扩展，拆分之后，这个系统的瓶颈更容易被发现，发现之后可以在不影响其他子系统的情况下进行性能优化或提升，风险会小很多。</li>
+</ol>
+<p>注意，并不是拆分的越细越好，拆分的越细，反而性能还会下降。拆分之后从原来的系统内函数调用，变成了网络远程调用。系统间的调用频率会增高，会降低整体的性能。所以，对于架构师来说，如何把握好这个粒度就非常关键了。</p>
+<h3 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h3><p>高可用就是指“系统无中断的运行”，代表系统的可用性成都，是进行系统设计时的准则之一。</p>
+<p>首先无中断是个难点，因为不可能做到无中断运行的，硬件故障，软件bug，硬件老化等。除去这些，还需要考虑天灾，事故等因素也会让系统中断。所以，<strong>高可用的方案有很多，其本质就是通过冗余来实现高可用。</strong>简单来说，一台服务器不够就两台，两台服务器不够就三台；一个机房可能会断电，就部署两个机房；四川有可能会地震，北京在部署一个；但是如果世界末日的话？？？</p>
+<p>高可能用高性能有着本质的区别，高性能增加机器在于扩展处理性能；高可用增加机器的目的在于冗余处理单元。</p>
+<p>通过冗余增强了可用性，但同时也带来了复杂度。通过不同的场景来分析一下</p>
+<ul>
+<li>计算高可用。计算是指业务的逻辑处理。计算有一个特点就是无论在哪台机器上，同样的算法的输入数据，输出结果都是一样的，所以这些机器可以相互替代。计算高可用的复杂度与高性能增加机器的复杂度相似，也是通过添加任务调度器所产生的复杂度。</li>
+<li>存储高可用。存储高可用与计算高可用相比，有一个本质的区别：将数据从一台机器传输到另一台机器，需要一定的时间，耗时随着两个机器的物理距离成正比。不稳定的情况下会达到1s多。但是对于高可用系统来说，这个时间就有点长了，这就意味着在某个时间点上，这些机器的数据会不一致。数据不一致会导致逻辑不一致，最终导致业务表现不一样。如何解决这个问题也是存储高可用带来的复杂度，所以存储高可用的难度在于如何减少或者规避这种数据不一致所带来的业务影响。</li>
+<li>高可用状态决策。无论是计算高可用还是存储高可用，基础都是“状态决策”，即系统能够判断当前的状态是不是正常的还是异常的。如果状态判断错误，后续的行动无论怎么处理都是无意义的，同时状态的判断也不可能做到完全正确。</li>
+</ul>
+<h3 id="可扩展性"><a href="#可扩展性" class="headerlink" title="可扩展性"></a>可扩展性</h3><p>可扩展性就是系统为了应对将来的需求变化而提供的扩展能力，有新需求出现时，可以需要修改或者少量的修改可以达到目的。</p>
+<p>有句谚语：唯一不变的就是变化。软件开发也是，软件系统不像建筑系统一样完工了就不会改变。软件系统需要不断的演进，演进的过程中也不能需要太大的成本。也不可能为了一个需求推翻现有的系统，所以尽量减少改动是最好的。我们需要正确的预测变化和封装变化。</p>
+<ul>
+<li>预测变化，在架构设计时，架构师需要能够预测到那些地方后期可能需要变动，但是到底是预测，也不可能100%预测到。预测变化的复杂在于<ul>
+<li>不能每个设计点都需要考虑可扩展性。</li>
+<li>不能完全不考虑可扩展性。</li>
+<li>所有的预测都可能存在出错。</li>
+</ul>
+</li>
+<li>应对变化，我们可以将变化封装一个变化层，将不变的封装在一个稳定层。但是这种剥离变化层和稳定层也会带来复杂度。<ul>
+<li>需要区分变化层和稳定层</li>
+<li>需要设计层与层之间的接口</li>
+</ul>
+</li>
+</ul>
+<h3 id="低成本"><a href="#低成本" class="headerlink" title="低成本"></a>低成本</h3><p>低成本与高性能，高可用是冲突的。高可能和高可用是增加机器来解决的，增加机器就以为成本会变高。所以低成本不会是架构设计的首要考虑目标，是架构设计的附加约束。低成本的复杂度在于需要创新达到低成本的目的，开创一个新的技术领域来解决现有的问题，这通常会是大公司作出的方案。一般情况我们还是会选择使用新技术来降低成本。</p>
+<p>无论是使用新技术还是开发新技术，都是一个复杂的事情。使用新技术需要了解这个技术，能不能运用到我们先有的项目中。创造新技术需要投入大量的人力还财力，并且与旧技术相比，需要有质的飞跃。</p>
+<h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><p>安全本来就是复杂又庞大的领域，而且没有绝对的安全。从技术角度来说，安全可以分为两类，功能安全和架构安全</p>
+<ul>
+<li>功能安全。能够抵御常见的XSS攻击，CSRF攻击，SQL注入，密码破解等。黑客会利用这些漏洞潜入系统，偷取你的数据。通常需要在编码的时候注意，与架构设计无关。功能安全本质就是“防小偷”</li>
+<li>架构安全，功能安全是“防小偷”，那架构安全则是“防强盗”。互联网时代，黑客会从各个地方对你发起恶意攻击。传统的架构安全主要是防火墙，但是防火墙性能一般，而且贵，所以一般公司不会选择堆防火墙来解决问题。互联网的架构目前来说没有太好的设计手段来时间，现在主要是靠运营商或者服务器厂商提供的带宽和流量清洗能力。</li>
+</ul>
 
       
     </div>
@@ -415,7 +466,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://www.story-has-you.top/posts/13992/" title="大型网站架构演化">https://www.story-has-you.top/posts/13992/</a>
+    <a href="https://www.story-has-you.top/posts/29199/" title="架构设计目的">https://www.story-has-you.top/posts/29199/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -437,8 +488,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/18252/" rel="next" title="线程池详解">
-                <i class="fa fa-chevron-left"></i> 线程池详解
+              <a href="/posts/50660/" rel="next" title="软件架构基础">
+                <i class="fa fa-chevron-left"></i> 软件架构基础
               </a>
             
           </div>
@@ -446,10 +497,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/posts/41791/" rel="prev" title="通过 CompletableFuture 组装异步计算单元">
-                通过 CompletableFuture 组装异步计算单元 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -598,7 +645,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#大型网站软件系统的特点"><span class="nav-number">1.</span> <span class="nav-text">大型网站软件系统的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大型网站架构演化发展历程"><span class="nav-number">2.</span> <span class="nav-text">大型网站架构演化发展历程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大型网站演化的价值观"><span class="nav-number">3.</span> <span class="nav-text">大型网站演化的价值观</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂度"><span class="nav-number">1.</span> <span class="nav-text">复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#高性能"><span class="nav-number">1.1.</span> <span class="nav-text">高性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高可用"><span class="nav-number">1.2.</span> <span class="nav-text">高可用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可扩展性"><span class="nav-number">1.3.</span> <span class="nav-text">可扩展性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#低成本"><span class="nav-number">1.4.</span> <span class="nav-text">低成本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全"><span class="nav-number">1.5.</span> <span class="nav-text">安全</span></a></li></ol></li></ol></div>
             
 
           </div>
