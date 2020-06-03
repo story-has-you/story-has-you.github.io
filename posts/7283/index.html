@@ -79,16 +79,14 @@
 
 
 
-<meta name="description" content="了解了架构是什么，那就想想为什么需要软件架构。">
+<meta name="description" content="Kubernetes作为生产级别的容器编排系统。 是一个可移植的、可扩展的开源平台，用于管理容器化的工作负载和服务，可促进声明式配置和自动化。Kubernetes 拥有一个庞大且快速增长的生态系统。Kubernetes 的服务、支持和工具广泛可用。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="架构设计目的">
-<meta property="og:url" content="https://www.story-has-you.top/posts/29199/index.html">
+<meta property="og:title" content="Kubernetes安装">
+<meta property="og:url" content="https://www.story-has-you.top/posts/7283/index.html">
 <meta property="og:site_name" content="story-has-you">
-<meta property="og:description" content="了解了架构是什么，那就想想为什么需要软件架构。">
-<meta property="og:image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/md4dc.png">
-<meta property="og:image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/9y28e.png">
-<meta property="article:published_time" content="2020-04-26T14:37:18.000Z">
-<meta property="article:modified_time" content="2020-04-26T14:41:52.685Z">
+<meta property="og:description" content="Kubernetes作为生产级别的容器编排系统。 是一个可移植的、可扩展的开源平台，用于管理容器化的工作负载和服务，可促进声明式配置和自动化。Kubernetes 拥有一个庞大且快速增长的生态系统。Kubernetes 的服务、支持和工具广泛可用。">
+<meta property="article:published_time" content="2020-06-03T13:00:18.000Z">
+<meta property="article:modified_time" content="2020-06-03T13:01:37.429Z">
 <meta property="article:author" content="[故事有你]">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="spring">
@@ -99,7 +97,6 @@
 <meta property="article:tag" content="[故事有你]">
 <meta property="article:tag" content="story-has-you">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/md4dc.png">
 
 
 
@@ -129,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="https://www.story-has-you.top/posts/29199/"/>
+  <link rel="canonical" href="https://www.story-has-you.top/posts/7283/"/>
 
 
 
 
 
-  <title>架构设计目的 | story-has-you</title>
+  <title>Kubernetes安装 | story-has-you</title>
   
 
 
@@ -252,7 +249,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.story-has-you.top/posts/29199/">
+    <link itemprop="mainEntityOfPage" href="https://www.story-has-you.top/posts/7283/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="[故事有你]">
@@ -269,7 +266,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">架构设计目的</h2>
+          <h2 class="post-title" itemprop="name headline">Kubernetes安装</h2>
         
 
         <div class="post-meta">
@@ -281,8 +278,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-26T22:37:18+08:00">
-                2020-04-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-03T21:00:18+08:00">
+                2020-06-03
               </time>
             
 
@@ -304,8 +301,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index">
-                    <span itemprop="name">架构设计</span>
+                  <a href="/categories/%E8%BF%90%E7%BB%B4%E9%83%A8%E7%BD%B2/" itemprop="url" rel="index">
+                    <span itemprop="name">运维部署</span>
                   </a>
                 </span>
 
@@ -335,7 +332,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.2k
+                  1.1k
                 </span>
               
 
@@ -351,7 +348,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  10
+                  4
                 </span>
               
             </div>
@@ -372,80 +369,57 @@
       
 
       
-        <p>了解了架构是什么，那就想想为什么需要软件架构。</p>
+        <p>Kubernetes作为生产级别的容器编排系统。 是一个可移植的、可扩展的开源平台，用于管理容器化的工作负载和服务，可促进声明式配置和自动化。Kubernetes 拥有一个庞大且快速增长的生态系统。Kubernetes 的服务、支持和工具广泛可用。</p>
 <a id="more"></a>
 
-<p>随着互联网项目越来越庞大，需求越来越多也越来越复杂。在计算机软件的发展史中可以看出，软件的发展史其实就是一直与“复杂度”作斗争，架构的出现也不例外。所以，架构出现的目的就是为了解决这些复杂度而提出的方案。一句话来说: <strong>架构设计的主要目的就是为了解决复杂度带来的问题</strong>。</p>
-<p>在进行架构设计时，想想这句话，可以让新手架构师心里有数，而不是怎么牛逼怎么来。也可以让有经验的架构师有舍有得，而不是贪大求全。</p>
-<h2 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h2><p>既然架构设计是为了解决复杂度带来的问题。那么，什么是复杂度？他是怎么出现的？</p>
-<p>个人理解，软件复杂度就是需求不断的变化，变大所带来的结果。一般会从以下方便带来复杂度</p>
+
+<h2 id="为什么需要-Kubernetes，它能做什么"><a href="#为什么需要-Kubernetes，它能做什么" class="headerlink" title="为什么需要 Kubernetes，它能做什么?"></a>为什么需要 Kubernetes，它能做什么?</h2><p>容器是打包和运行应用程序的好方式。在生产环境中，您需要管理运行应用程序的容器，并确保不会停机。例如，如果一个容器发生故障，则需要启动另一个容器。如果系统处理此行为，会不会更容易？</p>
+<p>这就是 Kubernetes 的救援方法！Kubernetes 为您提供了一个可弹性运行分布式系统的框架。Kubernetes 会满足您的扩展要求、故障转移、部署模式等。例如，Kubernetes 可以轻松管理系统的 Canary 部署。<br>Kubernetes 为您提供：</p>
 <ul>
-<li>高性能</li>
-<li>高可用</li>
-<li>可扩展</li>
-<li>成本</li>
-<li>安全</li>
+<li>服务发现和负载均衡，Kubernetes 可以使用 DNS 名称或自己的 IP 地址公开容器，如果到容器的流量很大，Kubernetes 可以负载均衡并分配网络流量，从而使部署稳定。</li>
+<li>存储编排，Kubernetes 允许您自动挂载您选择的存储系统，例如本地存储、公共云提供商等。</li>
+<li>自动部署和回滚您，可以使用 Kubernetes 描述已部署容器的所需状态，它可以以受控的速率将实际状态更改为所需状态。例如，您可以自动化 Kubernetes 来为您的部署创建新容器，删除现有容器并将它们的所有资源用于新容器。</li>
+<li>自动二进制打包，Kubernetes 允许您指定每个容器所需 CPU 和内存（RAM）。当容器指定了资源请求时，Kubernetes 可以做出更好的决策来管理容器的资源。</li>
+<li>自我修复，Kubernetes 重新启动失败的容器、替换容器、杀死不响应用户定义的运行状况检查的容器，并且在准备好服务之前不将其通告给客户端。</li>
+<li>密钥与配置管理，Kubernetes 允许您存储和管理敏感信息，例如密码、OAuth 令牌和 ssh 密钥。您可以在不重建容器镜像的情况下部署和更新密钥和应用程序配置，也无需在堆栈配置中暴露密钥。</li>
 </ul>
-<h3 id="高性能"><a href="#高性能" class="headerlink" title="高性能"></a>高性能</h3><p>人们对性能的追求是一直在持续的。从蒸汽火车到高铁，从第一代iPhone到iPhone11，从电子管计算机到超大规模集成电路。当然技术的发展带来了性能提升，但是不一定会带来复杂度的提升。例如从磁盘到SSD，从几十KB的网络到移动网络，这些并对我们没有带来复杂度的增加，只有新的技术替代旧的技术，我们直接使用新技术即可。只有那些不是替代旧技术，而是开辟了新的领域的技术，才会带来复杂度。好比在出行方面，汽车无法替代火车，火车无法替代飞机。这样会使得我们在如何选择出行方式时，会带来复杂度。价格啊，舒适度啊，速度啊之类的我们都需要考虑。</p>
-<p>软件系统中高性能带来的复杂度主要体现在两个方面</p>
-<ul>
-<li>单台计算机内部为了高性能带来的复杂度。</li>
-<li>多台计算机集群为了高性能带来的复杂度。</li>
-</ul>
-<p>单机复杂度主要在多进程、多线程、进程间通信、多线程并发等，这些技术并不是最新的就是最好的，也不是非此即彼的选择。在架构设计中，需要花费较大的精力来结合业务判断，选择，这个过程也同样很复杂。就好比，Nginx可以多线程，可以多进程提高性能，Redis是用单进程提高性能，Memcache使用多线程提高性能。他们虽然都能提高性能，但是内部实现差异却很大。</p>
-<p>集群复杂度是我们的重点讨论对象，就好比春节微信抢红包，阿里双11剁手节。面对这种复杂的业务，单机是无论如何也无法支撑的，必须采用集群，增加机器的方式解决，但是通过大量的机器来提高性能，并不仅仅是增加几台机器那么简单，让多台机器配合工作达到高性能的目的，是一个复杂的任务。</p>
-<p>业界常见的让多个机器相互协作的方式有以下几种</p>
-<ol>
-<li>任务分配，意思是将每台机器都可以完成的任务，不同的任务分配到不同的机器上执行。但是服务器的增加也带来了复杂度的问题，示意图如下<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/md4dc.png" alt=""></li>
-</ol>
-<p>1台服务器变成2台服务器后，架构上明显复杂了很多，主要体现在</p>
-<ul>
-<li>需要添加一个任务调度器，可以是Nginx、F5、交换机等。选择合适的任务调度器也是一件复杂的事情，需要考虑性能，成本，可维护性等之类的因素。</li>
-<li>任务调度器与服务器之间需要有合适的连接方式，选择合适的连接方式也是一件复杂的事情，并且还要对连接方式进行管理，如连接中断之后如何恢复等。</li>
-<li>任务调度器还需要增加调度算法，是轮询，还是权重，又或者是一致性哈希。这也是需要考虑的一件事情，选择合适的算法也是一件复杂的事情。</li>
-<li>假设随着任务越来越多，单台任务调度器也可能会带来性能瓶颈问题，所以任务调度器也需要考虑集群。任务调度器变成了集群方式，同时也就意味着需要将不同用户分配到不同的任务调度器上，这也需要选择一个合适的方案，DNS轮询，CDN分发等。</li>
-<li>随着任务调度器的增多，服务器的增多。任务调度器和服务器的状态管理，故障恢复处理等复杂度也会大大的提升，同时服务器的成本也是个问题。</li>
-</ul>
-<ol start="2">
-<li>任务分解<br>通过任务分配的方式可以解决单台机器性能瓶颈的问题，但是业务本身越来越复杂，单纯的增加机器的收益也会越来越低。这时候就需要任务分解来解决问题，我们可以将任务分解成不同的子任务。假设一个天猫系统的示意图如下<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/9y28e.png" alt=""></li>
-</ol>
-<p>通过上面架构示意图可以看出，后台架构从逻辑上将各个业务拆分成了订单、购物车、商品、登录、其他等子业务。通过这种方式，把一个庞大的业务系统单个需要多个系统配合的业务系统。从业务角度上看，任务分解功能并不会减少功能，也不会减少代码量（事实上也可能会增多代码量），那为什么就可以提升性能了呢？主要有下面几个因素</p>
-<ol>
-<li>越是简单的系统更容易做到高性能，系统简单，影响的功能点少，更容易有针对性的进行优化。</li>
-<li>可以针对单个任务扩展，拆分之后，这个系统的瓶颈更容易被发现，发现之后可以在不影响其他子系统的情况下进行性能优化或提升，风险会小很多。</li>
-</ol>
-<p>注意，并不是拆分的越细越好，拆分的越细，反而性能还会下降。拆分之后从原来的系统内函数调用，变成了网络远程调用。系统间的调用频率会增高，会降低整体的性能。所以，对于架构师来说，如何把握好这个粒度就非常关键了。</p>
-<h3 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h3><p>高可用就是指“系统无中断的运行”，代表系统的可用性成都，是进行系统设计时的准则之一。</p>
-<p>首先无中断是个难点，因为不可能做到无中断运行的，硬件故障，软件bug，硬件老化等。除去这些，还需要考虑天灾，事故等因素也会让系统中断。所以，<strong>高可用的方案有很多，其本质就是通过冗余来实现高可用。</strong>简单来说，一台服务器不够就两台，两台服务器不够就三台；一个机房可能会断电，就部署两个机房；四川有可能会地震，北京在部署一个；但是如果世界末日的话？？？</p>
-<p>高可能用高性能有着本质的区别，高性能增加机器在于扩展处理性能；高可用增加机器的目的在于冗余处理单元。</p>
-<p>通过冗余增强了可用性，但同时也带来了复杂度。通过不同的场景来分析一下</p>
-<ul>
-<li>计算高可用。计算是指业务的逻辑处理。计算有一个特点就是无论在哪台机器上，同样的算法的输入数据，输出结果都是一样的，所以这些机器可以相互替代。计算高可用的复杂度与高性能增加机器的复杂度相似，也是通过添加任务调度器所产生的复杂度。</li>
-<li>存储高可用。存储高可用与计算高可用相比，有一个本质的区别：将数据从一台机器传输到另一台机器，需要一定的时间，耗时随着两个机器的物理距离成正比。不稳定的情况下会达到1s多。但是对于高可用系统来说，这个时间就有点长了，这就意味着在某个时间点上，这些机器的数据会不一致。数据不一致会导致逻辑不一致，最终导致业务表现不一样。如何解决这个问题也是存储高可用带来的复杂度，所以存储高可用的难度在于如何减少或者规避这种数据不一致所带来的业务影响。</li>
-<li>高可用状态决策。无论是计算高可用还是存储高可用，基础都是“状态决策”，即系统能够判断当前的状态是不是正常的还是异常的。如果状态判断错误，后续的行动无论怎么处理都是无意义的，同时状态的判断也不可能做到完全正确。</li>
-</ul>
-<h3 id="可扩展性"><a href="#可扩展性" class="headerlink" title="可扩展性"></a>可扩展性</h3><p>可扩展性就是系统为了应对将来的需求变化而提供的扩展能力，有新需求出现时，可以需要修改或者少量的修改可以达到目的。</p>
-<p>有句谚语：唯一不变的就是变化。软件开发也是，软件系统不像建筑系统一样完工了就不会改变。软件系统需要不断的演进，演进的过程中也不能需要太大的成本。也不可能为了一个需求推翻现有的系统，所以尽量减少改动是最好的。我们需要正确的预测变化和封装变化。</p>
-<ul>
-<li>预测变化，在架构设计时，架构师需要能够预测到那些地方后期可能需要变动，但是到底是预测，也不可能100%预测到。预测变化的复杂在于<ul>
-<li>不能每个设计点都需要考虑可扩展性。</li>
-<li>不能完全不考虑可扩展性。</li>
-<li>所有的预测都可能存在出错。</li>
-</ul>
-</li>
-<li>应对变化，我们可以将变化封装一个变化层，将不变的封装在一个稳定层。但是这种剥离变化层和稳定层也会带来复杂度。<ul>
-<li>需要区分变化层和稳定层</li>
-<li>需要设计层与层之间的接口</li>
-</ul>
-</li>
-</ul>
-<h3 id="低成本"><a href="#低成本" class="headerlink" title="低成本"></a>低成本</h3><p>低成本与高性能，高可用是冲突的。高可能和高可用是增加机器来解决的，增加机器就以为成本会变高。所以低成本不会是架构设计的首要考虑目标，是架构设计的附加约束。低成本的复杂度在于需要创新达到低成本的目的，开创一个新的技术领域来解决现有的问题，这通常会是大公司作出的方案。一般情况我们还是会选择使用新技术来降低成本。</p>
-<p>无论是使用新技术还是开发新技术，都是一个复杂的事情。使用新技术需要了解这个技术，能不能运用到我们先有的项目中。创造新技术需要投入大量的人力还财力，并且与旧技术相比，需要有质的飞跃。</p>
-<h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><p>安全本来就是复杂又庞大的领域，而且没有绝对的安全。从技术角度来说，安全可以分为两类，功能安全和架构安全</p>
-<ul>
-<li>功能安全。能够抵御常见的XSS攻击，CSRF攻击，SQL注入，密码破解等。黑客会利用这些漏洞潜入系统，偷取你的数据。通常需要在编码的时候注意，与架构设计无关。功能安全本质就是“防小偷”</li>
-<li>架构安全，功能安全是“防小偷”，那架构安全则是“防强盗”。互联网时代，黑客会从各个地方对你发起恶意攻击。传统的架构安全主要是防火墙，但是防火墙性能一般，而且贵，所以一般公司不会选择堆防火墙来解决问题。互联网的架构目前来说没有太好的设计手段来时间，现在主要是靠运营商或者服务器厂商提供的带宽和流量清洗能力。</li>
-</ul>
+<h2 id="安装Kubernetes"><a href="#安装Kubernetes" class="headerlink" title="安装Kubernetes"></a>安装Kubernetes</h2><p>Kubernetes安装，需要连接谷歌。三台机器，一主两从。三台机器需要安装docker、kubelet、kubeadm、kubectl</p>
+<p><strong><em>以下安装三台机器都需要操作</em></strong><br>配置yum源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo</span><br><span class="line">[kubernetes]</span><br><span class="line">name=Kubernetes</span><br><span class="line">baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">repo_gpgcheck=1</span><br><span class="line">gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">yum clean all</span><br><span class="line">yum makecache</span><br></pre></td></tr></table></figure>
+
+<p>将 SELinux 设置为 permissive 模式（相当于将其禁用）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setenforce 0 </span><br><span class="line">sed -i <span class="string">'s/^SELINUX=enforcing$/SELINUX=permissive/'</span> /etc/selinux/config</span><br></pre></td></tr></table></figure>
+
+<p>关闭swap</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">swapoff -a</span><br><span class="line">sed -i <span class="string">'s/.*swap.*/#&amp;/'</span> /etc/fstab</span><br></pre></td></tr></table></figure>
+
+<p>安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y kubelet kubeadm kubectl –disableexcludes=kubernetes</span><br></pre></td></tr></table></figure>
+
+<p>启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> kubelet</span><br><span class="line">systemctl restart kubelet</span><br></pre></td></tr></table></figure>
+
+<p><strong><em>下面操作在master节点上</em></strong><br>初始化master节点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --apiserver-advertise-address=10.211.55.32 --pod-network-cidr=10.244.0.0/16</span><br></pre></td></tr></table></figure>
+<p>10.211.55.32为安装的机器ip</p>
+<p>如果报错:  <code>/proc/sys/net/bridge/bridge-nf-call-iptables contents are not set to 1</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/net/bridge/bridge-nf-call-iptables</span><br><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/net/bridge/bridge-nf-call-ip6tables</span><br></pre></td></tr></table></figure>
+
+<p>等的时间有点长，复制一下控制台最后打印的记录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">To start using your cluster, you need to run the following as a regular user:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  mkdir -p <span class="variable">$HOME</span>/.kube</span><br><span class="line">  sudo cp -i /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">  sudo chown $(id -u):$(id -g) <span class="variable">$HOME</span>/.kube/config</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">You should now deploy a pod network to the cluster.</span><br><span class="line">Run <span class="string">"kubectl apply -f [podnetwork].yaml"</span> with one of the options listed at:</span><br><span class="line">  https://kubernetes.io/docs/concepts/cluster-administration/addons/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Then you can join any number of worker nodes by running the following on each as root:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">kubeadm join 10.211.55.26:6443 --token d931h4.krfgmvo2axrudoeu \</span><br><span class="line">    --discovery-token-ca-cert-hash sha256:3b05c888cf13ed57882939d7e92e955106e4b8e58e288723defbc4bca3a3e1c8</span><br></pre></td></tr></table></figure>
+
+<p>还是在主节点上执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p <span class="variable">$HOME</span>/.kube</span><br><span class="line">sudo cp -i /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">sudo chown $(id -u):$(id -g) <span class="variable">$HOME</span>/.kube/config</span><br></pre></td></tr></table></figure>
+
+<p>配置网络，使用flannel</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</span><br></pre></td></tr></table></figure>
+
+
+<p><strong><em>在两个从节点上操作</em></strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubeadm join 10.211.55.26:6443 --token d931h4.krfgmvo2axrudoeu \</span><br><span class="line">    --discovery-token-ca-cert-hash sha256:3b05c888cf13ed57882939d7e92e955106e4b8e58e288723defbc4bca3a3e1c8</span><br></pre></td></tr></table></figure>
+
+<p>最后验证，在主节点上输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">kubectl get nodes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">NAME         STATUS   ROLES    AGE     VERSION</span><br><span class="line">k8s-master   Ready    master   9m4s    v1.18.2</span><br><span class="line">k8s-node1    Ready    &lt;none&gt;   2m46s   v1.18.2</span><br><span class="line">k8s-node2    Ready    &lt;none&gt;   2m36s   v1.18.2</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -466,7 +440,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://www.story-has-you.top/posts/29199/" title="架构设计目的">https://www.story-has-you.top/posts/29199/</a>
+    <a href="https://www.story-has-you.top/posts/7283/" title="Kubernetes安装">https://www.story-has-you.top/posts/7283/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -488,8 +462,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/50660/" rel="next" title="软件架构基础">
-                <i class="fa fa-chevron-left"></i> 软件架构基础
+              <a href="/posts/10386/" rel="next" title="Redis GEO命令介绍">
+                <i class="fa fa-chevron-left"></i> Redis GEO命令介绍
               </a>
             
           </div>
@@ -497,10 +471,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/posts/50784/" rel="prev" title="架构设计原则">
-                架构设计原则 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -649,7 +619,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂度"><span class="nav-number">1.</span> <span class="nav-text">复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#高性能"><span class="nav-number">1.1.</span> <span class="nav-text">高性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高可用"><span class="nav-number">1.2.</span> <span class="nav-text">高可用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可扩展性"><span class="nav-number">1.3.</span> <span class="nav-text">可扩展性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#低成本"><span class="nav-number">1.4.</span> <span class="nav-text">低成本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全"><span class="nav-number">1.5.</span> <span class="nav-text">安全</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要-Kubernetes，它能做什么"><span class="nav-number">1.</span> <span class="nav-text">为什么需要 Kubernetes，它能做什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Kubernetes"><span class="nav-number">2.</span> <span class="nav-text">安装Kubernetes</span></a></li></ol></div>
             
 
           </div>
