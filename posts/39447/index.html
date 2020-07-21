@@ -145,7 +145,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -376,7 +376,7 @@
 <a id="more"></a>
 
 
-<h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p>状态模式的通用类图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/81e2u.png" alt=""></p>
+<h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p>状态模式的通用类图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/81e2u.png"></p>
 <p>状态模式包含角色如下：</p>
 <ul>
 <li>上下文角色（Context）：上下文角色一般是一个类，上下文角色会聚合很多和 state，这些 state 使用静态常量修饰，并且负责 state 的状态切换；另外上下文角色还会包含抽象状态角色中定义的所有行为如 request，然后内部将请求委托给 state 的 handle 处理；</li>
@@ -481,7 +481,7 @@
 
 <p>可以看到，测试结果没有任何不同，但是我们没有写一行 switch…case 语句块，反而是将对象的各个状态抽出来做成状态类，然后各个状态类在对各个行为做出实现，代码更加精简。</p>
 <p>状态模式具体的状态类在对状态做出变更时其行为也跟着做出变更，其实代码量减少并不十分明显，但是对于状态拓展十分友好，只需要增加状态类再实现各个行为即可拓展新的状态出来，也体现了开闭原则及单一职责原则；状态模式将对象状态的变更放到类的内部进行，外部调用者无需关心对象的状态及行为的变化，也体现了更好的封装性；另外对代码的 cpd（代码重复率检测）也是很有提升明显。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本小节我们介绍了状态模式的定义，优缺点已经使用场景，然后用电视机的例子帮大家更好地理解模式，状态模式的出现，一定程度解决了繁杂的语句块的硬编码的形式，成为条件分支、判断的终结者，另外状态模式下代码结构更加清晰，面向拓展更加友好。<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/ndmh6.png" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本小节我们介绍了状态模式的定义，优缺点已经使用场景，然后用电视机的例子帮大家更好地理解模式，状态模式的出现，一定程度解决了繁杂的语句块的硬编码的形式，成为条件分支、判断的终结者，另外状态模式下代码结构更加清晰，面向拓展更加友好。<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/ndmh6.png"></p>
 
       
     </div>

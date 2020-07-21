@@ -146,7 +146,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -387,9 +387,9 @@
 <li>ConcreteFilter（具体过滤器角色）：该角色负责具体筛选规则的逻辑实现，最后再返回一个过滤后的数据集合，标准的过滤器只对数据做过滤，当然也可以对集合中的数据做某项处理，再将处理后的集合返回；</li>
 <li>Subject（被过滤的主体角色）：一个软件系统中可以有一个或多个目标角色，在具体过滤器角色中会对指定感兴趣的目标进行处理，以确保后面的数据确实是我想要的</li>
 </ul>
-<h2 id="过滤器延伸-——-管道和过滤器"><a href="#过滤器延伸-——-管道和过滤器" class="headerlink" title="过滤器延伸 —— 管道和过滤器"></a>过滤器延伸 —— 管道和过滤器</h2><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/ca2jz.png" alt=""></p>
+<h2 id="过滤器延伸-——-管道和过滤器"><a href="#过滤器延伸-——-管道和过滤器" class="headerlink" title="过滤器延伸 —— 管道和过滤器"></a>过滤器延伸 —— 管道和过滤器</h2><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/ca2jz.png"></p>
 <p>这里的管道，其实比较好理解，就类似于一根根的水管或者一个个的流水线，将一个个的过滤器连接起来，形成一个过滤器链（过滤器链可以携带多个过滤器，并且可以以自定义顺序执行它们），原始数据经过一道道的加工工序，最后形成我们需要的数据或产品。一般情况下我们还存在一个过滤器管理器的角色，过滤器管理器负责管理过滤器和过滤器链。</p>
-<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>下面我们通过一个例子来了解下过滤器模式，我们就以垃圾分类为例进行说明，使用不同的垃圾桶进行垃圾分类过滤，“垃圾” 就是我们的被过滤的角色，垃圾桶可以充当我们的绝体过滤器角色，实例的类图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/tj7z7.png" alt=""></p>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>下面我们通过一个例子来了解下过滤器模式，我们就以垃圾分类为例进行说明，使用不同的垃圾桶进行垃圾分类过滤，“垃圾” 就是我们的被过滤的角色，垃圾桶可以充当我们的绝体过滤器角色，实例的类图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/tj7z7.png"></p>
 <p>首先是 “垃圾” 类，也就是我们的被过滤的主体角色：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Rubbish</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name; <span class="comment">// 垃圾名称</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isHarm; <span class="comment">// 是否有害垃圾</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isRecycled; <span class="comment">// 是否可回收</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isDry; <span class="comment">// 是否干垃圾</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isWet; <span class="comment">// 是否湿垃圾</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Rubbish</span><span class="params">(String name, <span class="keyword">boolean</span> isHarm, <span class="keyword">boolean</span> isRecycled, <span class="keyword">boolean</span> isDry, <span class="keyword">boolean</span> isWet)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.isHarm = isHarm;</span><br><span class="line">        <span class="keyword">this</span>.isRecycled = isRecycled;</span><br><span class="line">        <span class="keyword">this</span>.isDry = isDry;</span><br><span class="line">        <span class="keyword">this</span>.isWet = isWet;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ... getter、setter省略，或者直接使用lombok</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -412,7 +412,7 @@
 <li>有序性：过滤器是被设计为一组组的过滤装置，要实现数据过滤，就必须有顺序性要求，比如我们要设计编解码过滤器，用户请求过来的 xml 数据会优先通过 xml2json 过滤器进行数据处理，完了再在响应发出前进行相应的 json2xml 过滤处理，以保证客户端交互以 xml 数据格式为准的同时系统内部数据交互还是维持 json 格式不变；</li>
 <li>过滤器的独立性：每种过滤器必须是独立的实体，其状态不受其它过滤器的影响，每个过滤器都有自己独立的数据输入输出接口，只要各个过滤器之间传送的数据遵守共同的规约就可以相连接。</li>
 </ul>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/5bp8b.png" alt=""></p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/5bp8b.png"></p>
 
       
     </div>

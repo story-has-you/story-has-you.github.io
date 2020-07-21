@@ -144,7 +144,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -387,7 +387,7 @@
 <li>具体元素（ConcreteElement）：具体的被访问的元素，实现上面 Element 的 accept 方法，各个元素负责定义自己的 accept 行为，来表示其被访问时的行为，本文中由 FileElement 和 DictionaryElement 类扮演；</li>
 <li>对象结构（ObjectStructure）：对象结构实际上是一个被访问元素的集合，好比一个元素容器，对容器的具体元素的访问表现出的行为如何，这是由访问者模式决定的。</li>
 </ul>
-<p>角色之间的 UML 关系图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/6jzht.jpg" alt=""></p>
+<p>角色之间的 UML 关系图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/6jzht.jpg"></p>
 <h2 id="访问者模式代码实现"><a href="#访问者模式代码实现" class="headerlink" title="访问者模式代码实现"></a>访问者模式代码实现</h2><h3 id="抽象访问者"><a href="#抽象访问者" class="headerlink" title="抽象访问者"></a>抽象访问者</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 抽象的访问者角色，需要针对每个被访问元素都定义一个接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Visitor</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">visit</span><span class="params">(ConcreteElementA element)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="具体访问者"><a href="#具体访问者" class="headerlink" title="具体访问者"></a>具体访问者</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 具体的访问者</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteVisitorA</span> <span class="keyword">implements</span> <span class="title">Visitor</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">visit</span><span class="params">(ConcreteElementA element)</span></span>&#123;</span><br><span class="line">        <span class="comment">// 实现自己的对元素ConcreteElementA的访问行为</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

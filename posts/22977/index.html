@@ -144,7 +144,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -388,7 +388,7 @@
 <li>接收者（Receiver）角色：该角色负责具体实施和执行请求动作（方法）；</li>
 <li>客户端（Client）角色：串连执行整个流程。</li>
 </ul>
-<p>角色关系类图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/j7g5e.png" alt=""></p>
+<p>角色关系类图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/j7g5e.png"></p>
 <h2 id="命令模式代码实现"><a href="#命令模式代码实现" class="headerlink" title="命令模式代码实现"></a>命令模式代码实现</h2><h3 id="接收者"><a href="#接收者" class="headerlink" title="接收者"></a>接收者</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Receiver</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行业务逻辑"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="命令对象"><a href="#命令对象" class="headerlink" title="命令对象"></a>命令对象</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Command</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 具体命令类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteCommand</span> <span class="keyword">implements</span> <span class="title">Command</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Receiver receiver;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteCommand</span><span class="params">(Receiver receiver)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.receiver = receiver;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.receiver.doSomething();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

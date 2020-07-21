@@ -149,7 +149,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -380,17 +380,17 @@
 <a id="more"></a>
 
 
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/lf03q.png" alt=""><br>图1 - 不使用代理模式</p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/zeejg.png" alt=""><br>图2 - 使用代理模式</p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/lf03q.png"><br>图1 - 不使用代理模式</p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/zeejg.png"><br>图2 - 使用代理模式</p>
 <p>那么，为什么会存在代理模式呢？我们知道，存在即合理，很多情况下，客户类不想或不能直接引用委托对象，这时候使用代理类充当中介作用，这种情况下代理类和委托类实现相同的接口；另外，有时候我们会想增强委托类，这个时候使用代理类来完成也是再合适不过了，也是符合开闭原则（对拓展开放，对修改关闭）的。</p>
-<h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p>代理模式一般分为两种：静态代理和动态代理（jdk动态代理和cglib动态代理），这里我们先来看下静态代理，静态代理的通用类图如下<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/42yyf.png" alt=""></p>
+<h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p>代理模式一般分为两种：静态代理和动态代理（jdk动态代理和cglib动态代理），这里我们先来看下静态代理，静态代理的通用类图如下<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/42yyf.png"></p>
 <p>代理模式也叫做委托模式，代理类一般包含被委托类的引用，下面我们来说下上面三个角色的定义：</p>
 <ul>
 <li>抽象主题角色（Subject）：抽象主题角色往往是一个抽象类或接口，用来定义被委托类也就是真实的业务处理类和代理类的一些通用操作；</li>
 <li>具体的主题角色（RealSubject）：该类实现 Subject，是真实被委托的类，也是具体业务逻辑的真正执行者；</li>
 <li>代理类或委托类（Proxy）：该类同样实现 Subject，在客户类和本地之间充当中介作用，将客户端的业务操作委托给 RealSubject 执行，并在执行前后做一些预处理或者善后工作。有点类似于AOP，实际上AOP使用的也是代理模式，不过是动态代理。</li>
 </ul>
-<h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2><p>上面说了那么多，我们简单的举个静态代理模式的例子吧，我们以购票为例，定义一个购票接口 IBuyer，然后定义一个具体的实现类 Buyer，模式类图简单如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/ca2ed.png" alt=""></p>
+<h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2><p>上面说了那么多，我们简单的举个静态代理模式的例子吧，我们以购票为例，定义一个购票接口 IBuyer，然后定义一个具体的实现类 Buyer，模式类图简单如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/ca2ed.png"></p>
 <p>代码非常简单，我们先来看下 IBuyer 接口的代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IBuyer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 购票登录接口</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> username 用户名</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> password 密码</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">login</span><span class="params">(String username, String password)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 模拟购票接口</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">bugTicket</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -403,7 +403,7 @@
 <p>测试输出如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用户：caiya 使用密码：123456 已登录成功</span><br><span class="line">caiya 正在购票</span><br></pre></td></tr></table></figure>
 
-<p>可以看到，在不使用代理模式的情况下一切实现起来也并不复杂，运行结果也都 ok。可是现实生活却并不是这般完美，我们往往买票时并非自己手动操作，而是会经常性地去“刷票”，这就体现出黄牛的价值了，黄牛可以理解成我们的 Buyer 的代理类，使用代理类时大致的类图设计如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/inuli.png" alt=""></p>
+<p>可以看到，在不使用代理模式的情况下一切实现起来也并不复杂，运行结果也都 ok。可是现实生活却并不是这般完美，我们往往买票时并非自己手动操作，而是会经常性地去“刷票”，这就体现出黄牛的价值了，黄牛可以理解成我们的 Buyer 的代理类，使用代理类时大致的类图设计如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/inuli.png"></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BuyerProxy</span> <span class="keyword">implements</span> <span class="title">IBuyer</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> IBuyer buyer;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BuyerProxy</span><span class="params">(IBuyer buyer)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.buyer = buyer;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">login</span><span class="params">(String username, String password)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.buyer.login(username, password);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bugTicket</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        before();</span><br><span class="line">        <span class="keyword">this</span>.buyer.bugTicket();</span><br><span class="line">        after();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"准备定时任务，开始刷票"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">after</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"刷票成功，短信通知客户"</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 <p>这里我们给购票接口加入了 before 预处理和 after 的善后处理工作，测试及输出如下：</p>
@@ -438,7 +438,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用户：caiya 使用密码：123456 已登录成功</span><br><span class="line">准备定时任务，开始刷票</span><br><span class="line">caiya 正在购票</span><br><span class="line">刷票成功，短信通知客户</span><br></pre></td></tr></table></figure>
 
 <h2 id="代理模式-Vs-装饰器模式"><a href="#代理模式-Vs-装饰器模式" class="headerlink" title="代理模式 Vs 装饰器模式"></a>代理模式 Vs 装饰器模式</h2><p>前面一节中我们还介绍了装饰器模式，两者几乎类图是一致的，区别在于应用侧重点不同，装饰器模式侧重于类的装饰，而代理模式侧重于请求代理，这是我的个人理解，有不同意见的也可以相互讨论。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本小节我们介绍了代理模式的定义、应用等等，又列举了静态代理和动态代理以及相应的实例，想必大家已经知道代理模型的具体含义了，下面我们总结下本节的内容：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/wwp3c.png" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本小节我们介绍了代理模式的定义、应用等等，又列举了静态代理和动态代理以及相应的实例，想必大家已经知道代理模型的具体含义了，下面我们总结下本节的内容：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/wwp3c.png"></p>
 
       
     </div>

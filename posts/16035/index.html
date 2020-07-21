@@ -145,7 +145,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -382,7 +382,7 @@
 </blockquote>
 <p>简单来说，就是我们可以定义一种语法比如就是一个表达式如：a-b+c，起初我们并不知道这个句子想要携带信息或者执行什么操作，然后我们要定义一个解析器来进行表达式解析，以便得到正确的结果。</p>
 <p>对于表达式：a-b+c 这种，我们做个简单的分析，a、b、c 这种我们又叫做运算参数，+、- 符号这种我们称之为运算符号，也就说这类表达式我们可以将其抽象为两种角色：运算参数、运算符号。运算参数一般就是英文字母，执行时各个参数需要赋上具体的数字值去替代英文字母执行，运算参数有一个共同点就是不管是 a、b 或者其它参数，除了被赋值之外不需要做其它任何处理，是执行时的最小单元，在解释器模式中被称为终结符号。运算符号是进行运算时具体要被解释器解释执行的部分，想象一下，加入我们计算机不知道如何处理类似 +、- 这种符号，我们是不要针对每一个符号写一个解释方法，以便告诉计算机该符号需要进行何种操作，这也就是解释器模式的核心——需要完成逻辑的解释执行操作，而运算符号在解释器模式中也被称为非终结符号。</p>
-<h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p>解释器模式的通用类图设计如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/yj4oz.png" alt=""></p>
+<h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p>解释器模式的通用类图设计如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/yj4oz.png"></p>
 <p>通常包含如下角色：</p>
 <ul>
 <li>抽象解释器（AbstractExpression）：抽象解释器是一个上层抽象类，用来抽取定义公共的解释方法：interpreter，具体的解释任务交给子类去完成；</li>
@@ -415,7 +415,7 @@
 <p>最后是测试类：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">AbstractExpression left = <span class="keyword">new</span> TerminalExpression(<span class="number">12</span>);</span><br><span class="line">AbstractExpression right = <span class="keyword">new</span> TerminalExpression(<span class="number">34</span>);</span><br><span class="line">AbstractExpression calExpression = <span class="keyword">new</span> NonTerminalExpression(left, right);</span><br><span class="line">Context context = <span class="keyword">new</span> Context(<span class="string">"+"</span>);</span><br><span class="line">Integer result = calExpression.interpreter(context);</span><br><span class="line">System.out.println(result); <span class="comment">// 46</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这节我们主要介绍了解释器模式的定义以及使用示例，解释器模式实际使用的场景并不多，但是又是一种比较复杂的设计模式，需要引起我们的重视，最后大家可以思考下，上面只是实现了最简单的 a + b，如果要实现 a + b - c 这种文法解析，又该如何实现呢，欢迎大家积极思考。<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/jois5.png" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这节我们主要介绍了解释器模式的定义以及使用示例，解释器模式实际使用的场景并不多，但是又是一种比较复杂的设计模式，需要引起我们的重视，最后大家可以思考下，上面只是实现了最简单的 a + b，如果要实现 a + b - c 这种文法解析，又该如何实现呢，欢迎大家积极思考。<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/jois5.png"></p>
 
       
     </div>

@@ -148,7 +148,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -380,7 +380,7 @@
 
 
 <p>Wrapper 有“包装器”的意思，适配器模式的定义是：<strong>将一个接口转换成客户希望的另一个接口，使接口不兼容的那些类可以一起工作，解决的痛点便是因接口不兼容导致的类不能正常工作的问题。</strong></p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/y0bt7.png" alt=""></p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/y0bt7.png"></p>
 <p>如上图所示，A、B 代表已经塑模成型的物体 A 和 B，如果想将这两种物体安装在一起，因为两者的接口是不兼容的，不可能直接安装在一起，这个时候该怎么办？这里，我们可以引入物体 C，物体 C 既要适配 A 的接口，又要适配 B 的接口，经过 C 的无缝“衔接”，便将 A、B 完美结合在了一起。</p>
 <p>这里的物体 C 就是我们要说的适配器角色，起到了一定的角色转换的作用。再举个例子，如果想让直流 12v 的笔记本电脑工作在交流 220v 的电源下，就必须要一个电源适配器，该适配器的作用就是将 220v 的 AC 交流转为 12v 的 DC 直流，这就是适配器该干的工作，弥补两者之间的空白——承上启下。</p>
 <p>什么时候使用适配器模式，从上面的案例我们也可以看出一点端倪：</p>
@@ -389,7 +389,7 @@
 <li>想要建立一个可以重复使用的类，用于与一些彼此之间没有太大关联的一些类，包括一些可能在将来引进的类一起工作，这些源类不一定有一致的接口。</li>
 </ul>
 <h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p>适配器模式，根据适配器类与适配者类的关系不同，适配器模式可分为对象适配器和类适配器两种，在对象适配器模式中，适配器与适配者之间是关联关系；在类适配器模式中，适配器与适配者之间是继承（或实现）关系。</p>
-<p>适配器模式的通用类图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/fl8kf.png" alt=""></p>
+<p>适配器模式的通用类图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/fl8kf.png"></p>
 <p>适配器模式包含的角色如下：</p>
 <ul>
 <li>目标角色（Target）：该角色定义把其它类转换为何种接口，也就是我们的期望接口，可以是一个抽象类或接口，也可以是具体类。以上文中笔记本电脑为例，即指让笔记本正常工作的直流 12v 电源；</li>
@@ -398,7 +398,7 @@
 <li>请求者（Client）：该角色负责使用 Target 定义的方法进行具体处理，以上文中笔记本电脑为例，即指使用 12v 电源驱动的笔记本电脑。</li>
 </ul>
 <p>总的一句话，Adapter 就是一个在 Client 中使用 Target 定义的接口来使用 Adaptee 角色（调用 Adaptee 中的方法）的存在。</p>
-<h2 id="类适配器（使用继承）"><a href="#类适配器（使用继承）" class="headerlink" title="类适配器（使用继承）"></a>类适配器（使用继承）</h2><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/nw66a.png" alt=""></p>
+<h2 id="类适配器（使用继承）"><a href="#类适配器（使用继承）" class="headerlink" title="类适配器（使用继承）"></a>类适配器（使用继承）</h2><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/nw66a.png"></p>
 <p>如上图为使用类适配器实现的适配器模式，具体代码如下：</p>
 <p>首先是 Target 接口，也就是我们要适配的目标接口：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Target</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">targetMethod1</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">targetMethod2</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -417,7 +417,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Adapter targetMethod1 inkoked.</span><br><span class="line">Adaptee methodA invoked.</span><br><span class="line">Adapter targetMethod2 inkoked.</span><br><span class="line">Adaptee methodB invoked.</span><br></pre></td></tr></table></figure>
 
 <p>这里，Client 使用者并不知道 Adaper 适配器是如何工作的，就好比笔记本电脑只需要在 12v 电压下正常工作即可，具体适配器如何适配实现电压转换，笔记本电脑无需关心。</p>
-<h2 id="对象适配器（使用委托）"><a href="#对象适配器（使用委托）" class="headerlink" title="对象适配器（使用委托）"></a>对象适配器（使用委托）</h2><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/mx21e.png" alt=""></p>
+<h2 id="对象适配器（使用委托）"><a href="#对象适配器（使用委托）" class="headerlink" title="对象适配器（使用委托）"></a>对象适配器（使用委托）</h2><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/mx21e.png"></p>
 <p>如上图为使用对象适配器实现的适配器模式，具体代码如下：<br>首先是我们要适配的目标类，这里不是接口了注意：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Target</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">targetMethod1</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">targetMethod2</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -447,7 +447,7 @@
 <li>想创建一个可以重复使用的类，用于与一些彼此之间没有太大关联的一些类，包括一些可能在将来引进的类一起工作。</li>
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>适配器模式，本身属于一种结构型模式，用于在两个对象或者系统之间建立适配链接，使得前后系统衔接更加平滑，适配器模式的实现主要有继承方式的类适配器，和委托方式的对象适配器。</p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/etjgx.png" alt=""></p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/etjgx.png"></p>
 
       
     </div>

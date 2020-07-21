@@ -147,7 +147,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -380,7 +380,7 @@
 
 <p>责任链模式的定义是：<strong>使多个对象都有机会处理请求，从而避免了请求的发送者和接受者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，直到有对象处理它为止。</strong></p>
 <h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2><p>举个例子，初级、中级、高级开发工程师分别处理问题的能力不同，我们假设初级工程师只能处理难度级别为 1 的问题，中级工程师能处理难度为 1、2 的问题，高级工程师能处理难度级别为 1、2、3 的问题，另外我们有一个 Request 请求代表要处理的请求，内部包含一个难度级别和要请求的内容，我们先来看下类图的设计：</p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/1w1vo.png" alt=""></p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/1w1vo.png"></p>
 <p>首先我们先定义一个请求接口：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IRequest</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 获取请求级别</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getRequestLevel</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取要请求的内容</span></span><br><span class="line">    <span class="function">String <span class="title">getRequest</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -398,8 +398,8 @@
 
 <p>可以看到，对于难度级别不同的请求，责任链上各个对象可以根据难度级别自行处理，对于不能处理的级别，也可以按照预期正常响应，责任链模式的魅力就在于此：_客户端不需要关心请求被谁处理，链上的各个责任人会根据预先设定的链的顺序依次处理，直至不能处理为止。_</p>
 <h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p>通过上面的实例，想必我们已经了解了什么是责任链模式，责任链模式的通用类图如下：</p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/uiut1.png" alt=""></p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/1713p.png" alt=""></p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/uiut1.png"></p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/1713p.png"></p>
 <p>责任链模式的核心就是 Handler 链抽象对象，该对象包含一个指向下一个链对象的私有属性，“链”是责任链的核心，就是使用该属性进行链式调用实现的。责任链模式的包含的角色如下：</p>
 <ul>
 <li>请求者（Client）：Client 角色就是向链发送请求的角色，在上面的例子中，Main 函数扮演这个角色；</li>
@@ -408,7 +408,7 @@
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本节介绍了责任链模式的概念、示例，责任链模式很好的降低了请求者和处理者的耦合度，弱化了前后关系，使得请求者不必关心请求真正是被哪个环节的哪个责任人处理，另外责任链模式下，链的调用顺序也是可控的，这也很好的实现了有序性。</p>
 <p>责任人链模式的链式调用，有个非常明显的缺点就是：每个请求可能都是从头到尾走一遍，特别是调用链比较长时，这就加剧了系统的响应时间及导致调试的复杂性。</p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/638c2.png" alt=""></p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/638c2.png"></p>
 
       
     </div>

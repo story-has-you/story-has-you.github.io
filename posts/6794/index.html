@@ -144,7 +144,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -390,7 +390,7 @@
 <p>如果队列设置了Dead Letter Exchange（DLX），那么这些Dead Letter就会被重新publish到Dead Letter Exchange，通过Dead Letter Exchange路由到其他队列。</p>
 <h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><p>将RabbitMQ的TTL和DLX特性结合在一起，实现一个延迟队列。</p>
 <p>延迟消费是延迟队列最为常用的使用模式。如下图所示，生产者产生的消息首先会进入缓冲队列（图中红色队列）。通过RabbitMQ提供的TTL扩展，这些消息会被设置过期时间，也就是延迟消费的时间。等消息过期之后，这些消息会通过配置好的DLX转发到实际消费队列（图中蓝色队列），以此达到延迟消费的效果</p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/zu1j3.png" alt=""></p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/zu1j3.png"></p>
 <h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>首先我们在Intellij中创建一个Spring Boot工程，并且添加<code>spring-boot-starter-amqp</code>扩展。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-amqp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -429,7 +429,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">14:17:14.534  INFO 9400 --- [           main] c.s.e.r.RabbitMQExampleApplicationTest   : 已发送延迟队列消息</span><br><span class="line">&#x2F;&#x2F; 10s 后</span><br><span class="line">14:17:24.586  INFO 9396 --- [ntContainer#1-1] c.s.e.rabbitmq.receive.RabbitReceive     : 延迟队列: hello delay</span><br></pre></td></tr></table></figure>
 
 
-<h2 id="使用RabbitMQ插件实现延迟队列"><a href="#使用RabbitMQ插件实现延迟队列" class="headerlink" title="使用RabbitMQ插件实现延迟队列"></a>使用RabbitMQ插件实现延迟队列</h2><p>首先去rabbitmq官网下载插件: <a href="https://www.rabbitmq.com/community-plugins.html" target="_blank" rel="noopener">https://www.rabbitmq.com/community-plugins.html</a>, 找到<code>rabbitmq_delayed_message_exchange</code>下载<br>安装</p>
+<h2 id="使用RabbitMQ插件实现延迟队列"><a href="#使用RabbitMQ插件实现延迟队列" class="headerlink" title="使用RabbitMQ插件实现延迟队列"></a>使用RabbitMQ插件实现延迟队列</h2><p>首先去rabbitmq官网下载插件: <a href="https://www.rabbitmq.com/community-plugins.html" target="_blank" rel="noopener">https://www.rabbitmq.com/community-plugins.html</a>, 找到<code>rabbitmq_delayed_message_exchange </code>下载<br>安装</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rabbitmq-plugins enable rabbitmq_delayed_message_exchange</span><br></pre></td></tr></table></figure>
 
 <p>需要改一下RabbitMQ的Java配置文件</p>

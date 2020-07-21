@@ -145,7 +145,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -385,7 +385,7 @@
 <li>使用者（Client）：实际使用 Builder 模式的角色，即下面的测试类。</li>
 </ul>
 <h2 id="建造者模式-UML-类图"><a href="#建造者模式-UML-类图" class="headerlink" title="建造者模式 UML 类图"></a>建造者模式 UML 类图</h2><p>我们还是以最开始讲的建造大楼为例，其 UML 类图大致如下：</p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/e0gqg.png" alt=""></p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/e0gqg.png"></p>
 <p>建造者模式的代码实现如下，首先是产品类（Product）：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String ground;</span><br><span class="line">    <span class="keyword">private</span> String cement;</span><br><span class="line">    <span class="keyword">private</span> String roof;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Product</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getGround</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ground;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setGround</span><span class="params">(String ground)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.ground = ground;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCement</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> cement;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCement</span><span class="params">(String cement)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.cement = cement;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getRoof</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> roof;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRoof</span><span class="params">(String roof)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.roof = roof;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -409,7 +409,7 @@
 <li>相同的组件或配件都可以装配到一个对象，但是产生的结果又不相同，可以使用建造者模式。</li>
 </ul>
 <h2 id="建造者模式-VS-工厂方法模式"><a href="#建造者模式-VS-工厂方法模式" class="headerlink" title="建造者模式 VS 工厂方法模式"></a>建造者模式 VS 工厂方法模式</h2><p>建造者模式关注的是零件类型和装配顺序（工艺）同为创建型模式，注重点不同。另外工厂模式只有一个建造方法，而建造者模式有多个建造零部件的方法并且强调建造顺序，而工厂模式没有顺序的概念。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>将复杂物体的构建与表现相分离，这就是建造者模式，很像生活中搭积木这种，一个个按需要按方式进行拼凑，建造者模式适应于产品类比较复杂调度方式不一的场景。<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/3r1g3.png" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>将复杂物体的构建与表现相分离，这就是建造者模式，很像生活中搭积木这种，一个个按需要按方式进行拼凑，建造者模式适应于产品类比较复杂调度方式不一的场景。<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/3r1g3.png"></p>
 
       
     </div>

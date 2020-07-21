@@ -144,7 +144,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -441,7 +441,7 @@
 <h3 id="BeanFactoryPostProcessor"><a href="#BeanFactoryPostProcessor" class="headerlink" title="BeanFactoryPostProcessor"></a>BeanFactoryPostProcessor</h3><p>BeanFactory级别的处理，是针对整个Bean的⼯⼚进⾏处理，典型应⽤:PropertyPlaceholderConﬁgurer</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BeanFactoryPostProcessor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">postProcessBeanFactory</span><span class="params">(ConfigurableListableBeanFactory beanFactory)</span> <span class="keyword">throws</span> BeansException</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>此接⼝只提供了⼀个⽅法，⽅法参数为ConﬁgurableListableBeanFactory，该参数类型定义了⼀些⽅法<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/dkgap.png" alt=""></p>
+<p>此接⼝只提供了⼀个⽅法，⽅法参数为ConﬁgurableListableBeanFactory，该参数类型定义了⼀些⽅法<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/dkgap.png"></p>
 <p>其中有个⽅法名为getBeanDeﬁnition的⽅法，我们可以根据此⽅法，找到我们定义bean 的 BeanDeﬁnition对象。然后我们可以对定义的属性进⾏修改。</p>
 <blockquote>
 <p>BeanDeﬁnition对象：我们在 XML 中定义的 bean 标签，Spring 解析 bean 标签成为⼀个 JavaBean， 这个JavaBean 就是 BeanDeﬁnition</p>

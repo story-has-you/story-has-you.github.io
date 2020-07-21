@@ -145,7 +145,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -382,9 +382,9 @@
 <li>调用方 bug 导致的突发请求；</li>
 <li>恶意攻击请求。</li>
 </ul>
-<h2 id="为什么要分布式限流"><a href="#为什么要分布式限流" class="headerlink" title="为什么要分布式限流"></a>为什么要分布式限流</h2><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/n5f5g.png" alt=""></p>
+<h2 id="为什么要分布式限流"><a href="#为什么要分布式限流" class="headerlink" title="为什么要分布式限流"></a>为什么要分布式限流</h2><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/n5f5g.png"></p>
 <p>当应用为单点应用时，只要应用进行了限流，那么应用所依赖的各种服务也都得到了保护。</p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/weji9.png" alt=""></p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/weji9.png"></p>
 <p>但线上业务出于各种原因考虑，多是分布式系统，单节点的限流仅能保护自身节点，但无法保护应用依赖的各种服务，并且在进行节点扩容、缩容时也无法准确控制整个服务的请求限制。</p>
 <p>而如果实现了分布式限流，那么就可以方便地控制整个服务集群的请求限制，且由于整个集群的请求数量得到了限制，因此服务依赖的各种资源也得到了限流的保护。</p>
 <h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>使用注解实现限流，在需要限流的方法上添加注解以及参数即可</p>

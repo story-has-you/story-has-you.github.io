@@ -148,7 +148,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -381,7 +381,7 @@
 <a id="more"></a>
 
 
-<h2 id="何为产品族"><a href="#何为产品族" class="headerlink" title="何为产品族"></a>何为产品族</h2><p>上面我们讲到一组相关或相互依赖的对象，这个怎么理解？比如，PC 机的主板和显卡就是两个相互依赖的产品线（也叫做产品族）。<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/i169r.png" alt=""></p>
+<h2 id="何为产品族"><a href="#何为产品族" class="headerlink" title="何为产品族"></a>何为产品族</h2><p>上面我们讲到一组相关或相互依赖的对象，这个怎么理解？比如，PC 机的主板和显卡就是两个相互依赖的产品线（也叫做产品族）。<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/i169r.png"></p>
 <h2 id="模式特点"><a href="#模式特点" class="headerlink" title="模式特点"></a>模式特点</h2><p>抽象工厂模式使用时，一般具有如下特点：</p>
 <ul>
 <li>系统中有多个产品族，每个具体工厂负责创建同一族但属于不同产品等级（产品种类）的产品</li>
@@ -398,7 +398,7 @@
 </ul>
 <p>实现抽象产品所定义的接口，和具体工厂是多对一的关系：</p>
 <h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2><p>这里继续以上面的冰箱、电视为例进行说明，其结构图如下所示：</p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/wwylz.png" alt=""></p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/wwylz.png"></p>
 <p>本例中，使用抽象工厂模式来设计两个工厂，一个是 TCL 厂另一个是美的厂，分别用来生产 TCL 和美的的电视、冰箱这两种产品，工厂类中使用 newTelevision()、newRefrigerator() 分别表示对其的创建。</p>
 <p>程序代码如下，先是抽象工厂定义：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">    <span class="function">Television <span class="title">newTelevision</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">Refrigerator <span class="title">newRefrigerator</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -417,10 +417,10 @@
 <p>下面，就是我们的测试类：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Factory factory = <span class="keyword">new</span> TCLFactory();</span><br><span class="line">        Television television = factory.newTelevision();</span><br><span class="line">        Refrigerator refrigerator = factory.newRefrigerator();</span><br><span class="line"></span><br><span class="line">        television.dosomething(); <span class="comment">// 我是TCL电视机，我可以看电视</span></span><br><span class="line">        refrigerator.dosomething(); <span class="comment">// 我是TCL冰箱，我可以洗衣服</span></span><br><span class="line"></span><br><span class="line">        factory = <span class="keyword">new</span> MeiDFactory();</span><br><span class="line">        television = factory.newTelevision();</span><br><span class="line">        refrigerator = factory.newRefrigerator();</span><br><span class="line"></span><br><span class="line">        television.dosomething(); <span class="comment">// 我是美的电视机，我可以看电视</span></span><br><span class="line">        refrigerator.dosomething(); <span class="comment">// 我是美的冰箱，我可以洗衣服</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="模块拓展"><a href="#模块拓展" class="headerlink" title="模块拓展"></a>模块拓展</h2><p>假设某一天，我们要新增一个产品族，比如加一个海尔的电视机和冰箱，这时的做法就是直接新增一个海尔工厂，新增后的结构图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/z0ljg.png" alt=""><br>这个时候，就很好的体现了开闭原则，对修改关闭，对拓展开放，不需要修改源代码即可实现功能拓展。</p>
-<p>当产品族中需要增加一个新种类的产品时，比如新增产品 “风扇”，新的结构图简单罗列如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/s7de0.png" alt=""></p>
+<h2 id="模块拓展"><a href="#模块拓展" class="headerlink" title="模块拓展"></a>模块拓展</h2><p>假设某一天，我们要新增一个产品族，比如加一个海尔的电视机和冰箱，这时的做法就是直接新增一个海尔工厂，新增后的结构图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/z0ljg.png"><br>这个时候，就很好的体现了开闭原则，对修改关闭，对拓展开放，不需要修改源代码即可实现功能拓展。</p>
+<p>当产品族中需要增加一个新种类的产品时，比如新增产品 “风扇”，新的结构图简单罗列如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/s7de0.png"></p>
 <p>由图中可以清晰看到，当需要增加一个新的产品时，所有的工厂类都需要进行修改，不满足开闭原则。所以，这也是抽象工厂的一个弊端。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本节主要介绍了抽象工厂模式的概念、特点，以及产品族的概念，另外说明了抽象工厂模式的通用设计类图，优缺点等，大家可以好好理解下。<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/mqjx3.png" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本节主要介绍了抽象工厂模式的概念、特点，以及产品族的概念，另外说明了抽象工厂模式的通用设计类图，优缺点等，大家可以好好理解下。<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/mqjx3.png"></p>
 
       
     </div>

@@ -144,7 +144,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -383,7 +383,7 @@
 <li>查询服务（Look Up Service）：用来查询具体业务范畴或对象的具体业务实现，对应上文的就是业务顾问要根据查询服务查询对客户进行服务的具体窗口（服务实现）；</li>
 <li>业务服务（Business Service）：具体的业务服务实现类，对应的就是具体的服务窗口。</li>
 </ul>
-<p>业务代表模式的通用 UML 类图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/hq59f.jpg" alt=""></p>
+<p>业务代表模式的通用 UML 类图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/hq59f.jpg"></p>
 <h2 id="业务代表模式代码实现"><a href="#业务代表模式代码实现" class="headerlink" title="业务代表模式代码实现"></a>业务代表模式代码实现</h2><p>业务代表模式的通用代码如下：</p>
 <h3 id="业务服务"><a href="#业务服务" class="headerlink" title="业务服务"></a>业务服务</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 业务服务抽象接口</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BusinessService</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 提供的服务</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">doTask</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 

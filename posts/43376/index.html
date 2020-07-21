@@ -148,7 +148,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -379,12 +379,12 @@
 <a id="more"></a>
 
 <p>Bridge 的意思就是 “桥梁”，好比现实生活中的桥梁，它的存在就是将河流两侧的东西给连接起来，应用到软件里面 Bridge 就是将<strong>类的功能层次结构与实现层次结构</strong>连接起来。</p>
-<h2 id="类的功能层次结构-VS-实现层次结构"><a href="#类的功能层次结构-VS-实现层次结构" class="headerlink" title="类的功能层次结构 VS 实现层次结构"></a>类的功能层次结构 VS 实现层次结构</h2><p>这里解释下什么叫做功能层次结构和实现层次结构。比方说，我们有一个类叫做 Abstraction，当我们想在 Abstraction 上增加新的功能时，一般我们会新建一个子类继承 Abstraction，比如叫 RefinedAbstraction 类，新类一般还会增加自定义的一些功能方法，这种就构成了一个简单的类层次结构：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/76y8k.png" alt=""><br>这种层次机构具有如下特点：</p>
+<h2 id="类的功能层次结构-VS-实现层次结构"><a href="#类的功能层次结构-VS-实现层次结构" class="headerlink" title="类的功能层次结构 VS 实现层次结构"></a>类的功能层次结构 VS 实现层次结构</h2><p>这里解释下什么叫做功能层次结构和实现层次结构。比方说，我们有一个类叫做 Abstraction，当我们想在 Abstraction 上增加新的功能时，一般我们会新建一个子类继承 Abstraction，比如叫 RefinedAbstraction 类，新类一般还会增加自定义的一些功能方法，这种就构成了一个简单的类层次结构：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/76y8k.png"><br>这种层次机构具有如下特点：</p>
 <ul>
 <li>父类具备基本功能</li>
 <li>子类在父类基础上添加新的功能<br>这种就称为 “类的功能层次结构”，当然，当我们继续添加新的功能时，一般我们选择某一功能层级的类然后继承它，在其基础上进行新功能的追加。（类的层级太深反而不好）</li>
 </ul>
-<p>什么又叫做类的实现层次机构呢？我们都知道抽象类的作用，抽象类一般声明一套接口（API），然后子类继承并实现这套接口，简单来说就是父类定义接口，子类实现接口。这种接口层面的“实现”关系就会产生一套层次结构，比如如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/r1wjb.png" alt=""></p>
+<p>什么又叫做类的实现层次机构呢？我们都知道抽象类的作用，抽象类一般声明一套接口（API），然后子类继承并实现这套接口，简单来说就是父类定义接口，子类实现接口。这种接口层面的“实现”关系就会产生一套层次结构，比如如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/r1wjb.png"></p>
 <p>这种基于“实现”层级有如下特点：</p>
 <ul>
 <li>父类声明抽象方法定义相关接口（API）</li>
@@ -392,7 +392,7 @@
 </ul>
 <p>这种因“实现”产生的结构层级就叫做“类的实现层级”。</p>
 <p>讲了这么多，Bridge 模式就是为了将<strong>类的功能层次结构与实现层次结构连接起来</strong>，充当中间桥梁的作用。</p>
-<h2 id="Bridge-模式的-UML-类图"><a href="#Bridge-模式的-UML-类图" class="headerlink" title="Bridge 模式的 UML 类图"></a>Bridge 模式的 UML 类图</h2><p>上面说了那么多，可能有点云里雾里，下面是 Bridge 模式的类图，通过图来理解可能会好一些：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/475pa.png" alt=""></p>
+<h2 id="Bridge-模式的-UML-类图"><a href="#Bridge-模式的-UML-类图" class="headerlink" title="Bridge 模式的 UML 类图"></a>Bridge 模式的 UML 类图</h2><p>上面说了那么多，可能有点云里雾里，下面是 Bridge 模式的类图，通过图来理解可能会好一些：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/475pa.png"></p>
 <h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p>桥接模式中包含了几种角色，分别是：</p>
 <ul>
 <li>抽象化（Abstraction）：该角色位于属于 “类的功能层次结构” 的最上层，用于定义抽象接口，一般是抽象类而不是抽象接口。其内部往往包含一个实现类接口实例（Implementor），使用委托方式进行内部调用；</li>
@@ -401,7 +401,7 @@
 <li>具体实现者（ConcreteImplementor）：该角色用于实现 Implementor 角色中定义的接口，不同的实现类提供不同的业务处理方法，程序运行时，ConcreteImplementor 将替换 Abstraction 中的 Implementor，提供给抽象类具体的业务操作方法。</li>
 </ul>
 <h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2><p>下面我们通过一个例子来理解下 Bridge 模式，我们都知道手机品牌有很多，每种手机上面又包含各种各样的软件，我们如何表示“在手机上运行软件”这一活动？手机的品牌和软件是两个维度上的东西，可以类比为上面的“功能层级”和“实现层级”，桥接模式的作用就是将这些不同的实现独立开来，从而应对不断地变化，下面是具体的类图设计：</p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/s035y.png" alt=""></p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/s035y.png"></p>
 <p>这里我们定义抽象类 MobilePhoneAbstraction，表示手机抽象类，该类自带 run 方法来 “运行各种软件”，示例代码如下:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">MobilePhoneAbstraction</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> SoftImplementor impl;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MobilePhoneAbstraction</span><span class="params">(SoftImplementor impl)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.impl = impl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -431,7 +431,7 @@
 <li>更好的拓展性：系统拓展时，因为抽象与实现已经分别独立，所以可以进行分别拓展不会相互影响，从而大大提高系统拓展性。</li>
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>桥接模式是解决一个系统有多个变化维度的一种设计模式，分离了抽象接口与实现部分，提高了系统的可拓展性，符合开闭原则，相反地，也增加了系统的理解与设计上的复杂性。</p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/eaf0y.png" alt=""></p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/eaf0y.png"></p>
 
       
     </div>

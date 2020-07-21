@@ -144,7 +144,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -384,7 +384,7 @@
 <li>抽象迭代器（Iterator）角色：该角色负责定义访问和遍历元素的接口；</li>
 <li>具体迭代器（Concrete Iterator）角色：该角色实现 Iterator 接口，完成容器元素的遍历；</li>
 <li>抽象聚集（Aggregate）角色：该角色提供创建迭代器角色的接口；</li>
-<li>具体聚集（Concrete Aggregate）角色：该角色实现抽象聚集接口，创建出容纳迭代器的对象。<br>角色之间的关系，如下图所示：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/hz29s.png" alt=""></li>
+<li>具体聚集（Concrete Aggregate）角色：该角色实现抽象聚集接口，创建出容纳迭代器的对象。<br>角色之间的关系，如下图所示：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/hz29s.png"></li>
 </ul>
 <h2 id="迭代器模式代码实现"><a href="#迭代器模式代码实现" class="headerlink" title="迭代器模式代码实现"></a>迭代器模式代码实现</h2><h3 id="抽象迭代器"><a href="#抽象迭代器" class="headerlink" title="抽象迭代器"></a>抽象迭代器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Iterator</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">next</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 

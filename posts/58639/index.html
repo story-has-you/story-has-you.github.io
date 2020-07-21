@@ -145,7 +145,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -380,7 +380,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">TreeSet&lt;String&gt; treeSet = <span class="keyword">new</span> TreeSet&lt;&gt;(<span class="keyword">new</span> Comparator&lt;String&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(String o1, String o2)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 使用自然排序的逆序排列</span></span><br><span class="line">        <span class="keyword">return</span> o2.compareTo(o1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">treeSet.add(<span class="string">"lily"</span>);</span><br><span class="line">treeSet.add(<span class="string">"yerkim"</span>);</span><br><span class="line">treeSet.add(<span class="string">"admin"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (String s : treeSet) &#123;</span><br><span class="line">    System.out.println(s); <span class="comment">// yerkim lily admin</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>结果比较明显，依次打印：yerkim lily admin，为什么要提到 TreeSet 这种数据结构，其实策略模式有点类似这种，我们上面所说的通用算法接口就好比 compare 接口，具体算法实现类就好比我们上面自行实现的排序类，而所谓的 Context 就好比一个调用入口，隔离底层算法实现。</p>
-<h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p>策略模式的通用类图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/qw4dk.jpg" alt=""></p>
+<h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p>策略模式的通用类图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/qw4dk.jpg"></p>
 <p>包含的角色罗列如下：</p>
 <ul>
 <li>上下文角色（Context）：该角色一般是一个实现类或者封装类，起到一定的封装及隔离作用，实际接受请求并将请求委托给实际的算法实现类处理，避免外界对底层策略的直接访问;</li>
@@ -420,7 +420,7 @@
 <p>上下文角色中定义了一个外部调用的 api 接口 getSortList，这样我们只需要初始化 StringSortContext 的时候指定排序策略，再调用 getSortList 即可获取排序结果，具体的排序策略如何实现对客户端是不可见的。测试类就是我们的 main 方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">3</span>);</span><br><span class="line">list.add(<span class="string">"admin"</span>);</span><br><span class="line">list.add(<span class="string">"code-shop"</span>);</span><br><span class="line">list.add(<span class="string">"lucy"</span>);</span><br><span class="line"></span><br><span class="line">StringSortContext context = <span class="keyword">new</span> StringSortContext(<span class="keyword">new</span> StringSortStrategyReverse());</span><br><span class="line">List&lt;String&gt; reverseSortedList = context.getSortList(list);</span><br><span class="line">System.out.println(reverseSortedList); <span class="comment">// [lucy, code-shop, admin]</span></span><br><span class="line"></span><br><span class="line">StringSortContext context2 = <span class="keyword">new</span> StringSortContext(<span class="keyword">new</span> StringSortStrategyNormal());</span><br><span class="line">List&lt;String&gt; normalSortedList = context2.getSortList(list);</span><br><span class="line">System.out.println(normalSortedList); <span class="comment">// [admin, code-shop, lucy]</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这节我们介绍了策略模式，总的来说比较简单，重点在于策略的切换，虽然说具体策略的实现如何客户端是不可见的，但是客户端进行初始化 Context 上下文角色的时候需要明确知晓系统有多少策略，这就对客户端要求较高了。<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/2c39z.jpg" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这节我们介绍了策略模式，总的来说比较简单，重点在于策略的切换，虽然说具体策略的实现如何客户端是不可见的，但是客户端进行初始化 Context 上下文角色的时候需要明确知晓系统有多少策略，这就对客户端要求较高了。<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/2c39z.jpg"></p>
 
       
     </div>

@@ -147,7 +147,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -381,7 +381,7 @@
 <p>外观模式的定义是：<strong>为各个子系统的一组接口提供一致的调用窗口或门面，使得子系统更容易使用，使得复杂的子系统与客户端分离解耦。</strong></p>
 <p>下面用一个简单的例子来说明下使用外观模式和不使用外观模式下系统设计的差别，继续看吧。</p>
 <h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2><p>这里还是以上面的射击游戏为例，先来看下不使用外观模式时候的类图设计</p>
-<h3 id="不使用外观模式"><a href="#不使用外观模式" class="headerlink" title="不使用外观模式"></a>不使用外观模式</h3><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/ycz1m.jpeg" alt=""></p>
+<h3 id="不使用外观模式"><a href="#不使用外观模式" class="headerlink" title="不使用外观模式"></a>不使用外观模式</h3><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/ycz1m.jpeg"></p>
 <p>这里代码比较简单，我们直接列出武器系统和用户系统的示例代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FireSystem</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fire</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"开火...."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">useBullet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"上子弹...."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserSystem</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loseBlood</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"掉血..."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addScore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"得分..."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -391,7 +391,7 @@
 <p>测试结果如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">上子弹…</span><br><span class="line">开火…</span><br><span class="line">掉血…</span><br><span class="line">得分…</span><br></pre></td></tr></table></figure>
 
-<h3 id="使用外观模式"><a href="#使用外观模式" class="headerlink" title="使用外观模式"></a>使用外观模式</h3><p>上面不使用外观模式时，可以看到客户端需要自己去直接调用各个子系统 API，系统模块多的时候对客户端十分不友好，下面我们看下使用外观模式如何解决这种问题，外观模式的类图设计如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/kfq0a.png" alt=""></p>
+<h3 id="使用外观模式"><a href="#使用外观模式" class="headerlink" title="使用外观模式"></a>使用外观模式</h3><p>上面不使用外观模式时，可以看到客户端需要自己去直接调用各个子系统 API，系统模块多的时候对客户端十分不友好，下面我们看下使用外观模式如何解决这种问题，外观模式的类图设计如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/kfq0a.png"></p>
 <p>这里我们引入 Facade 角色，该角色内部包含各个子系统的被委托的对象，客户端的所有请求经过 Facade 角色中转，简化了客户端操作的复杂性，Facade 代码示例如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Facade</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 被委托的对象</span></span><br><span class="line">    <span class="keyword">private</span> FireSystem fireSystem;</span><br><span class="line">    <span class="keyword">private</span> UserSystem userSystem;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Facade</span><span class="params">(FireSystem fireSystem, UserSystem userSystem)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.fireSystem = fireSystem;</span><br><span class="line">        <span class="keyword">this</span>.userSystem = userSystem;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 模拟射击的门面接口 API</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">shooting</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        fireSystem.useBullet(); <span class="comment">// 上子弹</span></span><br><span class="line">        fireSystem.fire(); <span class="comment">// 开火</span></span><br><span class="line">        userSystem.loseBlood(); <span class="comment">// 敌人掉血</span></span><br><span class="line">        userSystem.addScore(); <span class="comment">// 自己加分</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -402,7 +402,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">上子弹…</span><br><span class="line">开火…</span><br><span class="line">掉血…</span><br><span class="line">得分…</span><br></pre></td></tr></table></figure>
 
 <p>可以看出，门面模式下，客户端接口调用的复杂性有所降低，并且内部系统和客户端之间解耦，使用门面模式下的“接待员”接口即可完成功能操作。</p>
-<h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/3v5wl.png" alt=""></p>
+<h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/3v5wl.png"></p>
 <p>外观模式的一般类图如上所示，包含的角色列举如下：</p>
 <ul>
 <li>门面角色（Facade）：门面模式自然少不了门面角色，这就是我们的 Facade 类，一般情况下，该角色会将客户端的请求委派给相应的子系统去调用，也就说该角色实际没有啥实质性的业务逻辑，只是一个单纯的委派类，用来实现客户端和子系统的解耦；</li>
@@ -418,7 +418,7 @@
 <li>增加新的子系统可能需要修改外观类或者客户端的源代码，违背了开闭原则；</li>
 <li>外观类并没有阻断子系统被外部使用的可能性。</li>
 </ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这节我们介绍了什么是外观模式，以及外观模式的代码示例，总结下外观模式的特点及本节内容如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/7pp82.png" alt=""></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这节我们介绍了什么是外观模式，以及外观模式的代码示例，总结下外观模式的特点及本节内容如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/7pp82.png"></p>
 
       
     </div>

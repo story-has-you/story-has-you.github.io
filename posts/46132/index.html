@@ -145,7 +145,7 @@
 
 
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.1"></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
@@ -393,7 +393,7 @@
 <li>私有化的类成员变量</li>
 <li>公共的类实例的访问方法</li>
 </ul>
-<p>其 UML 类图大致如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/6zzc5.png" alt=""></p>
+<p>其 UML 类图大致如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/6zzc5.png"></p>
 <p>单例模式的实现一般有懒汉式和饿汉式两种，分别列举如下，首先是懒汉式：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用类变量来缓存创建过的实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> Singleton instance = <span class="keyword">null</span>; <span class="comment">// 保证instance线程同步</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用synchronized关键字修饰，确保线程安全</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            instance = <span class="keyword">new</span> Singleton();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -436,7 +436,7 @@
 <li>使用 protect 取代原先的 private 的构造方法，确保子类可继承</li>
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这节我们学习了单例模式，单例模式在工作中使用的还是比较多的，比如要生成唯一序列号、唯一连接对象等等这些都是要用到单例模式的，然后我们又介绍了下单例模式的优缺点以及简单说了下单例注册表的相关知识点，大家可以好好练习下。</p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/jp3de.png" alt=""></p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/jp3de.png"></p>
 
       
     </div>
