@@ -79,14 +79,16 @@
 
 
 
-<meta name="description" content="对于技术人员来说，“架构”是一个再常见不过的词了。我们会对新员工培训整个系统的架构，参加架构设计评审，学习业界开源系统（例如，MySQL、Hadoop）的架构，研究大公司的架构实现（例如，微信架构、淘宝架构）……虽然“架构”这个词常见，但如果深究一下“架构”到底指什么，大部分人也许并不一定能够准确地回答。">
+<meta name="description" content="大数据概述大数据（Big Data）：指无法在一定时间范围内用常规软件工具进行捕捉、管理和处理的数据集合，是需要新处理模式才能具有更强的决策力、洞察发现力和流程优化能力的海量、高增长和多样化的信息资产。主要解决：海量数据的存储和海量数据的分析问题。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="大型网站架构演化">
-<meta property="og:url" content="https://www.story-has-you.top/posts/13992/index.html">
+<meta property="og:title" content="大数据以及Hadoop介绍">
+<meta property="og:url" content="https://www.story-has-you.top/posts/36196/index.html">
 <meta property="og:site_name" content="story-has-you">
-<meta property="og:description" content="对于技术人员来说，“架构”是一个再常见不过的词了。我们会对新员工培训整个系统的架构，参加架构设计评审，学习业界开源系统（例如，MySQL、Hadoop）的架构，研究大公司的架构实现（例如，微信架构、淘宝架构）……虽然“架构”这个词常见，但如果深究一下“架构”到底指什么，大部分人也许并不一定能够准确地回答。">
-<meta property="article:published_time" content="2020-03-31T11:49:29.000Z">
-<meta property="article:modified_time" content="2020-04-25T14:37:25.691Z">
+<meta property="og:description" content="大数据概述大数据（Big Data）：指无法在一定时间范围内用常规软件工具进行捕捉、管理和处理的数据集合，是需要新处理模式才能具有更强的决策力、洞察发现力和流程优化能力的海量、高增长和多样化的信息资产。主要解决：海量数据的存储和海量数据的分析问题。">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/514611/1598966225145-cc3ce6ce-df13-4957-862f-75a5b69a9a7a.png#align=left&display=inline&height=341&margin=%5Bobject%20Object%5D&originHeight=1362&originWidth=2306&size=0&status=done&style=none&width=577">
+<meta property="og:image" content="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/sb1xm.png">
+<meta property="article:published_time" content="2020-09-06T05:04:18.000Z">
+<meta property="article:modified_time" content="2020-09-06T05:06:48.259Z">
 <meta property="article:author" content="[故事有你]">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="spring">
@@ -97,6 +99,7 @@
 <meta property="article:tag" content="[故事有你]">
 <meta property="article:tag" content="story-has-you">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2020/png/514611/1598966225145-cc3ce6ce-df13-4957-862f-75a5b69a9a7a.png#align=left&display=inline&height=341&margin=%5Bobject%20Object%5D&originHeight=1362&originWidth=2306&size=0&status=done&style=none&width=577">
 
 
 
@@ -126,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="https://www.story-has-you.top/posts/13992/"/>
+  <link rel="canonical" href="https://www.story-has-you.top/posts/36196/"/>
 
 
 
 
 
-  <title>大型网站架构演化 | story-has-you</title>
+  <title>大数据以及Hadoop介绍 | story-has-you</title>
   
 
 
@@ -249,7 +252,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.story-has-you.top/posts/13992/">
+    <link itemprop="mainEntityOfPage" href="https://www.story-has-you.top/posts/36196/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="[故事有你]">
@@ -266,7 +269,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">大型网站架构演化</h2>
+          <h2 class="post-title" itemprop="name headline">大数据以及Hadoop介绍</h2>
         
 
         <div class="post-meta">
@@ -278,8 +281,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-31T19:49:29+08:00">
-                2020-03-31
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-06T13:04:18+08:00">
+                2020-09-06
               </time>
             
 
@@ -301,8 +304,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index">
-                    <span itemprop="name">架构设计</span>
+                  <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
                   </a>
                 </span>
 
@@ -332,7 +335,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.1k
+                  886
                 </span>
               
 
@@ -369,32 +372,73 @@
       
 
       
-        <p>对于技术人员来说，“架构”是一个再常见不过的词了。我们会对新员工培训整个系统的架构，参加架构设计评审，学习业界开源系统（例如，MySQL、Hadoop）的架构，研究大公司的架构实现（例如，微信架构、淘宝架构）……虽然“架构”这个词常见，但如果深究一下“架构”到底指什么，大部分人也许并不一定能够准确地回答。</p>
+        <h2 id="大数据概述"><a href="#大数据概述" class="headerlink" title="大数据概述"></a>大数据概述</h2><p>大数据（Big Data）：指无法在一定时间范围内用常规软件工具进行捕捉、管理和处理的数据集合，是需要新处理模式才能具有更强的决策力、洞察发现力和流程优化能力的海量、高增长和多样化的信息资产。<br>主要解决：海量数据的存储和海量数据的分析问题。</p>
 <a id="more"></a>
 
-
-<h2 id="大型网站软件系统的特点"><a href="#大型网站软件系统的特点" class="headerlink" title="大型网站软件系统的特点"></a>大型网站软件系统的特点</h2><ul>
-<li>高并发、大流量：需要面对高并发用户，大流量访问。</li>
-<li>高可用：系统 7x24小时不间断服务。</li>
-<li>海量数据：需要存储、管理海量数据，需要使用大量的服务器。</li>
-<li>用户分布广泛，网络情况复杂：很多大型互联网服务的用户都是全球各地的，而且各个运营商之间的通信也是难题。</li>
-<li>安全环境恶劣：互联网的开放性，使得有很多网站遭受攻击。</li>
-<li>需求快速变更，发布频繁：和传统软件不同，互联网项目为了快速适应市场，满足用户需求，其发布的速度是极高的。</li>
-<li>渐进式发展：很多大型的互联网都是从一个小网站开始的，逐渐的发展起来的。</li>
+<p>按顺序给出的数据存储单位：bit、Byte、KB、MB、GB、TB、PB、ZB、YB、BB、NB、DB<br>大数据应用场景</p>
+<ul>
+<li>物流仓储：大数据分析系统助力商家精细化运营、提升销量、节约成本。</li>
+<li>零食：分析用户消费习惯，为用户购买商品提供方便，提升销量。</li>
+<li>旅游：结合大数据能力与旅游行业需求，共建旅游产业智慧管理、智慧服务。</li>
+<li>广告推荐：给用户推荐可能喜欢的商品。</li>
+<li>保险、房产、人工智能等。</li>
 </ul>
-<h2 id="大型网站架构演化发展历程"><a href="#大型网站架构演化发展历程" class="headerlink" title="大型网站架构演化发展历程"></a>大型网站架构演化发展历程</h2><ol>
-<li>初始阶段的网站架构：应用程序、数据库、文件等所有的资源都放在一个服务器上，通常是Linux。用户一多导致性能越来越差。</li>
-<li>应用服务和数据服务分离：应用程序、数据库、文件分别放在三个不同的服务器上。用户多了会导致数据库压力太大，影响整个性能。</li>
-<li>使用缓存改善网站性能：网站访问也遵循着二八定律：80%的业务访问集中在20%的数据上。我们可以将一小部分数据缓存在内存中，就可以减少数据库的压力，改善数据库的写入性能。</li>
-<li>使用应用服务器集群改善网络的并发处理能力：一个服务部署多个节点，通过负载均衡，可以将单台服务器的压力分散到多个服务器上。</li>
-<li>数据库读写分离：大部分主流数据库提供热备功能，通过配置两台数据库的主从关系，可以将一台数据库服务器的数据同步到另一台上。写数据访问主数据库，读数据访问从数据库。</li>
-<li>使用反向代理和CDN加速响应：CDN和反向代理其实都是缓存，区别在于CDN部署在网络提供商的机房，可以在用户访问的时候访问所在最近的机房获取数据；用户首先访问反向代理服务器，如果服务器上有用户请求的资源，可以直接返回给用户。</li>
-<li>使用分布式文件系统和分布式数据库系统：可以使用云上的OSS系统，数据量如果很多，采用分库分表的方式访问。</li>
-<li>使用NoSQL和搜索引擎：随着业务的发展，对数据的存储和检索也很复杂，网站需要一些NoSQL和非数据库查询手段。</li>
-<li>业务拆分：业务越来越多的时候，通过使用分而治之的手段将这个业务分拆不同的产品线，如大型的电商可以分为首页、商铺、订单、买家、卖家等。</li>
-<li>分布式服务：可以将许多相同的业务操作，如用户管理，商品管理等这些公共等业务抽取出来，独立部署。</li>
+<h2 id="Hadoop介绍"><a href="#Hadoop介绍" class="headerlink" title="Hadoop介绍"></a>Hadoop介绍</h2><h3 id="Hadoop是什么"><a href="#Hadoop是什么" class="headerlink" title="Hadoop是什么"></a>Hadoop是什么</h3><ol>
+<li>Hadoop是一个由Apache基金会所开发的分布式系统基础架构</li>
+<li>主要解决海量数据的存储和海量数据的分析问题</li>
+<li>广义上说，Hadoop通常泛指一个更广泛的概念——Hadoop生态圈<br>谷歌是Hadoop思想的起源，Google在大数据方便的三篇论文</li>
 </ol>
-<h2 id="大型网站演化的价值观"><a href="#大型网站演化的价值观" class="headerlink" title="大型网站演化的价值观"></a>大型网站演化的价值观</h2><p>没有什么网站一开始就是大型网站，都是从小型网站发展过来的，淘宝、京东也是如此。大型网站架构要做到可变形，随着网站所要的需求灵活应对。驱动大型网站架构发展的力量是网站的业务发展。不要一味这追随大公司的解救方案，学会借鉴大公司的经验成功模式，而不是跟着抄。也不要盲目追求最新的技术，适合就行。</p>
+<ul>
+<li>GFS对应HDFS</li>
+<li>Map_Reduce对应MR</li>
+<li>BigTable对应HBase<h3 id="Hadoop三大发行版本"><a href="#Hadoop三大发行版本" class="headerlink" title="Hadoop三大发行版本"></a>Hadoop三大发行版本</h3></li>
+<li>Apache：最原始、最基础的版本，对于入门学习最好。</li>
+<li>Cloudera：内部集成了很多大数据框架，对应产品CDH。企业用的最多</li>
+<li>Hortonworks：文档较好，对应产品HDP。</li>
+</ul>
+<h3 id="Hadoop优势"><a href="#Hadoop优势" class="headerlink" title="Hadoop优势"></a>Hadoop优势</h3><ol>
+<li>高可靠性：Hadoop底层维护了多个数据副本，所以即使Hadoop某个计算元素或存储出现故障，也不会导致数据丢失。</li>
+<li>高扩展性：在集群间分配任务数据，可方便的扩展数以千计的节点。</li>
+<li>高效性：在MapReduce的思想下，Hadoop是并行工作的，以加快任务的处理速度。</li>
+<li>高容错性：能够自动给失败的任务重新分配。</li>
+</ol>
+<h3 id="Hadoop架构"><a href="#Hadoop架构" class="headerlink" title="Hadoop架构"></a>Hadoop架构</h3><p><img src="https://cdn.nlark.com/yuque/0/2020/png/514611/1598966225145-cc3ce6ce-df13-4957-862f-75a5b69a9a7a.png#align=left&display=inline&height=341&margin=%5Bobject%20Object%5D&originHeight=1362&originWidth=2306&size=0&status=done&style=none&width=577"></p>
+<h3 id="HDFS架构"><a href="#HDFS架构" class="headerlink" title="HDFS架构"></a>HDFS架构</h3><p>HDFS(Hadoop Distributed File System)：分布式文件存储系统，将大数据分开存储，落在不同大硬盘上。HDFS中的几个概念</p>
+<ul>
+<li>NameNode(nn)：存储文件的元数据，如文件名、文件目录结构、文件属性，以及每个文件的快列表和快列表所在的DataNode。相当于一个索引的存在。一个集群中，只有一个NameNode。</li>
+<li>DataNode(dn)：在本地文件系统存储文件快数据，以及快数据的校验和。一个集群中，有N个DataNode。</li>
+<li>Secondary NameNode(2nn)：每隔一段时间对NameNode元数据备份，但是不能顶替NameNode。</li>
+</ul>
+<p>HDFS是一个1主N从的架构。</p>
+<h3 id="YARN架构"><a href="#YARN架构" class="headerlink" title="YARN架构"></a>YARN架构</h3><p>YRAN主要工作是资源调度，主要调度的对象就是CPU和内存。YRAN也是一个1主N从的架构。<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/sb1xm.png"></p>
+<p>ResourceManager的作用</p>
+<ol>
+<li>处理客户端请求</li>
+<li>监控NodeManager</li>
+<li>启动或监控ApplicationMaster</li>
+<li>资源的分配和调用</li>
+</ol>
+<p>NodeManage的作用</p>
+<ol>
+<li>管理单个节点上的资源</li>
+<li>处理来自ResourceManager的命令</li>
+<li>处理来自ApplicationMaster的命令</li>
+</ol>
+<p>ApplicationMaster作用</p>
+<ol>
+<li>负责数据切分</li>
+<li>为应用程序申请资源</li>
+<li>任务的监控与容错</li>
+</ol>
+<p>Container的作用</p>
+<ol>
+<li>Container是YRAN的资源抽象，封装了某个节点上多维度资源，如内存、CPU、磁盘、网络等。</li>
+</ol>
+<h3 id="MapReduce架构"><a href="#MapReduce架构" class="headerlink" title="MapReduce架构"></a>MapReduce架构</h3><p>MapReduce是一个计算框架，将计算分为两个阶段，Map和Reduce</p>
+<ol>
+<li>Map阶段并行处理输入数据</li>
+<li>Reduce阶段对Map阶段的结果进行汇总</li>
+</ol>
 
       
     </div>
@@ -415,7 +459,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://www.story-has-you.top/posts/13992/" title="大型网站架构演化">https://www.story-has-you.top/posts/13992/</a>
+    <a href="https://www.story-has-you.top/posts/36196/" title="大数据以及Hadoop介绍">https://www.story-has-you.top/posts/36196/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -437,8 +481,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/18252/" rel="next" title="线程池详解">
-                <i class="fa fa-chevron-left"></i> 线程池详解
+              <a href="/posts/12684/" rel="next" title="Spring Boot Json序列化终极配置">
+                <i class="fa fa-chevron-left"></i> Spring Boot Json序列化终极配置
               </a>
             
           </div>
@@ -447,8 +491,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/posts/41791/" rel="prev" title="通过 CompletableFuture 组装异步计算单元">
-                通过 CompletableFuture 组装异步计算单元 <i class="fa fa-chevron-right"></i>
+              <a href="/posts/22030/" rel="prev" title="Hadoop集群搭建">
+                Hadoop集群搭建 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -598,7 +642,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#大型网站软件系统的特点"><span class="nav-number">1.</span> <span class="nav-text">大型网站软件系统的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大型网站架构演化发展历程"><span class="nav-number">2.</span> <span class="nav-text">大型网站架构演化发展历程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大型网站演化的价值观"><span class="nav-number">3.</span> <span class="nav-text">大型网站演化的价值观</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#大数据概述"><span class="nav-number">1.</span> <span class="nav-text">大数据概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop介绍"><span class="nav-number">2.</span> <span class="nav-text">Hadoop介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop是什么"><span class="nav-number">2.1.</span> <span class="nav-text">Hadoop是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop三大发行版本"><span class="nav-number">2.2.</span> <span class="nav-text">Hadoop三大发行版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop优势"><span class="nav-number">2.3.</span> <span class="nav-text">Hadoop优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop架构"><span class="nav-number">2.4.</span> <span class="nav-text">Hadoop架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HDFS架构"><span class="nav-number">2.5.</span> <span class="nav-text">HDFS架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YARN架构"><span class="nav-number">2.6.</span> <span class="nav-text">YARN架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MapReduce架构"><span class="nav-number">2.7.</span> <span class="nav-text">MapReduce架构</span></a></li></ol></li></ol></div>
             
 
           </div>
