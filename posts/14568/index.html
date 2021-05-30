@@ -40,7 +40,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -382,7 +384,17 @@
                 
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    1.5k
+                </div>
+                
 
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
+                    5 Min
+                </div>
                 
 
                 
@@ -391,13 +403,16 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>模板模式（Template Pattern）又被称作模板方法模式（Template Method Pattern），它是一种简单的、常见的且应用非常广泛的模式。</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <blockquote>
 <p>Define the skeleton of an algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm’s structure.</p>
@@ -410,18 +425,69 @@
 <li>具体模板（Concrete Template）角色：该角色实现抽象模板中定义的一个或多个抽象方法，每一个抽象模板角色都可以有任意多个具体模板角色与之对应，而每一个具体模板角色都可以给出这些抽象方法的不同实现，从而使得顶级逻辑的实现各不相同。</li>
 </ul>
 <p>角色之间的 UML 关系图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/ewr01.jpg"></p>
-<h2 id="模板模式代码实现"><a href="#模板模式代码实现" class="headerlink" title="模板模式代码实现"></a>模板模式代码实现</h2><h3 id="抽象模板"><a href="#抽象模板" class="headerlink" title="抽象模板"></a>抽象模板</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 抽象模板</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractTemplate</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 模板方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">templateMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//（所有）基本方法</span></span><br><span class="line">        abstractMethod();</span><br><span class="line">        hookMethod();</span><br><span class="line">        concreteMethod();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 抽象方法，必须有子类实现</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">abstractMethod</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 钩子方法，子类可以选择重写或不重写</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">hookMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 具体方法，子类不可修改</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">concreteMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"抽象类中的具体方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="模板模式代码实现"><a href="#模板模式代码实现" class="headerlink" title="模板模式代码实现"></a>模板模式代码实现</h2><h3 id="抽象模板"><a href="#抽象模板" class="headerlink" title="抽象模板"></a>抽象模板</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 抽象模板
+ */</span>
+<span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">AbstractTemplate</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 模板方法</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">templateMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">//（所有）基本方法</span>
+        <span class="token function">abstractMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">hookMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">concreteMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 抽象方法，必须有子类实现</span>
+    <span class="token keyword">protected</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">abstractMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 钩子方法，子类可以选择重写或不重写</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">hookMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 具体方法，子类不可修改</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">concreteMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"抽象类中的具体方法"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h3 id="具体模板-A"><a href="#具体模板-A" class="headerlink" title="具体模板 A"></a>具体模板 A</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 具体模板 A 类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteTemplateA</span> <span class="keyword">extends</span> <span class="title">AbstractTemplate</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">abstractMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"A 子类中重写的抽象方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="具体模板-A"><a href="#具体模板-A" class="headerlink" title="具体模板 A"></a>具体模板 A</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 具体模板 A 类
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name">ConcreteTemplateA</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractTemplate</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">abstractMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"A 子类中重写的抽象方法"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h3 id="具体模板-B"><a href="#具体模板-B" class="headerlink" title="具体模板 B"></a>具体模板 B</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 具体模板 B 类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ConcreteTemplateB</span> <span class="keyword">extends</span> <span class="title">AbstractTemplate</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">abstractMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"B 子类中重写的抽象方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="具体模板-B"><a href="#具体模板-B" class="headerlink" title="具体模板 B"></a>具体模板 B</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 具体模板 B 类
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name">ConcreteTemplateB</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractTemplate</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">abstractMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"B 子类中重写的抽象方法"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="调用"><a href="#调用" class="headerlink" title="调用"></a>调用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        AbstractTemplate tp = <span class="keyword">new</span> ConcreteTemplateA();</span><br><span class="line">        <span class="comment">// 调用子类 A 的模板方法</span></span><br><span class="line">        tp.templateMethod();</span><br><span class="line">        tp = <span class="keyword">new</span> ConcreteTemplateB();</span><br><span class="line">        <span class="comment">// 调用子类 B 的模板方法</span></span><br><span class="line">        tp.templateMethod();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="调用"><a href="#调用" class="headerlink" title="调用"></a>调用</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">AbstractTemplate</span> tp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcreteTemplateA</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 调用子类 A 的模板方法</span>
+        tp<span class="token punctuation">.</span><span class="token function">templateMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        tp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcreteTemplateB</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 调用子类 B 的模板方法</span>
+        tp<span class="token punctuation">.</span><span class="token function">templateMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>程序执行结果如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">A 子类中重写的抽象方法</span><br><span class="line"></span><br><span class="line">抽象类中的具体方法</span><br><span class="line"></span><br><span class="line">B 子类中重写的抽象方法</span><br><span class="line"></span><br><span class="line">抽象类中的具体方法</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">A</span> 子类中重写的抽象方法
+
+抽象类中的具体方法
+
+<span class="token class-name">B</span> 子类中重写的抽象方法
+
+抽象类中的具体方法<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>从以上代码可以看出，在模板模式中，方法分为两类：模版方法和基本方法，而基本方法又分为：抽象方法，具体方法，钩子方法。</p>
 <ul>
@@ -449,16 +515,73 @@
 <li>重构时，模板方法模式是一个经常使用的模式，把相同的代码抽取到父类中，然后通过钩子函数约束其行为。</li>
 </ul>
 <h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2><p>以生活中上班的过程为例，我们上班的通常流程是：起床洗漱 -&gt; 通勤（开车、坐公交、打车） -&gt; 到达公司。从以上步骤可以看出，只有通勤部分是不一样的，其他都一样，因为开车可能会被限号，就只能打车或坐公交去公司了，下面我们用代码（模板模式）来实现一下。</p>
-<h3 id="上班抽象类"><a href="#上班抽象类" class="headerlink" title="上班抽象类"></a>上班抽象类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 上班抽象（模板）类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractWork</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 模板方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">gotoWork</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        getup();</span><br><span class="line">        commute();</span><br><span class="line">        arrive();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 起床洗漱</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"1.起床洗漱"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 通勤</span></span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">commute</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 到达公司</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">arrive</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"3.到达公司"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="上班抽象类"><a href="#上班抽象类" class="headerlink" title="上班抽象类"></a>上班抽象类</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 上班抽象（模板）类
+ */</span>
+<span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">AbstractWork</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 模板方法</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">gotoWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">getup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">commute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">arrive</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 起床洗漱</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">getup</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"1.起床洗漱"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 通勤</span>
+    <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">commute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 到达公司</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">arrive</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"3.到达公司"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="开车上班"><a href="#开车上班" class="headerlink" title="开车上班"></a>开车上班</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 开车上班</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DriveToWork</span> <span class="keyword">extends</span> <span class="title">AbstractWork</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">commute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"2.开车去公司"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="开车上班"><a href="#开车上班" class="headerlink" title="开车上班"></a>开车上班</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 开车上班
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name">DriveToWork</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractWork</span> <span class="token punctuation">{</span>
 
-<h3 id="坐公交上班"><a href="#坐公交上班" class="headerlink" title="坐公交上班"></a>坐公交上班</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 坐公交上班</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BusToWork</span> <span class="keyword">extends</span> <span class="title">AbstractWork</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">commute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"2.坐公交去公司"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">void</span> <span class="token function">commute</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"2.开车去公司"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        AbstractWork work = <span class="keyword">new</span> DriveToWork();</span><br><span class="line">        <span class="comment">// 开车上班</span></span><br><span class="line">        work.gotoWork();</span><br><span class="line">        work = <span class="keyword">new</span> BusToWork();</span><br><span class="line">        <span class="comment">// 坐公交上班</span></span><br><span class="line">        work.gotoWork();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="坐公交上班"><a href="#坐公交上班" class="headerlink" title="坐公交上班"></a>坐公交上班</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 坐公交上班
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name">BusToWork</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractWork</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">void</span> <span class="token function">commute</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"2.坐公交去公司"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">AbstractWork</span> work <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DriveToWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 开车上班</span>
+        work<span class="token punctuation">.</span><span class="token function">gotoWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        work <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BusToWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 坐公交上班</span>
+        work<span class="token punctuation">.</span><span class="token function">gotoWork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>程序执行结果如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>. 起床洗漱</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>. 开车去公司</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>. 到达公司</span><br><span class="line"></span><br><span class="line"><span class="number">1</span>. 起床洗漱</span><br><span class="line"></span><br><span class="line"><span class="number">2</span>. 坐公交去公司</span><br><span class="line"></span><br><span class="line"><span class="number">3</span>. 到达公司</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token number">1.</span> 起床洗漱
+
+<span class="token number">2.</span> 开车去公司
+
+<span class="token number">3.</span> 到达公司
+
+<span class="token number">1.</span> 起床洗漱
+
+<span class="token number">2.</span> 坐公交去公司
+
+<span class="token number">3.</span> 到达公司<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>模板模式的精髓是复用抽象类中的公共方法，重写抽象类中的基础（抽象）方法，选择性使用抽象类中的钩子（hook Method）方法。使用模板模式的关键是：子类可以置换掉父类的可变部分，但是子类却不可以改变模板方法所代表的顶级逻辑。</p>
 
@@ -845,6 +968,9 @@ Represent an operation to be performed on the elements of an object structure. V
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;Total Words:&nbsp;<span
+                        class="white-color">84.3k</span>
             
             
             

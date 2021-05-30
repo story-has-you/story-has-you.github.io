@@ -40,7 +40,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -382,7 +384,17 @@
                 
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    1.5k
+                </div>
+                
 
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
+                    6 Min
+                </div>
                 
 
                 
@@ -390,6 +402,9 @@
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
 
         
@@ -400,46 +415,175 @@
 <li>LVS：一种四层负载均衡器，软负载均衡，完成所有负载均衡业务需求，比如数据库、web服务、虚拟化技术。Linux2.4内核之后，默认集成。</li>
 <li>Keepalived：LVS基础之上，实现心跳检测、监控服务器实现故障转移，如果服务器发生宕机，可以尝试自动重试脚本。</li>
 </ul>
-<a id="more"></a>
+<span id="more"></span>
 
 
 <p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/5oyzm.png"></p>
 <h2 id="安装keepalived"><a href="#安装keepalived" class="headerlink" title="安装keepalived"></a>安装keepalived</h2><p>下载keepalived</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://www.keepalived.org/software/keepalived-1.2.18.tar.gz</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> http://www.keepalived.org/software/keepalived-1.2.18.tar.gz<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>解压安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf keepalived-1.2.18.tar.gz -C /usr/<span class="built_in">local</span>/</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> -zxvf keepalived-1.2.18.tar.gz -C /usr/local/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>下载插件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install -y openssl openssl-devel</span><br><span class="line">yum -y install libnl libnl-devel</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token function">install</span> -y openssl openssl-devel
+yum -y <span class="token function">install</span> libnl libnl-devel<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>开始编译keepalived</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr/<span class="built_in">local</span>/keepalived</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./configure --prefix<span class="token operator">=</span>/usr/local/keepalived<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>如果报错: keepalived执行./configure –prefix=/usr/local/keepalived时报错：configure: error: Popt libraries is required<br>出现此错误的原因：未安装popt的开发包<br>解决方法：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install popt-devel</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">yum <span class="token function">install</span> popt-devel<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>安装好popt的开发包。重新./configure 即可。</p>
 <p>keepalived安装成Linux系统服务<br>将keepalived安装成Linux系统服务，因为没有使用keepalived的默认安装路径（默认路径：/usr/local）,安装完成之后，需要做一些修改工作：<br>首先创建文件夹，将keepalived配置文件进行复制：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mkdir /etc/keepalived</span><br><span class="line">cp /usr/<span class="built_in">local</span>/keepalived/etc/keepalived/keepalived.conf /etc/keepalived/</span><br><span class="line">然后复制keepalived脚本文件：</span><br><span class="line">cp /usr/<span class="built_in">local</span>/keepalived/etc/rc.d/init.d/keepalived /etc/init.d/</span><br><span class="line">cp /usr/<span class="built_in">local</span>/keepalived/etc/sysconfig/keepalived /etc/sysconfig/</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/sbin/keepalived /usr/sbin/</span><br><span class="line">ln -s /usr/<span class="built_in">local</span>/keepalived/sbin/keepalived /sbin/</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">mkdir</span> /etc/keepalived
+<span class="token function">cp</span> /usr/local/keepalived/etc/keepalived/keepalived.conf /etc/keepalived/
+然后复制keepalived脚本文件：
+<span class="token function">cp</span> /usr/local/keepalived/etc/rc.d/init.d/keepalived /etc/init.d/
+<span class="token function">cp</span> /usr/local/keepalived/etc/sysconfig/keepalived /etc/sysconfig/
+<span class="token function">ln</span> -s /usr/local/sbin/keepalived /usr/sbin/
+<span class="token function">ln</span> -s /usr/local/keepalived/sbin/keepalived /sbin/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>可以设置开机启动：chkconfig keepalived on，到此我们安装完毕!</p>
 <h2 id="配置keepalived"><a href="#配置keepalived" class="headerlink" title="配置keepalived"></a>配置keepalived</h2><p>vim /etc/keepalived/keepalived.conf</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">! Configuration File <span class="keyword">for</span> keepalived</span><br><span class="line"></span><br><span class="line">vrrp_script chk_nginx &#123;</span><br><span class="line">    script <span class="string">"/etc/keepalived/nginx_check.sh"</span> <span class="comment">#运行脚本，脚本内容下面有，就是起到一个nginx宕机以后，自动开启服务</span></span><br><span class="line">    interval 2 <span class="comment">#检测时间间隔</span></span><br><span class="line">    weight -20 <span class="comment">#如果条件成立的话，则权重 -20</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 定义虚拟路由，VI_1 为虚拟路由的标示符，自己定义名称</span></span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    <span class="comment">###MASTER 主的意思  BACKUP 从</span></span><br><span class="line">    state MASTER <span class="comment">#来决定主从</span></span><br><span class="line">    interface eth0 <span class="comment"># 绑定虚拟 IP 的网络接口，根据自己的机器填写</span></span><br><span class="line">    virtual_router_id 121 <span class="comment"># 虚拟路由的 ID 号， 两个节点设置必须一样</span></span><br><span class="line">    mcast_src_ip 10.0.0.13 <span class="comment">#填写本机ip</span></span><br><span class="line">    priority 100 <span class="comment"># 节点优先级,主要比从节点优先级高</span></span><br><span class="line">    nopreempt <span class="comment"># 优先级高的设置 nopreempt 解决异常恢复后再次抢占的问题</span></span><br><span class="line">    advert_int 1 <span class="comment"># 组播信息发送间隔，两个节点设置必须一样，默认 1s</span></span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_type PASS</span><br><span class="line">        auth_pass 1111</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># 将 track_script 块加入 instance 配置块</span></span><br><span class="line">    track_script &#123;</span><br><span class="line">        chk_nginx <span class="comment">#执行 Nginx 监控的服务</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">### 虚拟IP地址配置规范 假设192.168.212.143</span></span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        10.0.0.20 <span class="comment"># 虚拟ip,也就是解决写死程序的ip怎么能切换的ip,也可扩展，用途广泛。可配置多个。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">!</span> Configuration File <span class="token keyword">for</span> keepalived
+
+vrrp_script chk_nginx <span class="token punctuation">{</span>
+    script <span class="token string">"/etc/keepalived/nginx_check.sh"</span> <span class="token comment">#运行脚本，脚本内容下面有，就是起到一个nginx宕机以后，自动开启服务</span>
+    interval <span class="token number">2</span> <span class="token comment">#检测时间间隔</span>
+    weight -20 <span class="token comment">#如果条件成立的话，则权重 -20</span>
+<span class="token punctuation">}</span>
+<span class="token comment"># 定义虚拟路由，VI_1 为虚拟路由的标示符，自己定义名称</span>
+vrrp_instance VI_1 <span class="token punctuation">{</span>
+    <span class="token comment">###MASTER 主的意思  BACKUP 从</span>
+    state MASTER <span class="token comment">#来决定主从</span>
+    interface eth0 <span class="token comment"># 绑定虚拟 IP 的网络接口，根据自己的机器填写</span>
+    virtual_router_id <span class="token number">121</span> <span class="token comment"># 虚拟路由的 ID 号， 两个节点设置必须一样</span>
+    mcast_src_ip <span class="token number">10.0</span>.0.13 <span class="token comment">#填写本机ip</span>
+    priority <span class="token number">100</span> <span class="token comment"># 节点优先级,主要比从节点优先级高</span>
+    nopreempt <span class="token comment"># 优先级高的设置 nopreempt 解决异常恢复后再次抢占的问题</span>
+    advert_int <span class="token number">1</span> <span class="token comment"># 组播信息发送间隔，两个节点设置必须一样，默认 1s</span>
+    authentication <span class="token punctuation">{</span>
+        auth_type PASS
+        auth_pass <span class="token number">1111</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment"># 将 track_script 块加入 instance 配置块</span>
+    track_script <span class="token punctuation">{</span>
+        chk_nginx <span class="token comment">#执行 Nginx 监控的服务</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">### 虚拟IP地址配置规范 假设192.168.212.143</span>
+    virtual_ipaddress <span class="token punctuation">{</span>
+        <span class="token number">10.0</span>.0.20 <span class="token comment"># 虚拟ip,也就是解决写死程序的ip怎么能切换的ip,也可扩展，用途广泛。可配置多个。</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>nginx重启脚本</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">nginx_check.sh</span><br><span class="line"></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">A=`ps -C nginx –no-header |wc -l`</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$A</span> -eq 0 ];<span class="keyword">then</span></span><br><span class="line">    /usr/<span class="built_in">local</span>/nginx/sbin/nginx</span><br><span class="line">    sleep 2</span><br><span class="line">    <span class="keyword">if</span> [ `ps -C nginx --no-header |wc -l` -eq 0 ];<span class="keyword">then</span></span><br><span class="line">        killall keepalived</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">nginx_check.sh
+
+<span class="token comment">#!/bin/bash</span>
+<span class="token assign-left variable">A</span><span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token function">ps</span> -C nginx –no-header <span class="token operator">|</span><span class="token function">wc</span> -l<span class="token variable">`</span></span>
+<span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable">$A</span> -eq <span class="token number">0</span> <span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token keyword">then</span>
+    /usr/local/nginx/sbin/nginx
+    <span class="token function">sleep</span> <span class="token number">2</span>
+    <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token variable"><span class="token variable">`</span><span class="token function">ps</span> -C nginx --no-header <span class="token operator">|</span><span class="token function">wc</span> -l<span class="token variable">`</span></span> -eq <span class="token number">0</span> <span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token keyword">then</span>
+        <span class="token function">killall</span> keepalived
+    <span class="token keyword">fi</span>
+<span class="token keyword">fi</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>假设有三个节点，两个虚拟ip: 192.168.208.100,192.168.208.101，三个节点都正常的话，两个ip都访问master节点。如果master节点挂了，我们要让192.168.208.100访问node1节点，192.168.208.101访问node2节点。</p>
 <p>master节点配置</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义虚拟路由，VI_1 为虚拟路由的标示符，自己定义名称</span></span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    <span class="comment">###MASTER 主的意思  BACKUP 从</span></span><br><span class="line">    state MASTER <span class="comment">#来决定主从</span></span><br><span class="line">    interface ens33 <span class="comment"># 绑定虚拟 IP 的网络接口，根据自己的机器填写</span></span><br><span class="line">    virtual_router_id 121 <span class="comment"># 虚拟路由的 ID 号， 两个节点设置必须一样</span></span><br><span class="line">    mcast_src_ip 192.168.208.129 <span class="comment">#填写本机ip</span></span><br><span class="line">    priority 100 <span class="comment"># 节点优先级,主要比从节点优先级高</span></span><br><span class="line">    nopreempt <span class="comment"># 优先级高的设置 nopreempt 解决异常恢复后再次抢占的问题</span></span><br><span class="line">    advert_int 1 <span class="comment"># 组播信息发送间隔，两个节点设置必须一样，默认 1s</span></span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_type PASS</span><br><span class="line">        auth_pass 1111</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">### 虚拟IP地址配置规范 假设192.168.212.143</span></span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        192.168.208.100 <span class="comment"># 虚拟ip,也就是解决写死程序的ip怎么能切换的ip,也可扩展，用途广泛。可配置多个。</span></span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">vrrp_instance VI_2 &#123;</span><br><span class="line">    <span class="comment">###MASTER 主的意思  BACKUP 从</span></span><br><span class="line">    state MASTER <span class="comment">#来决定主从</span></span><br><span class="line">    interface ens33 <span class="comment"># 绑定虚拟 IP 的网络接口，根据自己的机器填写</span></span><br><span class="line">    virtual_router_id 122 <span class="comment"># 虚拟路由的 ID 号， 两个节点设置必须一样</span></span><br><span class="line">    mcast_src_ip 192.168.208.129 <span class="comment">#填写本机ip</span></span><br><span class="line">    priority 100 <span class="comment"># 节点优先级,主要比从节点优先级高</span></span><br><span class="line">    nopreempt <span class="comment"># 优先级高的设置 nopreempt 解决异常恢复后再次抢占的问题</span></span><br><span class="line">    advert_int 1 <span class="comment"># 组播信息发送间隔，两个节点设置必须一样，默认 1s</span></span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_type PASS</span><br><span class="line">        auth_pass 1111</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">### 虚拟IP地址配置规范 假设192.168.212.143</span></span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        192.168.208.101</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 定义虚拟路由，VI_1 为虚拟路由的标示符，自己定义名称</span>
+vrrp_instance VI_1 <span class="token punctuation">{</span>
+    <span class="token comment">###MASTER 主的意思  BACKUP 从</span>
+    state MASTER <span class="token comment">#来决定主从</span>
+    interface ens33 <span class="token comment"># 绑定虚拟 IP 的网络接口，根据自己的机器填写</span>
+    virtual_router_id <span class="token number">121</span> <span class="token comment"># 虚拟路由的 ID 号， 两个节点设置必须一样</span>
+    mcast_src_ip <span class="token number">192.168</span>.208.129 <span class="token comment">#填写本机ip</span>
+    priority <span class="token number">100</span> <span class="token comment"># 节点优先级,主要比从节点优先级高</span>
+    nopreempt <span class="token comment"># 优先级高的设置 nopreempt 解决异常恢复后再次抢占的问题</span>
+    advert_int <span class="token number">1</span> <span class="token comment"># 组播信息发送间隔，两个节点设置必须一样，默认 1s</span>
+    authentication <span class="token punctuation">{</span>
+        auth_type PASS
+        auth_pass <span class="token number">1111</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">### 虚拟IP地址配置规范 假设192.168.212.143</span>
+    virtual_ipaddress <span class="token punctuation">{</span>
+        <span class="token number">192.168</span>.208.100 <span class="token comment"># 虚拟ip,也就是解决写死程序的ip怎么能切换的ip,也可扩展，用途广泛。可配置多个。</span>
+     <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+
+vrrp_instance VI_2 <span class="token punctuation">{</span>
+    <span class="token comment">###MASTER 主的意思  BACKUP 从</span>
+    state MASTER <span class="token comment">#来决定主从</span>
+    interface ens33 <span class="token comment"># 绑定虚拟 IP 的网络接口，根据自己的机器填写</span>
+    virtual_router_id <span class="token number">122</span> <span class="token comment"># 虚拟路由的 ID 号， 两个节点设置必须一样</span>
+    mcast_src_ip <span class="token number">192.168</span>.208.129 <span class="token comment">#填写本机ip</span>
+    priority <span class="token number">100</span> <span class="token comment"># 节点优先级,主要比从节点优先级高</span>
+    nopreempt <span class="token comment"># 优先级高的设置 nopreempt 解决异常恢复后再次抢占的问题</span>
+    advert_int <span class="token number">1</span> <span class="token comment"># 组播信息发送间隔，两个节点设置必须一样，默认 1s</span>
+    authentication <span class="token punctuation">{</span>
+        auth_type PASS
+        auth_pass <span class="token number">1111</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">### 虚拟IP地址配置规范 假设192.168.212.143</span>
+    virtual_ipaddress <span class="token punctuation">{</span>
+        <span class="token number">192.168</span>.208.101
+     <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 <p>node1节点配置</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">! Configuration File <span class="keyword">for</span> keepalived</span><br><span class="line"><span class="comment"># 定义虚拟路由，VI_1 为虚拟路由的标示符，自己定义名称</span></span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    <span class="comment">###MASTER 主的意思  BACKUP 从</span></span><br><span class="line">    state BACKUP <span class="comment">#来决定主从</span></span><br><span class="line">    interface ens33 <span class="comment"># 绑定虚拟 IP 的网络接口，根据自己的机器填写</span></span><br><span class="line">    virtual_router_id 121 <span class="comment"># 虚拟路由的 ID 号， 两个节点设置必须一样</span></span><br><span class="line">    mcast_src_ip 192.168.208.131 <span class="comment">#填写本机ip</span></span><br><span class="line">    priority 40 <span class="comment"># 节点优先级,主要比从节点优先级高</span></span><br><span class="line">    nopreempt <span class="comment"># 优先级高的设置 nopreempt 解决异常恢复后再次抢占的问题</span></span><br><span class="line">    advert_int 1 <span class="comment"># 组播信息发送间隔，两个节点设置必须一样，默认 1s</span></span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_type PASS</span><br><span class="line">        auth_pass 1111</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># 将 track_script 块加入 instance 配置块</span></span><br><span class="line">    track_script &#123;</span><br><span class="line">        chk_nginx <span class="comment">#执行 Nginx 监控的服务</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">### 虚拟IP地址配置规范 假设192.168.212.143</span></span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        192.168.208.100 <span class="comment"># 虚拟ip,也就是解决写死程序的ip怎么能切换的ip,也可扩展，用途广泛。可配置多个。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">!</span> Configuration File <span class="token keyword">for</span> keepalived
+<span class="token comment"># 定义虚拟路由，VI_1 为虚拟路由的标示符，自己定义名称</span>
+vrrp_instance VI_1 <span class="token punctuation">{</span>
+    <span class="token comment">###MASTER 主的意思  BACKUP 从</span>
+    state BACKUP <span class="token comment">#来决定主从</span>
+    interface ens33 <span class="token comment"># 绑定虚拟 IP 的网络接口，根据自己的机器填写</span>
+    virtual_router_id <span class="token number">121</span> <span class="token comment"># 虚拟路由的 ID 号， 两个节点设置必须一样</span>
+    mcast_src_ip <span class="token number">192.168</span>.208.131 <span class="token comment">#填写本机ip</span>
+    priority <span class="token number">40</span> <span class="token comment"># 节点优先级,主要比从节点优先级高</span>
+    nopreempt <span class="token comment"># 优先级高的设置 nopreempt 解决异常恢复后再次抢占的问题</span>
+    advert_int <span class="token number">1</span> <span class="token comment"># 组播信息发送间隔，两个节点设置必须一样，默认 1s</span>
+    authentication <span class="token punctuation">{</span>
+        auth_type PASS
+        auth_pass <span class="token number">1111</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment"># 将 track_script 块加入 instance 配置块</span>
+    track_script <span class="token punctuation">{</span>
+        chk_nginx <span class="token comment">#执行 Nginx 监控的服务</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">### 虚拟IP地址配置规范 假设192.168.212.143</span>
+    virtual_ipaddress <span class="token punctuation">{</span>
+        <span class="token number">192.168</span>.208.100 <span class="token comment"># 虚拟ip,也就是解决写死程序的ip怎么能切换的ip,也可扩展，用途广泛。可配置多个。</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 <p>node2节点配置</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">! Configuration File <span class="keyword">for</span> keepalived</span><br><span class="line">vrrp_instance VI_2 &#123;</span><br><span class="line">    <span class="comment">###MASTER 主的意思  BACKUP 从</span></span><br><span class="line">    state BACUUP <span class="comment">#来决定主从</span></span><br><span class="line">    interface ens33 <span class="comment"># 绑定虚拟 IP 的网络接口，根据自己的机器填写</span></span><br><span class="line">    virtual_router_id 122 <span class="comment"># 虚拟路由的 ID 号， 两个节点设置必须一样</span></span><br><span class="line">    mcast_src_ip 192.168.208.129 <span class="comment">#填写本机ip</span></span><br><span class="line">    priority 100 <span class="comment"># 节点优先级,主要比从节点优先级高</span></span><br><span class="line">    nopreempt <span class="comment"># 优先级高的设置 nopreempt 解决异常恢复后再次抢占的问题</span></span><br><span class="line">    advert_int 1 <span class="comment"># 组播信息发送间隔，两个节点设置必须一样，默认 1s</span></span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_type PASS</span><br><span class="line">        auth_pass 1111</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment"># 将 track_script 块加入 instance 配置块</span></span><br><span class="line">    track_script &#123;</span><br><span class="line">        chk_nginx <span class="comment">#执行 Nginx 监控的服务</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">### 虚拟IP地址配置规范 假设192.168.212.143</span></span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        192.168.208.101</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">!</span> Configuration File <span class="token keyword">for</span> keepalived
+vrrp_instance VI_2 <span class="token punctuation">{</span>
+    <span class="token comment">###MASTER 主的意思  BACKUP 从</span>
+    state BACUUP <span class="token comment">#来决定主从</span>
+    interface ens33 <span class="token comment"># 绑定虚拟 IP 的网络接口，根据自己的机器填写</span>
+    virtual_router_id <span class="token number">122</span> <span class="token comment"># 虚拟路由的 ID 号， 两个节点设置必须一样</span>
+    mcast_src_ip <span class="token number">192.168</span>.208.129 <span class="token comment">#填写本机ip</span>
+    priority <span class="token number">100</span> <span class="token comment"># 节点优先级,主要比从节点优先级高</span>
+    nopreempt <span class="token comment"># 优先级高的设置 nopreempt 解决异常恢复后再次抢占的问题</span>
+    advert_int <span class="token number">1</span> <span class="token comment"># 组播信息发送间隔，两个节点设置必须一样，默认 1s</span>
+    authentication <span class="token punctuation">{</span>
+        auth_type PASS
+        auth_pass <span class="token number">1111</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment"># 将 track_script 块加入 instance 配置块</span>
+    track_script <span class="token punctuation">{</span>
+        chk_nginx <span class="token comment">#执行 Nginx 监控的服务</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">### 虚拟IP地址配置规范 假设192.168.212.143</span>
+    virtual_ipaddress <span class="token punctuation">{</span>
+        <span class="token number">192.168</span>.208.101
+     <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
                 
@@ -823,6 +967,9 @@
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;Total Words:&nbsp;<span
+                        class="white-color">84.3k</span>
             
             
             

@@ -40,7 +40,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -382,7 +384,17 @@
                 
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    1.9k
+                </div>
+                
 
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
+                    6 Min
+                </div>
                 
 
                 
@@ -391,13 +403,16 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>本节我们要学习的设计模式叫做——装饰器模式，何为装饰器模式？</p>
-<a id="more"></a>
+<span id="more"></span>
 
 
 <p>假如我们现在有一个视频 video 需要播放，如果在 video 播放上加上弹幕，那我们的视频播放还是之前的播放，只不过在原有播放功能上加入了弹幕功能，同样地，我们可以在视频播放上加入 3D 效果，这样就有了 3D 播放功能。<strong>这种在原有基础上进行装饰，来添加新的功能的模式其实就叫做装饰器模式，简称装饰模式。</strong>最直观地就是我们买房后的装修，无非是对原有对象（房子）的一种额外装饰，我们在开头就讲过，软件设计模式其实是从建筑领域延申过来的，这样看来，一点没错。</p>
@@ -406,23 +421,121 @@
 <p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/ddib9.png"></p>
 <h3 id="MediaPlay-媒体播放抽象类"><a href="#MediaPlay-媒体播放抽象类" class="headerlink" title="MediaPlay 媒体播放抽象类"></a>MediaPlay 媒体播放抽象类</h3><p>媒体播放抽象类是具有媒体播放功能的抽象类。</p>
 <p>getMediaName 用于获取播放的媒体文件名，属于抽象方法，需要子类去实现；getMediaSeconds 用于获取播放的媒体的播放时长，也属于抽象方法，需要子类自行实现；getMediaContent 用于获取播放的媒体的内容，同样需要子类实现。play 是模拟的媒体播放方法，这里我们每隔一秒打印输出媒体内容，具体代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 定义 媒体播放 抽象类，用于模拟多媒体播放功能（Component 抽象构件角色）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">MediaPlay</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getMediaName</span><span class="params">()</span></span>; <span class="comment">// 获取要播放的媒体文件名称</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">int</span> <span class="title">getMediaSeconds</span><span class="params">()</span></span>; <span class="comment">// 获取要播放的媒体文件的播放时长（s）</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">getMediaContent</span><span class="params">()</span></span>; <span class="comment">// 获取需要播放的媒体文件内容</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 模拟媒体播放</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">play</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Media："</span> + getMediaName() + <span class="string">"(累计时长："</span> + getMediaSeconds() + <span class="string">" 秒) 正在播放"</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= getMediaSeconds(); i++) &#123;</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">                System.out.println(<span class="string">"当前播放第 "</span> + i + <span class="string">" 秒，"</span> + getMediaContent() + <span class="string">"..."</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 定义 媒体播放 抽象类，用于模拟多媒体播放功能（Component 抽象构件角色）
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">MediaPlay</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token class-name">String</span> <span class="token function">getMediaName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 获取要播放的媒体文件名称</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">int</span> <span class="token function">getMediaSeconds</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 获取要播放的媒体文件的播放时长（s）</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token class-name">String</span> <span class="token function">getMediaContent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 获取需要播放的媒体文件内容</span>
+
+    <span class="token comment">// 模拟媒体播放</span>
+    <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Media："</span> <span class="token operator">+</span> <span class="token function">getMediaName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"(累计时长："</span> <span class="token operator">+</span> <span class="token function">getMediaSeconds</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" 秒) 正在播放"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token function">getMediaSeconds</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token class-name">Thread</span><span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"当前播放第 "</span> <span class="token operator">+</span> i <span class="token operator">+</span> <span class="token string">" 秒，"</span> <span class="token operator">+</span> <span class="token function">getMediaContent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="VideoPlay-具体被装饰的类"><a href="#VideoPlay-具体被装饰的类" class="headerlink" title="VideoPlay 具体被装饰的类"></a>VideoPlay 具体被装饰的类</h3><p>上面的 MediaPlay 抽象类，如果仅仅查看代码是看不出完整端倪的，所以我们再看下它的子类——VideoPlay 具体实现类，该类的构造接收两个参数，分别是：视频名、视频内容。VideoPlay 类代表视频播放具体类，属于被装饰的角色，我们后面的弹幕视频播放就是修饰的该视频播放类，关键代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 视频播放类，模拟视频播放功能，属于真正被装饰的角色</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VideoPlay</span> <span class="keyword">extends</span> <span class="title">MediaPlay</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String videoContent; <span class="comment">// 播放的视频内容</span></span><br><span class="line">    <span class="keyword">private</span> String videoName; <span class="comment">// 播放的视频名称</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">VideoPlay</span><span class="params">(String videoName, String videoContent)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.videoName = videoName;</span><br><span class="line">        <span class="keyword">this</span>.videoContent = videoContent;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMediaName</span><span class="params">()</span> </span>&#123; <span class="comment">// 获取媒体文件（视频）名称</span></span><br><span class="line">        <span class="keyword">return</span> videoName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMediaSeconds</span><span class="params">()</span> </span>&#123; <span class="comment">// 获取媒体文件的播放时长</span></span><br><span class="line">        <span class="keyword">return</span> videoContent.length();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMediaContent</span><span class="params">()</span> </span>&#123; <span class="comment">// 获取媒体文件的播放内容</span></span><br><span class="line">        <span class="keyword">return</span> videoContent;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 视频播放类，模拟视频播放功能，属于真正被装饰的角色
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">VideoPlay</span> <span class="token keyword">extends</span> <span class="token class-name">MediaPlay</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">String</span> videoContent<span class="token punctuation">;</span> <span class="token comment">// 播放的视频内容</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> videoName<span class="token punctuation">;</span> <span class="token comment">// 播放的视频名称</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">VideoPlay</span><span class="token punctuation">(</span><span class="token class-name">String</span> videoName<span class="token punctuation">,</span> <span class="token class-name">String</span> videoContent<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>videoName <span class="token operator">=</span> videoName<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>videoContent <span class="token operator">=</span> videoContent<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getMediaName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// 获取媒体文件（视频）名称</span>
+        <span class="token keyword">return</span> videoName<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getMediaSeconds</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// 获取媒体文件的播放时长</span>
+        <span class="token keyword">return</span> videoContent<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getMediaContent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// 获取媒体文件的播放内容</span>
+        <span class="token keyword">return</span> videoContent<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="BarrageVideoPlay-弹幕播放抽象类"><a href="#BarrageVideoPlay-弹幕播放抽象类" class="headerlink" title="BarrageVideoPlay 弹幕播放抽象类"></a>BarrageVideoPlay 弹幕播放抽象类</h3><p>原有的视频播放太过单调，我们现在想在其基础上加入弹幕播放的功能，BarrageVideoPlay 抽象类用于定义我们要实现的弹幕播放功能，该类往往只是一个抽象类，内部持有 MediaPlay 类的引用，所以其子类可以比较方便的保留使用 MediaPlay 的既有功能，该类的代码实现如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 弹幕视频播放：定义弹幕播放的抽象角色，具体的弹幕实现交给子类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BarrageVideoPlay</span> <span class="keyword">extends</span> <span class="title">MediaPlay</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> MediaPlay mediaPlay;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BarrageVideoPlay</span><span class="params">(MediaPlay mediaPlay)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mediaPlay = mediaPlay;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 弹幕视频播放：定义弹幕播放的抽象角色，具体的弹幕实现交给子类</span>
+<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">BarrageVideoPlay</span> <span class="token keyword">extends</span> <span class="token class-name">MediaPlay</span><span class="token punctuation">{</span>
+
+    <span class="token keyword">protected</span> <span class="token class-name">MediaPlay</span> mediaPlay<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">BarrageVideoPlay</span><span class="token punctuation">(</span><span class="token class-name">MediaPlay</span> mediaPlay<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>mediaPlay <span class="token operator">=</span> mediaPlay<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 <h3 id="BarrageRedVideoPlay-弹幕播放的具体实现类"><a href="#BarrageRedVideoPlay-弹幕播放的具体实现类" class="headerlink" title="BarrageRedVideoPlay 弹幕播放的具体实现类"></a>BarrageRedVideoPlay 弹幕播放的具体实现类</h3><p>该类是 BarrageVideoPlay 抽象类的子类，内部具体实现了“弹幕功能”，父类持有 MediaPlay 类的引用，可以直接调用父类方法，只不过在方法内部可以实现装饰功能，添加一些装饰操作，具体实现类如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 实现弹幕播放的类，具体的装饰器的实现类，这里我们使用红色字体进行弹幕视频播放</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BarrageRedVideoPlay</span> <span class="keyword">extends</span> <span class="title">BarrageVideoPlay</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BarrageRedVideoPlay</span><span class="params">(MediaPlay mediaPlay)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(mediaPlay);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMediaName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mediaPlay.getMediaName() + <span class="string">"（已开启弹幕）"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMediaSeconds</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mediaPlay.getMediaSeconds();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMediaContent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"---+++*** "</span> + mediaPlay.getMediaContent() + <span class="string">"（弹幕中）---+++***"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 实现弹幕播放的类，具体的装饰器的实现类，这里我们使用红色字体进行弹幕视频播放</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BarrageRedVideoPlay</span> <span class="token keyword">extends</span> <span class="token class-name">BarrageVideoPlay</span><span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">BarrageRedVideoPlay</span><span class="token punctuation">(</span><span class="token class-name">MediaPlay</span> mediaPlay<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>mediaPlay<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getMediaName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> mediaPlay<span class="token punctuation">.</span><span class="token function">getMediaName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"（已开启弹幕）"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getMediaSeconds</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> mediaPlay<span class="token punctuation">.</span><span class="token function">getMediaSeconds</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getMediaContent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string">"---+++*** "</span> <span class="token operator">+</span> mediaPlay<span class="token punctuation">.</span><span class="token function">getMediaContent</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"（弹幕中）---+++***"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="Main-测试类"><a href="#Main-测试类" class="headerlink" title="Main 测试类"></a>Main 测试类</h3><p>接下来，我们进行测试，分别测试不加弹幕和添加弹幕的视频播放功能，测试代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MediaPlay mediaPlay = <span class="keyword">new</span> VideoPlay(<span class="string">"射雕英雄传"</span>, <span class="string">"郭靖大战欧阳锋"</span>);</span><br><span class="line">MediaPlay mediaPlay1 = <span class="keyword">new</span> BarrageRedVideoPlay(mediaPlay);</span><br><span class="line">mediaPlay.play(); <span class="comment">// 不加装饰时</span></span><br><span class="line">mediaPlay1.play(); <span class="comment">// 添加弹幕装饰时</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">MediaPlay</span> mediaPlay <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">VideoPlay</span><span class="token punctuation">(</span><span class="token string">"射雕英雄传"</span><span class="token punctuation">,</span> <span class="token string">"郭靖大战欧阳锋"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">MediaPlay</span> mediaPlay1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BarrageRedVideoPlay</span><span class="token punctuation">(</span>mediaPlay<span class="token punctuation">)</span><span class="token punctuation">;</span>
+mediaPlay<span class="token punctuation">.</span><span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 不加装饰时</span>
+mediaPlay1<span class="token punctuation">.</span><span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 添加弹幕装饰时</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>测试结果输出如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Media：射雕英雄传(累计时长：7 秒) 正在播放</span><br><span class="line">当前播放第 1 秒，郭靖大战欧阳锋…</span><br><span class="line">当前播放第 2 秒，郭靖大战欧阳锋…</span><br><span class="line">当前播放第 3 秒，郭靖大战欧阳锋…</span><br><span class="line">当前播放第 4 秒，郭靖大战欧阳锋…</span><br><span class="line">当前播放第 5 秒，郭靖大战欧阳锋…</span><br><span class="line">当前播放第 6 秒，郭靖大战欧阳锋…</span><br><span class="line">当前播放第 7 秒，郭靖大战欧阳锋…</span><br><span class="line">…</span><br><span class="line">Media：射雕英雄传（已开启弹幕）(累计时长：7 秒) 正在播放</span><br><span class="line">当前播放第 1 秒，—+*** 郭靖大战欧阳锋（弹幕中）—+***…</span><br><span class="line">当前播放第 2 秒，—+*** 郭靖大战欧阳锋（弹幕中）—+***…</span><br><span class="line">当前播放第 3 秒，—+*** 郭靖大战欧阳锋（弹幕中）—+***…</span><br><span class="line">当前播放第 4 秒，—+*** 郭靖大战欧阳锋（弹幕中）—+***…</span><br><span class="line">当前播放第 5 秒，—+*** 郭靖大战欧阳锋（弹幕中）—+***…</span><br><span class="line">当前播放第 6 秒，—+*** 郭靖大战欧阳锋（弹幕中）—+***…</span><br><span class="line">当前播放第 7 秒，—+*** 郭靖大战欧阳锋（弹幕中）—+***…</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">Media：射雕英雄传(累计时长：7 秒) 正在播放
+当前播放第 1 秒，郭靖大战欧阳锋…
+当前播放第 2 秒，郭靖大战欧阳锋…
+当前播放第 3 秒，郭靖大战欧阳锋…
+当前播放第 4 秒，郭靖大战欧阳锋…
+当前播放第 5 秒，郭靖大战欧阳锋…
+当前播放第 6 秒，郭靖大战欧阳锋…
+当前播放第 7 秒，郭靖大战欧阳锋…
+…
+Media：射雕英雄传（已开启弹幕）(累计时长：7 秒) 正在播放
+当前播放第 1 秒，—+*** 郭靖大战欧阳锋（弹幕中）—+***…
+当前播放第 2 秒，—+*** 郭靖大战欧阳锋（弹幕中）—+***…
+当前播放第 3 秒，—+*** 郭靖大战欧阳锋（弹幕中）—+***…
+当前播放第 4 秒，—+*** 郭靖大战欧阳锋（弹幕中）—+***…
+当前播放第 5 秒，—+*** 郭靖大战欧阳锋（弹幕中）—+***…
+当前播放第 6 秒，—+*** 郭靖大战欧阳锋（弹幕中）—+***…
+当前播放第 7 秒，—+*** 郭靖大战欧阳锋（弹幕中）—+***…<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>可以看到，添加弹幕装饰之后，我们的视频播放起来功能更加丰富了，这就是装饰器模式的好处，在不改变原有功能的基础上添加额外的装饰功能。</p>
 <h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/e558e.png"></p>
@@ -816,6 +929,9 @@
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;Total Words:&nbsp;<span
+                        class="white-color">84.3k</span>
             
             
             

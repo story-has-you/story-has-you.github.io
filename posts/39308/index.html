@@ -40,7 +40,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -382,7 +384,17 @@
                 
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    1.6k
+                </div>
+                
 
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
+                    6 Min
+                </div>
                 
 
                 
@@ -391,13 +403,16 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>业务代表模式（Business Delegate Pattern）主要是为了实现表现层和业务层的解耦，使用业务代表模式可以支持各种场景，在这些场景中，客户端可以根据需要自行选择不同的业务代表，每个业务代表负责的服务各有不同或者说服务类型不同，业务查询服务一般是负责公共的业务查询，提供给业务代表使用。</p>
-<a id="more"></a>
+<span id="more"></span>
 
 
 <p>业务代表模式是一种经典的 J2EE 设计模式，是业务解耦的一种手段。举个例子：生活中比较常见的去银行办理业务时，每种业务都会有不同的业务顾问（业务代表），客户办理业务时可以选择具体的业务顾问，每个业务顾问又负责不同的业务范畴，业务顾问进行业务办理时需要先进行业务询问或查询，也就说根据客户业务范畴选择可以进行服务的服务窗口，完事后就交由服务窗口负责客户具体服务了。</p>
@@ -410,28 +425,139 @@
 </ul>
 <p>业务代表模式的通用 UML 类图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/hq59f.jpg"></p>
 <h2 id="业务代表模式代码实现"><a href="#业务代表模式代码实现" class="headerlink" title="业务代表模式代码实现"></a>业务代表模式代码实现</h2><p>业务代表模式的通用代码如下：</p>
-<h3 id="业务服务"><a href="#业务服务" class="headerlink" title="业务服务"></a>业务服务</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 业务服务抽象接口</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BusinessService</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 提供的服务</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">doTask</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="业务服务"><a href="#业务服务" class="headerlink" title="业务服务"></a>业务服务</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 业务服务抽象接口
+ * @author Administrator
+ *
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">BusinessService</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 提供的服务</span>
+    <span class="token keyword">void</span> <span class="token function">doTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="业务服务的具体实现类"><a href="#业务服务的具体实现类" class="headerlink" title="业务服务的具体实现类"></a>业务服务的具体实现类</h3><p>服务实现类 1：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 业务服务具体实现类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BusinessServiceImpl1</span> <span class="keyword">implements</span> <span class="title">BusinessService</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doTask</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Processing task by invoking BusinessServiceImpl1"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 业务服务具体实现类
+ * @author Administrator
+ *
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BusinessServiceImpl1</span> <span class="token keyword">implements</span> <span class="token class-name">BusinessService</span><span class="token punctuation">{</span>
+    
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Processing task by invoking BusinessServiceImpl1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>服务实现类 2：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 业务服务的具体实现类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BusinessServiceImpl2</span> <span class="keyword">implements</span> <span class="title">BusinessService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doTask</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Processing task by invoking BusinessServiceImpl2"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 业务服务的具体实现类
+ * @author Administrator
+ *
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BusinessServiceImpl2</span> <span class="token keyword">implements</span> <span class="token class-name">BusinessService</span><span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Processing task by invoking BusinessServiceImpl2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h3 id="业务查询服务"><a href="#业务查询服务" class="headerlink" title="业务查询服务"></a>业务查询服务</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 业务查询服务</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BusinessLookUp</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据具体的业务类型，查询具体的业务类型的办理人（服务）</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> serviceType</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BusinessService <span class="title">getBusinessService</span><span class="params">(String serviceType)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">"type1"</span>.equalsIgnoreCase(serviceType)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> BusinessServiceImpl1();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> BusinessServiceImpl2();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="业务查询服务"><a href="#业务查询服务" class="headerlink" title="业务查询服务"></a>业务查询服务</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 业务查询服务
+ * @author Administrator
+ *
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BusinessLookUp</span> <span class="token punctuation">{</span>
+    <span class="token comment">/**
+     * 根据具体的业务类型，查询具体的业务类型的办理人（服务）
+     * @param serviceType
+     * @return
+     */</span>
+    <span class="token keyword">public</span> <span class="token class-name">BusinessService</span> <span class="token function">getBusinessService</span><span class="token punctuation">(</span><span class="token class-name">String</span> serviceType<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token string">"type1"</span><span class="token punctuation">.</span><span class="token function">equalsIgnoreCase</span><span class="token punctuation">(</span>serviceType<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">BusinessServiceImpl1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">BusinessServiceImpl2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h3 id="业务代表"><a href="#业务代表" class="headerlink" title="业务代表"></a>业务代表</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 业务代表</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BusinessDelegate</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 业务查询</span></span><br><span class="line">    <span class="keyword">private</span> BusinessLookUp lookUpService = <span class="keyword">new</span> BusinessLookUp();</span><br><span class="line">    <span class="comment">// 业务服务</span></span><br><span class="line">    <span class="keyword">private</span> BusinessService businessService;</span><br><span class="line">    <span class="comment">// 服务类型</span></span><br><span class="line">    <span class="keyword">private</span> String serviceType;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setServiceType</span><span class="params">(String serviceType)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.serviceType = serviceType;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 业务代表的服务方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doTask</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 查找具体的服务窗口</span></span><br><span class="line">        businessService = lookUpService.getBusinessService(serviceType);</span><br><span class="line">        <span class="comment">// 委托窗口进行业务处理</span></span><br><span class="line">        businessService.doTask();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="业务代表"><a href="#业务代表" class="headerlink" title="业务代表"></a>业务代表</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 业务代表
+ * @author Administrator
+ *
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BusinessDelegate</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 业务查询</span>
+    <span class="token keyword">private</span> <span class="token class-name">BusinessLookUp</span> lookUpService <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BusinessLookUp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 业务服务</span>
+    <span class="token keyword">private</span> <span class="token class-name">BusinessService</span> businessService<span class="token punctuation">;</span>
+    <span class="token comment">// 服务类型</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> serviceType<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setServiceType</span><span class="token punctuation">(</span><span class="token class-name">String</span> serviceType<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>serviceType <span class="token operator">=</span> serviceType<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">/**
+     * 业务代表的服务方法
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 查找具体的服务窗口</span>
+        businessService <span class="token operator">=</span> lookUpService<span class="token punctuation">.</span><span class="token function">getBusinessService</span><span class="token punctuation">(</span>serviceType<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 委托窗口进行业务处理</span>
+        businessService<span class="token punctuation">.</span><span class="token function">doTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 客户端-表现层</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 业务代表</span></span><br><span class="line">    <span class="keyword">private</span> BusinessDelegate businessDelegate;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Client</span><span class="params">(BusinessDelegate businessDelegate)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.businessDelegate = businessDelegate;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 客户端的业务</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doTask</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 委托业务代表处理</span></span><br><span class="line">        businessDelegate.doTask();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 客户端-表现层
+ * @author Administrator
+ *
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 业务代表</span>
+    <span class="token keyword">private</span> <span class="token class-name">BusinessDelegate</span> businessDelegate<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">Client</span><span class="token punctuation">(</span><span class="token class-name">BusinessDelegate</span> businessDelegate<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>businessDelegate <span class="token operator">=</span> businessDelegate<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 客户端的业务</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 委托业务代表处理</span>
+        businessDelegate<span class="token punctuation">.</span><span class="token function">doTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h3 id="测试验证"><a href="#测试验证" class="headerlink" title="测试验证"></a>测试验证</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 业务代表模式测试类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BusinessDelagateDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 生成一个服务范畴类型为type1的业务代表</span></span><br><span class="line">        BusinessDelegate businessDelegate = <span class="keyword">new</span> BusinessDelegate();</span><br><span class="line">        businessDelegate.setServiceType(<span class="string">"type1"</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 指定客户的业务代表为businessDelegate</span></span><br><span class="line">        Client client = <span class="keyword">new</span> Client(businessDelegate);</span><br><span class="line">        <span class="comment">// 客户办理业务</span></span><br><span class="line">        client.doTask();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 生成一个服务范畴类型为type2的业务代表</span></span><br><span class="line">        businessDelegate.setServiceType(<span class="string">"type2"</span>);</span><br><span class="line">        client.doTask();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="测试验证"><a href="#测试验证" class="headerlink" title="测试验证"></a>测试验证</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 业务代表模式测试类
+ * @author Administrator
+ *
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BusinessDelagateDemo</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 生成一个服务范畴类型为type1的业务代表</span>
+        <span class="token class-name">BusinessDelegate</span> businessDelegate <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BusinessDelegate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        businessDelegate<span class="token punctuation">.</span><span class="token function">setServiceType</span><span class="token punctuation">(</span><span class="token string">"type1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token comment">// 指定客户的业务代表为businessDelegate</span>
+        <span class="token class-name">Client</span> client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Client</span><span class="token punctuation">(</span>businessDelegate<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 客户办理业务</span>
+        client<span class="token punctuation">.</span><span class="token function">doTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        
+        <span class="token comment">// 生成一个服务范畴类型为type2的业务代表</span>
+        businessDelegate<span class="token punctuation">.</span><span class="token function">setServiceType</span><span class="token punctuation">(</span><span class="token string">"type2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        client<span class="token punctuation">.</span><span class="token function">doTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>输出结果如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Processing task by invoking BusinessServiceImpl1</span><br><span class="line"></span><br><span class="line">Processing task by invoking BusinessServiceImpl2</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Processing</span> task by invoking <span class="token class-name">BusinessServiceImpl1</span>
+
+<span class="token class-name">Processing</span> task by invoking <span class="token class-name">BusinessServiceImpl2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>业务代表模式的优点：</p>
 <ul>
@@ -439,26 +565,133 @@
 <li>客户端可以根据需要自主选择业务代表，符合面向对象的特点。<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2>业务代表模式典型应用场景如下：</li>
 <li>业务的表现层和业务层解耦：传统的 MVC 架构中，为了实现 JSP、Servlet 等与业务层解耦，可以提高系统的开发效率以及模块的复用性。<h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2>下面我们以本节开始时讲解的银行业务办理场景进行 Demo 讲解，具体代码设计如下：</li>
 </ul>
-<h3 id="抽象业务服务"><a href="#抽象业务服务" class="headerlink" title="抽象业务服务"></a>抽象业务服务</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 抽象业务服务</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">BusinessService</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 要进行的业务-开户</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">doCreateCount</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 要进行的业务-存钱</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">doSaveMoney</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="抽象业务服务"><a href="#抽象业务服务" class="headerlink" title="抽象业务服务"></a>抽象业务服务</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 抽象业务服务
+ */</span>
+<span class="token keyword">interface</span> <span class="token class-name">BusinessService</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 要进行的业务-开户</span>
+    <span class="token keyword">void</span> <span class="token function">doCreateCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 要进行的业务-存钱</span>
+    <span class="token keyword">void</span> <span class="token function">doSaveMoney</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h3 id="服务窗口-张"><a href="#服务窗口-张" class="headerlink" title="服务窗口 - 张"></a>服务窗口 - 张</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 服务窗口-张</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BusinessConsultantZh</span> <span class="keyword">implements</span> <span class="title">BusinessService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doCreateCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"服务窗口-张：开户成功"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSaveMoney</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"服务窗口-张：存钱成功"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="服务窗口-张"><a href="#服务窗口-张" class="headerlink" title="服务窗口 - 张"></a>服务窗口 - 张</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 服务窗口-张
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name">BusinessConsultantZh</span> <span class="token keyword">implements</span> <span class="token class-name">BusinessService</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doCreateCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"服务窗口-张：开户成功"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doSaveMoney</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"服务窗口-张：存钱成功"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h3 id="服务窗口-李"><a href="#服务窗口-李" class="headerlink" title="服务窗口 - 李"></a>服务窗口 - 李</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 服务窗口-李</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BusinessConsultantLi</span> <span class="keyword">implements</span> <span class="title">BusinessService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doCreateCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"服务窗口-李：开户成功"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSaveMoney</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"服务窗口-李：存钱成功"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="服务窗口-李"><a href="#服务窗口-李" class="headerlink" title="服务窗口 - 李"></a>服务窗口 - 李</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 服务窗口-李
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name">BusinessConsultantLi</span> <span class="token keyword">implements</span> <span class="token class-name">BusinessService</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doCreateCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"服务窗口-李：开户成功"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-<h3 id="业务查询服务-1"><a href="#业务查询服务-1" class="headerlink" title="业务查询服务"></a>业务查询服务</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 业务查询服务</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BusinessLookUp</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据具体的业务类型，查询具体的业务类型的办理人（服务）</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> serviceType</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BusinessService <span class="title">getBusinessService</span><span class="params">(String serviceType)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 开户业务暂由 BusinessConsultantZh 窗口办理</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="string">"doCreateCount"</span>.equalsIgnoreCase(serviceType)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> BusinessConsultantZh();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 存钱业务暂由 BusinessConsultantLi 窗口办理</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> BusinessConsultantLi();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doSaveMoney</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"服务窗口-李：存钱成功"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="业务顾问"><a href="#业务顾问" class="headerlink" title="业务顾问"></a>业务顾问</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 业务顾问或者大堂业务专员</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BusinessDelegate</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 业务查询</span></span><br><span class="line">    <span class="keyword">private</span> BusinessLookUp lookUpService = <span class="keyword">new</span> BusinessLookUp();</span><br><span class="line">    <span class="comment">// 业务服务</span></span><br><span class="line">    <span class="keyword">private</span> BusinessService businessService;</span><br><span class="line">    <span class="comment">// 服务类型</span></span><br><span class="line">    <span class="keyword">private</span> String serviceType;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setServiceType</span><span class="params">(String serviceType)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.serviceType = serviceType;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 业务顾问的服务方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doTask</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 查找具体的服务窗口</span></span><br><span class="line">        businessService = lookUpService.getBusinessService(serviceType);</span><br><span class="line">        <span class="comment">// 委托窗口进行业务处理</span></span><br><span class="line">        <span class="keyword">if</span> (serviceType.equalsIgnoreCase(<span class="string">"doCreateCount"</span>)) &#123;</span><br><span class="line">            businessService.doCreateCount();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            businessService.doSaveMoney();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="业务查询服务-1"><a href="#业务查询服务-1" class="headerlink" title="业务查询服务"></a>业务查询服务</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 业务查询服务
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name">BusinessLookUp</span> <span class="token punctuation">{</span>
+    <span class="token comment">/**
+     * 根据具体的业务类型，查询具体的业务类型的办理人（服务）
+     * @param serviceType
+     * @return
+     */</span>
+    <span class="token keyword">public</span> <span class="token class-name">BusinessService</span> <span class="token function">getBusinessService</span><span class="token punctuation">(</span><span class="token class-name">String</span> serviceType<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 开户业务暂由 BusinessConsultantZh 窗口办理</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token string">"doCreateCount"</span><span class="token punctuation">.</span><span class="token function">equalsIgnoreCase</span><span class="token punctuation">(</span>serviceType<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">BusinessConsultantZh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 存钱业务暂由 BusinessConsultantLi 窗口办理</span>
+            <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">BusinessConsultantLi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="业务顾问"><a href="#业务顾问" class="headerlink" title="业务顾问"></a>业务顾问</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 业务顾问或者大堂业务专员
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name">BusinessDelegate</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 业务查询</span>
+    <span class="token keyword">private</span> <span class="token class-name">BusinessLookUp</span> lookUpService <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BusinessLookUp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 业务服务</span>
+    <span class="token keyword">private</span> <span class="token class-name">BusinessService</span> businessService<span class="token punctuation">;</span>
+    <span class="token comment">// 服务类型</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> serviceType<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setServiceType</span><span class="token punctuation">(</span><span class="token class-name">String</span> serviceType<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>serviceType <span class="token operator">=</span> serviceType<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">/**
+     * 业务顾问的服务方法
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 查找具体的服务窗口</span>
+        businessService <span class="token operator">=</span> lookUpService<span class="token punctuation">.</span><span class="token function">getBusinessService</span><span class="token punctuation">(</span>serviceType<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 委托窗口进行业务处理</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>serviceType<span class="token punctuation">.</span><span class="token function">equalsIgnoreCase</span><span class="token punctuation">(</span><span class="token string">"doCreateCount"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            businessService<span class="token punctuation">.</span><span class="token function">doCreateCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            businessService<span class="token punctuation">.</span><span class="token function">doSaveMoney</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h3 id="客户"><a href="#客户" class="headerlink" title="客户"></a>客户</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 普通客户</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NormalCustomer</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 要提供服务的业务代表</span></span><br><span class="line">    <span class="keyword">private</span> BusinessDelegate businessDelegate;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NormalCustomer</span><span class="params">(BusinessDelegate businessDelegate)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.businessDelegate = businessDelegate;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 客户端的业务</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doTask</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 委托业务代表处理</span></span><br><span class="line">        businessDelegate.doTask();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="客户"><a href="#客户" class="headerlink" title="客户"></a>客户</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 普通客户
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name">NormalCustomer</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 要提供服务的业务代表</span>
+    <span class="token keyword">private</span> <span class="token class-name">BusinessDelegate</span> businessDelegate<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">NormalCustomer</span><span class="token punctuation">(</span><span class="token class-name">BusinessDelegate</span> businessDelegate<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>businessDelegate <span class="token operator">=</span> businessDelegate<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 客户端的业务</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 委托业务代表处理</span>
+        businessDelegate<span class="token punctuation">.</span><span class="token function">doTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h3 id="测试类"><a href="#测试类" class="headerlink" title="测试类"></a>测试类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 生成一个服务范畴类型为开户的业务代表</span></span><br><span class="line">BusinessDelegate businessDelegate = <span class="keyword">new</span> BusinessDelegate();</span><br><span class="line">businessDelegate.setServiceType(<span class="string">"doCreateCount"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 指定客户的业务代表为businessDelegate</span></span><br><span class="line">NormalCustomer client = <span class="keyword">new</span> NormalCustomer(businessDelegate);</span><br><span class="line"><span class="comment">// 客户办理业务</span></span><br><span class="line">client.doTask();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成一个服务范畴类型为存钱的业务代表</span></span><br><span class="line">businessDelegate.setServiceType(<span class="string">"doSaveMoney"</span>);</span><br><span class="line">client.doTask();</span><br></pre></td></tr></table></figure>
+<h3 id="测试类"><a href="#测试类" class="headerlink" title="测试类"></a>测试类</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 生成一个服务范畴类型为开户的业务代表</span>
+<span class="token class-name">BusinessDelegate</span> businessDelegate <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BusinessDelegate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+businessDelegate<span class="token punctuation">.</span><span class="token function">setServiceType</span><span class="token punctuation">(</span><span class="token string">"doCreateCount"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 指定客户的业务代表为businessDelegate</span>
+<span class="token class-name">NormalCustomer</span> client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NormalCustomer</span><span class="token punctuation">(</span>businessDelegate<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 客户办理业务</span>
+client<span class="token punctuation">.</span><span class="token function">doTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 生成一个服务范畴类型为存钱的业务代表</span>
+businessDelegate<span class="token punctuation">.</span><span class="token function">setServiceType</span><span class="token punctuation">(</span><span class="token string">"doSaveMoney"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+client<span class="token punctuation">.</span><span class="token function">doTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>输出结果如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">服务窗口 - 张：开户成功</span><br><span class="line"></span><br><span class="line">服务窗口 - 李：存钱成功</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">服务窗口 <span class="token operator">-</span> 张：开户成功
+
+服务窗口 <span class="token operator">-</span> 李：存钱成功<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>业务代表模式比较简单，在做 MVC 开发的时候就能体会到表现层和业务层分离的好处，这里要和建造者模式区分下，建造者模式强调的是构建与表现相分离，强调的是内部构建，而业务代表模式强调的是表现层。</p>
 
@@ -843,6 +1076,9 @@
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;Total Words:&nbsp;<span
+                        class="white-color">84.3k</span>
             
             
             

@@ -40,7 +40,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -382,7 +384,17 @@
                 
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    1.6k
+                </div>
+                
 
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
+                    6 Min
+                </div>
                 
 
                 
@@ -391,32 +403,113 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>这节中我们将介绍一种新的结构型模式——享元模式 （Flyweight Pattern），Flyweight 模式是以共享的模式来支持大量细粒度对象的复用。听起来可能有点绕，Java 中的 String 就是享元模式的一个应用：</p>
-<a id="more"></a>
+<span id="more"></span>
 
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String a = <span class="string">"abc"</span>;</span><br><span class="line">String b = <span class="string">"abc"</span>;</span><br><span class="line">System.out.println(a == b); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> a <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">;</span>
+<span class="token class-name">String</span> b <span class="token operator">=</span> <span class="token string">"abc"</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>a <span class="token operator">==</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>上述例子中，分别创建两个字符串对象的时候，a、b 其实都指向了常量池中的某个字符串“abc”，这种对象创建的模式，就避免了大量对象创建时非必要的资源消耗，享元模式的“享”就有一物被众人所共享的意思，所以享元模式也是池技术的重要实现方式，其定义如下：<strong>使用共享对象有效地支持大量的细粒度的对象。</strong></p>
 <h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2><p>下面我们用一个最简单的考试报名的例子进行说明，假设我们有 2 个科目，有 3 位考生分别进行报考，我们一般会定义考试实体 ExamInfo，如果不使用模式的话，可以想象，每次有考生参与一场科目考试的话，我们就会实例化一个 ExamInfo，总共我们要实例化 6 个这样的实体，倘若使用享元模式，我们就只需要实例化 2 个这样的实体，然后通过内部状态的 set 方法进行不同对象的赋值操作，节省了不少的内存，很神奇吧？</p>
 <p>先来看看我们的 ExamInfo 如何？</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExamInfo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 内部状态，用于在各个对象之间共享，不随环境改变而改变，存储在享元对象内部，往往作为对象的动态附加信息存在</span></span><br><span class="line">    <span class="keyword">private</span> String user; <span class="comment">// 考生</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 外部状态，随环境改变而改变，属于不可共享的状态，是对象得以依赖的一个标记</span></span><br><span class="line">    <span class="keyword">private</span> String subject; <span class="comment">// 考试科目</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ExamInfo</span><span class="params">(String subject)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.subject = subject;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getUser</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUser</span><span class="params">(String user)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.user = user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"ExamInfo&#123;"</span> +</span><br><span class="line">                <span class="string">"user='"</span> + user + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">", subject='"</span> + subject + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ExamInfo</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// 内部状态，用于在各个对象之间共享，不随环境改变而改变，存储在享元对象内部，往往作为对象的动态附加信息存在</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> user<span class="token punctuation">;</span> <span class="token comment">// 考生</span>
+
+    <span class="token comment">// 外部状态，随环境改变而改变，属于不可共享的状态，是对象得以依赖的一个标记</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> subject<span class="token punctuation">;</span> <span class="token comment">// 考试科目</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">ExamInfo</span><span class="token punctuation">(</span><span class="token class-name">String</span> subject<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>subject <span class="token operator">=</span> subject<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> user<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setUser</span><span class="token punctuation">(</span><span class="token class-name">String</span> user<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>user <span class="token operator">=</span> user<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string">"ExamInfo{"</span> <span class="token operator">+</span>
+                <span class="token string">"user='"</span> <span class="token operator">+</span> user <span class="token operator">+</span> <span class="token string">'\''</span> <span class="token operator">+</span>
+                <span class="token string">", subject='"</span> <span class="token operator">+</span> subject <span class="token operator">+</span> <span class="token string">'\''</span> <span class="token operator">+</span>
+                <span class="token string">'}'</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>在考试信息里面，我们将考试科目作为考试信息的唯一标识，以此来实现对象复用。</p>
 <p>然后是我们的享元工厂，也就是我们的池，该池中留有细粒度对象的引用实例，具体代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExamInfoFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 对象池，用来支持细粒度对象的复用</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> HashMap&lt;String, ExamInfo&gt; pool = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExamInfo <span class="title">getExamInfo</span><span class="params">(String subject)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 设置返回的对象</span></span><br><span class="line">        ExamInfo examInfo = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (!pool.containsKey(subject)) &#123;</span><br><span class="line">            System.out.println(<span class="string">"建立对象，并放到池中..."</span> + subject);</span><br><span class="line">            examInfo = <span class="keyword">new</span> ExamInfo(subject);</span><br><span class="line">            pool.put(subject, examInfo);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            examInfo = pool.get(subject);</span><br><span class="line">            System.out.println(<span class="string">"直接从池中获取..."</span> + subject);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> examInfo;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ExamInfoFactory</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// 对象池，用来支持细粒度对象的复用</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">ExamInfo</span><span class="token punctuation">&gt;</span></span> pool <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">ExamInfo</span> <span class="token function">getExamInfo</span><span class="token punctuation">(</span><span class="token class-name">String</span> subject<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 设置返回的对象</span>
+        <span class="token class-name">ExamInfo</span> examInfo <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>pool<span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span>subject<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"建立对象，并放到池中..."</span> <span class="token operator">+</span> subject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            examInfo <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ExamInfo</span><span class="token punctuation">(</span>subject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            pool<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>subject<span class="token punctuation">,</span> examInfo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            examInfo <span class="token operator">=</span> pool<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>subject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"直接从池中获取..."</span> <span class="token operator">+</span> subject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> examInfo<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里我们使用一个 map 对象来实现池的功能，通过科目我们可以获取池中的某个考试信息实例，如果存在则直接从池中获取返回，如果不存在，我们会手动 new 一个考试信息，然后再将其放入池中，之后再返回。</p>
 <p>接下来是我们的测试类，也就是 main 函数：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 假设有2个科目，初始化一遍池子</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++) &#123;</span><br><span class="line">            String subject = <span class="string">"科目"</span> + i;</span><br><span class="line">            ExamInfoFactory.getExamInfo(subject);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 假设3个考生考试</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">2</span>; j++) &#123;</span><br><span class="line">                ExamInfo examInfo = ExamInfoFactory.getExamInfo(<span class="string">"科目"</span> + j);</span><br><span class="line">                examInfo.setUser(<span class="string">"考生"</span> + i);</span><br><span class="line">                System.out.println(examInfo);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Main</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        <span class="token comment">// 假设有2个科目，初始化一遍池子</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token class-name">String</span> subject <span class="token operator">=</span> <span class="token string">"科目"</span> <span class="token operator">+</span> i<span class="token punctuation">;</span>
+            <span class="token class-name">ExamInfoFactory</span><span class="token punctuation">.</span><span class="token function">getExamInfo</span><span class="token punctuation">(</span>subject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// 假设3个考生考试</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token class-name">ExamInfo</span> examInfo <span class="token operator">=</span> <span class="token class-name">ExamInfoFactory</span><span class="token punctuation">.</span><span class="token function">getExamInfo</span><span class="token punctuation">(</span><span class="token string">"科目"</span> <span class="token operator">+</span> j<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                examInfo<span class="token punctuation">.</span><span class="token function">setUser</span><span class="token punctuation">(</span><span class="token string">"考生"</span> <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>examInfo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>测试输出如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">建立对象，并放到池中...科目0</span><br><span class="line">建立对象，并放到池中...科目1</span><br><span class="line">直接从池中获取...科目0</span><br><span class="line">ExamInfo&#123;user&#x3D;&#39;考生0&#39;, subject&#x3D;&#39;科目0&#39;&#125;</span><br><span class="line">直接从池中获取...科目1</span><br><span class="line">ExamInfo&#123;user&#x3D;&#39;考生0&#39;, subject&#x3D;&#39;科目1&#39;&#125;</span><br><span class="line">直接从池中获取...科目0</span><br><span class="line">ExamInfo&#123;user&#x3D;&#39;考生1&#39;, subject&#x3D;&#39;科目0&#39;&#125;</span><br><span class="line">直接从池中获取...科目1</span><br><span class="line">ExamInfo&#123;user&#x3D;&#39;考生1&#39;, subject&#x3D;&#39;科目1&#39;&#125;</span><br><span class="line">直接从池中获取...科目0</span><br><span class="line">ExamInfo&#123;user&#x3D;&#39;考生2&#39;, subject&#x3D;&#39;科目0&#39;&#125;</span><br><span class="line">直接从池中获取...科目1</span><br><span class="line">ExamInfo&#123;user&#x3D;&#39;考生2&#39;, subject&#x3D;&#39;科目1&#39;&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">建立对象，并放到池中...科目0
+建立对象，并放到池中...科目1
+直接从池中获取...科目0
+ExamInfo{user='考生0', subject='科目0'}
+直接从池中获取...科目1
+ExamInfo{user='考生0', subject='科目1'}
+直接从池中获取...科目0
+ExamInfo{user='考生1', subject='科目0'}
+直接从池中获取...科目1
+ExamInfo{user='考生1', subject='科目1'}
+直接从池中获取...科目0
+ExamInfo{user='考生2', subject='科目0'}
+直接从池中获取...科目1
+ExamInfo{user='考生2', subject='科目1'}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>从上面的信息中我们可以发现，实际上初始化 ExamInfo 实体的操作我们只进行了 2 次，也就说内存中保存的对象引用只有 2 份，相比预不使用享元模式需要进行 6 次实例化的方案是不是一下省了部分内存，设想一下，倘若有 100000 个考生那又节省了多少内存？</p>
 <h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/zt2ry.png"></p>
@@ -427,13 +520,68 @@
 <li>享元工厂（FlyweightFactory）：该角色指责一般比较清晰，就是一个池工厂，提供池对象和获取池中对象的方法</li>
 </ul>
 <h2 id="享元模式代码实现"><a href="#享元模式代码实现" class="headerlink" title="享元模式代码实现"></a>享元模式代码实现</h2><p>享元模式的几个角色上面已经介绍了，该角色对应的通用代码如下，首先是抽象享元角色：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Flyweight</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 内部状态</span></span><br><span class="line">    <span class="keyword">private</span> String intrinsic;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 外部状态</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">final</span> String extrinsic;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Flyweight</span><span class="params">(String extrinsic)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.extrinsic = extrinsic;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义的业务操作</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">operate</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 内部状态的getter、setter</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getIntrinsic</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> intrinsic;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIntrinsic</span><span class="params">(String intrinsic)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.intrinsic = intrinsic;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Flyweight</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// 内部状态</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> intrinsic<span class="token punctuation">;</span>
+
+    <span class="token comment">// 外部状态</span>
+    <span class="token keyword">protected</span> <span class="token keyword">final</span> <span class="token class-name">String</span> extrinsic<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">Flyweight</span><span class="token punctuation">(</span><span class="token class-name">String</span> extrinsic<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>extrinsic <span class="token operator">=</span> extrinsic<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 定义的业务操作</span>
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">operate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 内部状态的getter、setter</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getIntrinsic</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> intrinsic<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setIntrinsic</span><span class="token punctuation">(</span><span class="token class-name">String</span> intrinsic<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>intrinsic <span class="token operator">=</span> intrinsic<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>接下来是具体的享元角色：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteFlyweight</span> <span class="keyword">extends</span> <span class="title">Flyweight</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 接受外部状态</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ConcreteFlyweight</span><span class="params">(String extrinsic)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(extrinsic);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 根据外部状态进行一些逻辑处理</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">operate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 具体的业务逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ConcreteFlyweight</span> <span class="token keyword">extends</span> <span class="token class-name">Flyweight</span><span class="token punctuation">{</span>
+
+    <span class="token comment">// 接受外部状态</span>
+    <span class="token keyword">public</span> <span class="token class-name">ConcreteFlyweight</span><span class="token punctuation">(</span><span class="token class-name">String</span> extrinsic<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>extrinsic<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 根据外部状态进行一些逻辑处理</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">operate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 具体的业务逻辑</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>最后是享元工厂：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FlyweightFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 池容器</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> HashMap&lt;String, Flyweight&gt; pool = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取池中对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Flyweight <span class="title">getFlyweight</span><span class="params">(String extrinsic)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 需要返回的对象</span></span><br><span class="line">        Flyweight flyweight = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (!pool.containsKey(extrinsic)) &#123;</span><br><span class="line">            <span class="comment">// 根据外部状态创建享元对象</span></span><br><span class="line">            flyweight = <span class="keyword">new</span> ConcreteFlyweight(extrinsic);</span><br><span class="line">            <span class="comment">// 再放入池中</span></span><br><span class="line">            pool.put(extrinsic, flyweight);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 池中有对象，则直接返回</span></span><br><span class="line">            flyweight = pool.get(extrinsic);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> flyweight;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">FlyweightFactory</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// 池容器</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Flyweight</span><span class="token punctuation">&gt;</span></span> pool <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 获取池中对象</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">Flyweight</span> <span class="token function">getFlyweight</span><span class="token punctuation">(</span><span class="token class-name">String</span> extrinsic<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 需要返回的对象</span>
+        <span class="token class-name">Flyweight</span> flyweight <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>pool<span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span>extrinsic<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 根据外部状态创建享元对象</span>
+            flyweight <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcreteFlyweight</span><span class="token punctuation">(</span>extrinsic<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// 再放入池中</span>
+            pool<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>extrinsic<span class="token punctuation">,</span> flyweight<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 池中有对象，则直接返回</span>
+            flyweight <span class="token operator">=</span> pool<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>extrinsic<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> flyweight<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本节中，我们讲了下什么是享元模式，以及为什么要使用享元模式，下面我们归纳下本节的知识点，包括享元模式的应用场景，总结下如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/2n3zj.png"></p>
 
@@ -818,6 +966,9 @@
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;Total Words:&nbsp;<span
+                        class="white-color">84.3k</span>
             
             
             

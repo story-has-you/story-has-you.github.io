@@ -40,7 +40,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -382,7 +384,17 @@
                 
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    1.8k
+                </div>
+                
 
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
+                    6 Min
+                </div>
                 
 
                 
@@ -391,13 +403,16 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>桥接模式 (Bridge Pattern)：将抽象部分与它的实现部分分离，使它们都可以独立地变化。它是一种对象结构型模式，又称为柄体 (Handle and Body) 模式或接口 (Interface) 模式。</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <p>Bridge 的意思就是 “桥梁”，好比现实生活中的桥梁，它的存在就是将河流两侧的东西给连接起来，应用到软件里面 Bridge 就是将<strong>类的功能层次结构与实现层次结构</strong>连接起来。</p>
 <h2 id="类的功能层次结构-VS-实现层次结构"><a href="#类的功能层次结构-VS-实现层次结构" class="headerlink" title="类的功能层次结构 VS 实现层次结构"></a>类的功能层次结构 VS 实现层次结构</h2><p>这里解释下什么叫做功能层次结构和实现层次结构。比方说，我们有一个类叫做 Abstraction，当我们想在 Abstraction 上增加新的功能时，一般我们会新建一个子类继承 Abstraction，比如叫 RefinedAbstraction 类，新类一般还会增加自定义的一些功能方法，这种就构成了一个简单的类层次结构：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/76y8k.png"><br>这种层次机构具有如下特点：</p>
@@ -424,25 +439,87 @@
 <h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2><p>下面我们通过一个例子来理解下 Bridge 模式，我们都知道手机品牌有很多，每种手机上面又包含各种各样的软件，我们如何表示“在手机上运行软件”这一活动？手机的品牌和软件是两个维度上的东西，可以类比为上面的“功能层级”和“实现层级”，桥接模式的作用就是将这些不同的实现独立开来，从而应对不断地变化，下面是具体的类图设计：</p>
 <p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/s035y.png"></p>
 <p>这里我们定义抽象类 MobilePhoneAbstraction，表示手机抽象类，该类自带 run 方法来 “运行各种软件”，示例代码如下:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">MobilePhoneAbstraction</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> SoftImplementor impl;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MobilePhoneAbstraction</span><span class="params">(SoftImplementor impl)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.impl = impl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">MobilePhoneAbstraction</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">protected</span> <span class="token class-name">SoftImplementor</span> impl<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">MobilePhoneAbstraction</span><span class="token punctuation">(</span><span class="token class-name">SoftImplementor</span> impl<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>impl <span class="token operator">=</span> impl<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>MobilePhoneAbstraction 为我们定义的类的功能层次结构的顶层，内部包含对 SoftImplementor 的引用，SoftImplementor 即是我们定义的手机软件的抽象类，示例代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">SoftImplementor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">rawrun</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">SoftImplementor</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">rawrun</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里我们声明 rawrun 方法供子类实现，同时又委托给 MobilePhoneAbstraction 供其调用，下面是手机品牌的实现类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HuaWeiMobilePhone</span> <span class="keyword">extends</span> <span class="title">MobilePhoneAbstraction</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HuaWeiMobilePhone</span><span class="params">(SoftImplementor impl)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(impl);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 使用委托：调用HuaWeiMobilePhone的run时，实际调用的是SoftImplementor的rawrun</span></span><br><span class="line">        <span class="keyword">this</span>.impl.rawrun();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">gpuTurborRun</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"GPU Turbo Running start..."</span>);</span><br><span class="line">        <span class="keyword">this</span>.run();</span><br><span class="line">        System.out.println(<span class="string">"GPU Turbo Running end..."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HuaWeiMobilePhone</span> <span class="token keyword">extends</span> <span class="token class-name">MobilePhoneAbstraction</span><span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">HuaWeiMobilePhone</span><span class="token punctuation">(</span><span class="token class-name">SoftImplementor</span> impl<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>impl<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 使用委托：调用HuaWeiMobilePhone的run时，实际调用的是SoftImplementor的rawrun</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>impl<span class="token punctuation">.</span><span class="token function">rawrun</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">gpuTurborRun</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"GPU Turbo Running start..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"GPU Turbo Running end..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里子类添加自己独特的功能方法”GPU Turbo“ 方法类运行软件，进行 run 调用，可以看到实际调用的是 SoftImplementor 中的 rawrun 方法，该方法为我们自定义实现的基于抽象的 SoftImplementor，接下来看下 SoftImplementor 示例代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">SoftImplementor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">rawrun</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">SoftImplementor</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">rawrun</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这里声明 rawrun 接口（API），实现的子类有两个，分别是游戏软件 ——GameSoft，和聊天软件 ——ChatSoft，相关代码分别如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ChatSoft</span> <span class="keyword">extends</span> <span class="title">SoftImplementor</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rawrun</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"ChatSoft rawrun..."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GameSoft</span> <span class="keyword">extends</span> <span class="title">SoftImplementor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rawrun</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"GameSoft rawrun..."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ChatSoft</span> <span class="token keyword">extends</span> <span class="token class-name">SoftImplementor</span><span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">rawrun</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"ChatSoft rawrun..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">GameSoft</span> <span class="token keyword">extends</span> <span class="token class-name">SoftImplementor</span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">rawrun</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"GameSoft rawrun..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>最后是我们的测试类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MobilePhoneAbstraction m1 = <span class="keyword">new</span> HuaWeiMobilePhone(<span class="keyword">new</span> ChatSoft());</span><br><span class="line"></span><br><span class="line">HuaWeiMobilePhone m2 = <span class="keyword">new</span> HuaWeiMobilePhone(<span class="keyword">new</span> GameSoft());</span><br><span class="line"></span><br><span class="line">m1.run();</span><br><span class="line">m2.run();</span><br><span class="line"></span><br><span class="line">m2.gpuTurborRun();</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">MobilePhoneAbstraction</span> m1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HuaWeiMobilePhone</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ChatSoft</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">HuaWeiMobilePhone</span> m2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HuaWeiMobilePhone</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">GameSoft</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+m1<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+m2<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+m2<span class="token punctuation">.</span><span class="token function">gpuTurborRun</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>运行结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ChatSoft rawrun...</span><br><span class="line"></span><br><span class="line">GameSoft rawrun...</span><br><span class="line"></span><br><span class="line">GPU Turbo Running start...</span><br><span class="line">GameSoft rawrun...</span><br><span class="line">GPU Turbo Running end...</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">ChatSoft rawrun...
+
+GameSoft rawrun...
+
+GPU Turbo Running start...
+GameSoft rawrun...
+GPU Turbo Running end...<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>由于 m1、m2 都属于 MobilePhoneAbstraction 的类的实例，因此我们可以调用它们的 run 方法，而 m1、m2 又都属于 HuaWeiMobilePhone 的实例，所以我们还能调用其 gpuTurborRun 方法，比如后期我们 run 实现有所变动，那么只需要修改 main 方法和 SoftImplementor 的实现类即可，其它代码就可以保持不动了。</p>
 <p>通过 MobilePhoneAbstraction 中的 impl 桥接，就实现了抽象与行为实现的分离，这种就是桥接模式的存在意义。</p>
@@ -835,6 +912,9 @@
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;Total Words:&nbsp;<span
+                        class="white-color">84.3k</span>
             
             
             

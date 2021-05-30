@@ -40,7 +40,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -382,7 +384,17 @@
                 
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    1.4k
+                </div>
+                
 
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
+                    5 Min
+                </div>
                 
 
                 
@@ -391,32 +403,42 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>Redis 在 3.2版本之后，支持GEO类型的数据存储。可以计算两个经纬度之间的距离，也就是，可以利用GEO功能，实现类似滴滴打车附近的车辆，类似微信附近的人基于地理位置的功能。也可以计算两个城市之间的距离，两个位置之间的距离等。</p>
-<a id="more"></a>
+<span id="more"></span>
 
 
 <h2 id="Redis-GEO-API"><a href="#Redis-GEO-API" class="headerlink" title="Redis GEO API"></a>Redis GEO API</h2><p>下面利用Redis GEO功能，实现一个类似滴滴打车查找附近的车功能。假设我们有2辆车，编号分别为1、2，我们需要将这2辆车当前的经纬度都添加到Redis中。</p>
-<h3 id="增加地理位置信息"><a href="#增加地理位置信息" class="headerlink" title="增加地理位置信息"></a>增加地理位置信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">geoadd key longitude latitude member [longitude latitude member ...]</span><br></pre></td></tr></table></figure>
+<h3 id="增加地理位置信息"><a href="#增加地理位置信息" class="headerlink" title="增加地理位置信息"></a>增加地理位置信息</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">geoadd key longitude latitude member <span class="token punctuation">[</span>longitude latitude member <span class="token punctuation">..</span>.<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>eg:<br>向key为cars:locations添加车辆信息</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">geoadd cars:locations 120.346111 31.556381 1   120.375821 31.560368 2</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">geoadd cars:locations <span class="token number">120.346111</span> <span class="token number">31.556381</span> <span class="token number">1</span>   <span class="token number">120.375821</span> <span class="token number">31.560368</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<h3 id="获取地理位置信息"><a href="#获取地理位置信息" class="headerlink" title="获取地理位置信息"></a>获取地理位置信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">geopos key name [name ...]</span><br></pre></td></tr></table></figure>
+<h3 id="获取地理位置信息"><a href="#获取地理位置信息" class="headerlink" title="获取地理位置信息"></a>获取地理位置信息</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">geopos key name <span class="token punctuation">[</span>name <span class="token punctuation">..</span>.<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>eg: 获取2辆车的位置信息</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">geopos cars:locations 1 2</span><br><span class="line"></span><br><span class="line">1) 1) <span class="string">"120.34611314535140991"</span></span><br><span class="line">   2) <span class="string">"31.55637987511895659"</span></span><br><span class="line">2) 1) <span class="string">"120.37582129240036011"</span></span><br><span class="line">   2) <span class="string">"31.5603669915025975"</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">geopos cars:locations <span class="token number">1</span> <span class="token number">2</span>
+
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"120.34611314535140991"</span>
+   <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"31.55637987511895659"</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"120.37582129240036011"</span>
+   <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"31.5603669915025975"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="获取两个地理位置的距离"><a href="#获取两个地理位置的距离" class="headerlink" title="获取两个地理位置的距离"></a>获取两个地理位置的距离</h3><p>在拥有了地理数据之后， 我们就可以基于这些数据进行各种各样的操作。 针对地理位置信息的其中一个最简单的操作， 就是计算两个位置之间的距离。</p>
 <p>在 Redis 里面， 计算两个位置之间的距离可以通过 GEODIST 命令来实现：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">geodist location-set location-x location-y [unit]</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">geodist location-set location-x location-y <span class="token punctuation">[</span>unit<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>eg:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">geodist cars:locations 1 2</span><br><span class="line"></span><br><span class="line"><span class="string">"2850.3519"</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">geodist cars:locations <span class="token number">1</span> <span class="token number">2</span>
+
+<span class="token string">"2850.3519"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>所以两地相隔 2850.3519 米</p>
 <p>可选参数 unit 用于指定计算距离时的单位， 它的值可以是以下单位的其中一个：</p>
@@ -428,7 +450,9 @@
 </ul>
 <h3 id="获取指定范围内的元素"><a href="#获取指定范围内的元素" class="headerlink" title="获取指定范围内的元素"></a>获取指定范围内的元素</h3><p>除了计算两地的距离之外， 另一个常见的地理位置操作就是找出特定范围之内的其他存在的地点。 比如找出地点 x 范围 100 米之内的所有地点， 找出地点 y 范围 50 公里之内的所有地点等等。</p>
 <p>以给定的经纬度为中心， 返回键包含的位置元素当中， 与中心的距离不超过给定最大距离的所有位置元素。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">georadius location-set longitude latitude radius m|km|ft|mi [WITHCOORD] [WITHDIST] [WITHHASH] [ASC|DESC] [COUNT count]</span><br><span class="line"></span><br><span class="line">georadiusbymember location-set location radius m|km|ft|mi [WITHCOORD] [WITHDIST] [WITHHASH] [ASC|DESC] [COUNT count]</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">georadius location-set longitude latitude radius m<span class="token operator">|</span>km<span class="token operator">|</span>ft<span class="token operator">|</span>mi <span class="token punctuation">[</span>WITHCOORD<span class="token punctuation">]</span> <span class="token punctuation">[</span>WITHDIST<span class="token punctuation">]</span> <span class="token punctuation">[</span>WITHHASH<span class="token punctuation">]</span> <span class="token punctuation">[</span>ASC<span class="token operator">|</span>DESC<span class="token punctuation">]</span> <span class="token punctuation">[</span>COUNT count<span class="token punctuation">]</span>
+
+georadiusbymember location-set location radius m<span class="token operator">|</span>km<span class="token operator">|</span>ft<span class="token operator">|</span>mi <span class="token punctuation">[</span>WITHCOORD<span class="token punctuation">]</span> <span class="token punctuation">[</span>WITHDIST<span class="token punctuation">]</span> <span class="token punctuation">[</span>WITHHASH<span class="token punctuation">]</span> <span class="token punctuation">[</span>ASC<span class="token operator">|</span>DESC<span class="token punctuation">]</span> <span class="token punctuation">[</span>COUNT count<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>georadius和georadiusbymember 两个命令来实现查找特定范围内地点的功能， 它们的作用一样， 只是指定中心点的方式不同</p>
 <ul>
@@ -438,36 +462,76 @@
 <p>这两个命令的各个参数的意义如下：</p>
 <ul>
 <li>m|km|ft|mi 指定的是计算范围时的单位。</li>
-<li>如果给定了可选的 <code>withcoord </code> ， 那么命令在返回匹配的位置时会将位置的经纬度一并返回。</li>
-<li>如果给定了可选的 <code>withdist </code> ， 那么命令在返回匹配的位置时会将位置与中心点之间的距离一并返回。</li>
+<li>如果给定了可选的 <code>withcoord&nbsp;</code> ， 那么命令在返回匹配的位置时会将位置的经纬度一并返回。</li>
+<li>如果给定了可选的 <code>withdist&nbsp;</code> ， 那么命令在返回匹配的位置时会将位置与中心点之间的距离一并返回。</li>
 <li>如果给定了可选的 <code>withhash</code> ,  那么命令在返回匹配的位置时同时返回Redis内部的GeoHash值（非标准算法值），一般用于debug。</li>
-<li>在默认情况下， <code>georadius </code> 和 <code>georadiusbymember</code> 的结果是未排序的， <code>asc</code> 可以让查找结果根据距离从近到远排序， 而 <code>desc</code> 则可以让查找结果根据从远到近排序。</li>
+<li>在默认情况下， <code>georadius&nbsp;</code> 和 <code>georadiusbymember</code> 的结果是未排序的， <code>asc</code> 可以让查找结果根据距离从近到远排序， 而 <code>desc</code> 则可以让查找结果根据从远到近排序。</li>
 <li><code>count</code> 参数指定要返回的结果数量。</li>
 </ul>
 <p>eg:<br>以经度120.375821纬度31.556381为中心查找5公里范围内的车辆</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">georadius cars:locations 120.375821 31.556381 5 km withcoord asc count 10</span><br><span class="line"></span><br><span class="line">1) 1) <span class="string">"2"</span>  							<span class="comment"># 符合条件的member</span></span><br><span class="line">   2) 1) <span class="string">"120.37582129240036011"</span>	<span class="comment"># member的经纬度</span></span><br><span class="line">      2) <span class="string">"31.5603669915025975"</span></span><br><span class="line">2) 1) <span class="string">"1"</span></span><br><span class="line">   2) 1) <span class="string">"120.34611314535140991"</span></span><br><span class="line">      2) <span class="string">"31.55637987511895659"</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">georadius cars:locations <span class="token number">120.375821</span> <span class="token number">31.556381</span> <span class="token number">5</span> km withcoord asc count <span class="token number">10</span>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">georadius cars:locations 120.375821 31.556381 5 km withdist asc count 10</span><br><span class="line"></span><br><span class="line">1) 1) <span class="string">"2"</span>			<span class="comment"># 符合条件的member</span></span><br><span class="line">   2) <span class="string">"0.4433"</span>		<span class="comment"># 与120.375821 31.556381的距离</span></span><br><span class="line">2) 1) <span class="string">"1"</span></span><br><span class="line">   2) <span class="string">"2.8157"</span></span><br></pre></td></tr></table></figure>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"2"</span>  							<span class="token comment"># 符合条件的member</span>
+   <span class="token number">2</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"120.37582129240036011"</span>	<span class="token comment"># member的经纬度</span>
+      <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"31.5603669915025975"</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"1"</span>
+   <span class="token number">2</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"120.34611314535140991"</span>
+      <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"31.55637987511895659"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">georadius cars:locations 120.375821 31.556381 5 km withhash asc count 10</span><br><span class="line"></span><br><span class="line">1) 1) <span class="string">"2"</span>							<span class="comment"># 符合条件的member</span></span><br><span class="line">   2) (<span class="built_in">integer</span>) 4054421167795118	<span class="comment"># GeoHash值</span></span><br><span class="line">2) 1) <span class="string">"1"</span></span><br><span class="line">   2) (<span class="built_in">integer</span>) 4054421060663027</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">georadius cars:locations <span class="token number">120.375821</span> <span class="token number">31.556381</span> <span class="token number">5</span> km withdist asc count <span class="token number">10</span>
+
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"2"</span>			<span class="token comment"># 符合条件的member</span>
+   <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"0.4433"</span>		<span class="token comment"># 与120.375821 31.556381的距离</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"1"</span>
+   <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"2.8157"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">georadius cars:locations <span class="token number">120.375821</span> <span class="token number">31.556381</span> <span class="token number">5</span> km withhash asc count <span class="token number">10</span>
+
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"2"</span>							<span class="token comment"># 符合条件的member</span>
+   <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">4054421167795118</span>	<span class="token comment"># GeoHash值</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"1"</span>
+   <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">4054421060663027</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>可以一起使用</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">georadius cars:locations 120.375821 31.556381 5 km withdist withcoord asc count 10</span><br><span class="line"></span><br><span class="line">1) 1) <span class="string">"2"</span></span><br><span class="line">   2) <span class="string">"0.4433"</span></span><br><span class="line">   3) 1) <span class="string">"120.37582129240036011"</span></span><br><span class="line">      2) <span class="string">"31.5603669915025975"</span></span><br><span class="line">2) 1) <span class="string">"1"</span></span><br><span class="line">   2) <span class="string">"2.8157"</span></span><br><span class="line">   3) 1) <span class="string">"120.34611314535140991"</span></span><br><span class="line">      2) <span class="string">"31.55637987511895659"</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">georadius cars:locations <span class="token number">120.375821</span> <span class="token number">31.556381</span> <span class="token number">5</span> km withdist withcoord asc count <span class="token number">10</span>
+
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"2"</span>
+   <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"0.4433"</span>
+   <span class="token number">3</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"120.37582129240036011"</span>
+      <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"31.5603669915025975"</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"1"</span>
+   <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"2.8157"</span>
+   <span class="token number">3</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"120.34611314535140991"</span>
+      <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"31.55637987511895659"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 <p>使用1号车的位置为中心查看附近的车</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">georadiusbymember cars:locations 1 5 km withcoord withdist asc count 10</span><br><span class="line"></span><br><span class="line">1) 1) <span class="string">"1"</span></span><br><span class="line">   2) <span class="string">"0.0000"</span></span><br><span class="line">   3) 1) <span class="string">"120.34611314535140991"</span></span><br><span class="line">      2) <span class="string">"31.55637987511895659"</span></span><br><span class="line">2) 1) <span class="string">"2"</span></span><br><span class="line">   2) <span class="string">"2.8504"</span></span><br><span class="line">   3) 1) <span class="string">"120.37582129240036011"</span></span><br><span class="line">      2) <span class="string">"31.5603669915025975"</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">georadiusbymember cars:locations <span class="token number">1</span> <span class="token number">5</span> km withcoord withdist asc count <span class="token number">10</span>
+
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"1"</span>
+   <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"0.0000"</span>
+   <span class="token number">3</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"120.34611314535140991"</span>
+      <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"31.55637987511895659"</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"2"</span>
+   <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"2.8504"</span>
+   <span class="token number">3</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"120.37582129240036011"</span>
+      <span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"31.5603669915025975"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="Redis-GEO背后的原理"><a href="#Redis-GEO背后的原理" class="headerlink" title="Redis GEO背后的原理"></a>Redis GEO背后的原理</h2><p>Redis 在存储数据不同数据类型的数据时都有对应的编码方式。 Redis GEO是采用哪种编码方式进行存储的呢？</p>
 <p>在翻阅Redis GEO API时发现其并没有删除指令，因为其底层是使用zset进行实现的。 我们可以使用zrem 进行数据的删除。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">zrange cars:locations 0 -1 withscores</span><br><span class="line"></span><br><span class="line">1) <span class="string">"1"</span></span><br><span class="line">2) <span class="string">"4054421060663027"</span></span><br><span class="line">3) <span class="string">"2"</span></span><br><span class="line">4) <span class="string">"4054421167795118"</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">zrange cars:locations <span class="token number">0</span> -1 withscores
+
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">"1"</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">"4054421060663027"</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">"2"</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">"4054421167795118"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>至此可以推断出Redis GEO 添加经、纬度位置信息的指令的过程是</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zadd cars:locations 4054421060663027 1</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">zadd cars:locations <span class="token number">4054421060663027</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>4054421060663027为对经纬度进行编码后的值。使用4054421060663027作为score 可以快速实现对经纬度的索引。</p>
 <h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>分析完Redis GEO的实现原理后不然发现其背后核心是geohash，使用geohash将二维的经纬度数据编码成一维数据，再使用B树索引快速查找出需要的数据。</p>
-<p>参考文章： <a href="https://yq.aliyun.com/articles/62844" target="_blank" rel="noopener">阿里云Redis GEO地理位置功能上线啦</a></p>
+<p>参考文章： <a target="_blank" rel="noopener" href="https://yq.aliyun.com/articles/62844">阿里云Redis GEO地理位置功能上线啦</a></p>
 <p>#中间件</p>
 
                 
@@ -851,6 +915,9 @@
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;Total Words:&nbsp;<span
+                        class="white-color">84.3k</span>
             
             
             

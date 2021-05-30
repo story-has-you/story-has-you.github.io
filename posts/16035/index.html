@@ -40,7 +40,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -382,7 +384,17 @@
                 
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    1.9k
+                </div>
+                
 
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
+                    6 Min
+                </div>
                 
 
                 
@@ -391,13 +403,16 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>解释器模式，这个模式我觉得是这些模式中最不好理解的模式，解释器模式是用来干啥的呢？比如说我们有一段英文或者一段公式，我们需要知道其中表达的意思到底是啥？（假如我们起初并不理解）也就是说，我们需要一个”解释人”，该角色就是我们的联络官或者叫做解释器，用来翻译我们的文本或者公式，翻译成我们能理解的最小的基础单元，听着是不是还云里雾里地？大家都知道编译器吧，一般的编译器分为词法分析器、语法分析器、语义分析器、中间代码优化器以及最终的代码生成器等，而我的理解，解释器就类似于其中的语法分析器的作用，专门负责语法文本的解析作用。</p>
-<a id="more"></a>
+<span id="more"></span>
 
 
 <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>解释器模式（Interpreter Pattern）提供了评估语言的语法或者表达式的方式，属于一种行为型的设计模式。<br>解释器模式的英文原话是：</p>
@@ -428,16 +443,62 @@
 </ul>
 <h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2><p>现在我们以一个最简单的例子：a+b，我们要做的就是解释执行这段语法文本，a 和 b是两个字母也叫做两个变量，我们需要使用一个 “+” 符号来将这俩变量连接起来，假设我们的语言并不知道符号 “+”是什么作用，具体作用需要我们去实现（假设我们并不知道 + 其实是加法的意思），示例比较简单，只是为了说明解释器模式没别的意思。</p>
 <p>首先是我们的上下文类，该类负责模式中一些上下文数据的存储，这里我们使用 context 存储运算符号 +，实现代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 上下文类，这里只是简单说明下，实际的context可没这么简单</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Context</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String symbol = <span class="string">""</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Context</span><span class="params">(String symbol)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.symbol = symbol;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getSymbol</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> symbol;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 上下文类，这里只是简单说明下，实际的context可没这么简单</span>
+<span class="token keyword">class</span> <span class="token class-name">Context</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> symbol <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">Context</span><span class="token punctuation">(</span><span class="token class-name">String</span> symbol<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>symbol <span class="token operator">=</span> symbol<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getSymbol</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> symbol<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>然后是我们的抽象解释器角色：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 抽象解释器</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractExpression</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 解释器接口</span></span><br><span class="line">    <span class="function"><span class="keyword">abstract</span> <span class="keyword">int</span> <span class="title">interpreter</span><span class="params">(Context context)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 抽象解释器</span>
+<span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">AbstractExpression</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 解释器接口</span>
+    <span class="token keyword">abstract</span> <span class="token keyword">int</span> <span class="token function">interpreter</span><span class="token punctuation">(</span><span class="token class-name">Context</span> context<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>然后是我们的终结符和非终结符类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 终结符，即我们的参数构造类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TerminalExpression</span> <span class="keyword">extends</span> <span class="title">AbstractExpression</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Integer arg;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TerminalExpression</span><span class="params">(Integer arg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.arg = arg;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">interpreter</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.arg;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 非终结符，即我们的运算符构造类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NonTerminalExpression</span> <span class="keyword">extends</span> <span class="title">AbstractExpression</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 代表运算符两侧的参数，即a、b</span></span><br><span class="line">    <span class="keyword">private</span> AbstractExpression left;</span><br><span class="line">    <span class="keyword">private</span> AbstractExpression right;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NonTerminalExpression</span><span class="params">(AbstractExpression left, AbstractExpression right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.left = left;</span><br><span class="line">        <span class="keyword">this</span>.right = right;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">interpreter</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 实现具体的 a +b 的解释执行操作</span></span><br><span class="line">        <span class="keyword">if</span> (!context.getSymbol().equalsIgnoreCase(<span class="string">""</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.left.interpreter(context) + <span class="keyword">this</span>.right.interpreter(context);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 终结符，即我们的参数构造类</span>
+<span class="token keyword">class</span> <span class="token class-name">TerminalExpression</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractExpression</span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token class-name">Integer</span> arg<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">TerminalExpression</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>arg <span class="token operator">=</span> arg<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">int</span> <span class="token function">interpreter</span><span class="token punctuation">(</span><span class="token class-name">Context</span> context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>arg<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// 非终结符，即我们的运算符构造类</span>
+<span class="token keyword">class</span> <span class="token class-name">NonTerminalExpression</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractExpression</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 代表运算符两侧的参数，即a、b</span>
+    <span class="token keyword">private</span> <span class="token class-name">AbstractExpression</span> left<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">AbstractExpression</span> right<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">NonTerminalExpression</span><span class="token punctuation">(</span><span class="token class-name">AbstractExpression</span> left<span class="token punctuation">,</span> <span class="token class-name">AbstractExpression</span> right<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>left <span class="token operator">=</span> left<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>right <span class="token operator">=</span> right<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">int</span> <span class="token function">interpreter</span><span class="token punctuation">(</span><span class="token class-name">Context</span> context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 实现具体的 a +b 的解释执行操作</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>context<span class="token punctuation">.</span><span class="token function">getSymbol</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">equalsIgnoreCase</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>left<span class="token punctuation">.</span><span class="token function">interpreter</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token keyword">this</span><span class="token punctuation">.</span>right<span class="token punctuation">.</span><span class="token function">interpreter</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>最后是测试类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">AbstractExpression left = <span class="keyword">new</span> TerminalExpression(<span class="number">12</span>);</span><br><span class="line">AbstractExpression right = <span class="keyword">new</span> TerminalExpression(<span class="number">34</span>);</span><br><span class="line">AbstractExpression calExpression = <span class="keyword">new</span> NonTerminalExpression(left, right);</span><br><span class="line">Context context = <span class="keyword">new</span> Context(<span class="string">"+"</span>);</span><br><span class="line">Integer result = calExpression.interpreter(context);</span><br><span class="line">System.out.println(result); <span class="comment">// 46</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">AbstractExpression</span> left <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TerminalExpression</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">AbstractExpression</span> right <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TerminalExpression</span><span class="token punctuation">(</span><span class="token number">34</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">AbstractExpression</span> calExpression <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NonTerminalExpression</span><span class="token punctuation">(</span>left<span class="token punctuation">,</span> right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Context</span> context <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Context</span><span class="token punctuation">(</span><span class="token string">"+"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Integer</span> result <span class="token operator">=</span> calExpression<span class="token punctuation">.</span><span class="token function">interpreter</span><span class="token punctuation">(</span>context<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 46</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这节我们主要介绍了解释器模式的定义以及使用示例，解释器模式实际使用的场景并不多，但是又是一种比较复杂的设计模式，需要引起我们的重视，最后大家可以思考下，上面只是实现了最简单的 a + b，如果要实现 a + b - c 这种文法解析，又该如何实现呢，欢迎大家积极思考。<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/jois5.png"></p>
 
@@ -822,6 +883,9 @@
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;Total Words:&nbsp;<span
+                        class="white-color">84.3k</span>
             
             
             

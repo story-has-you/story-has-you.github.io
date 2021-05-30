@@ -40,7 +40,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -382,7 +384,17 @@
                 
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    569
+                </div>
+                
 
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
+                    2 Min
+                </div>
                 
 
                 
@@ -391,6 +403,9 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
@@ -398,7 +413,7 @@
             <div id="articleContent">
                 <h2 id="Promise基本概念"><a href="#Promise基本概念" class="headerlink" title="Promise基本概念"></a>Promise基本概念</h2><p>Pormise是JS的异步编程的一种解决方案，在ES6将其写进了语言标准，提供了原生的Promise对象。</p>
 <p>Promise简单来理解就是一个容器，里面存放着某个未来才会结束的事件结果。Promise是一个对象，从它可以获取异步操作的消息，Promise提供了统一的API，各种异步操作都可以用同样的方法进行处理。</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <p>Promise是个对象，有三种状态</p>
 <ul>
@@ -408,8 +423,24 @@
 </ul>
 <h2 id="Promise使用"><a href="#Promise使用" class="headerlink" title="Promise使用"></a>Promise使用</h2><ol>
 <li><p>初始化的时候需要传递一个函数，这个函数有两个参数，两个参数也是函数。需要执行的异步代码放在传递的函数中</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  wx.getSystemInfo(&#123;</span><br><span class="line">    success: <span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 修改成已成功的状态</span></span><br><span class="line">      resolve(res)</span><br><span class="line">    &#125;,</span><br><span class="line">    fail: <span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 修改成已失败的状态</span></span><br><span class="line">      reject(err)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">promise.then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(res)</span><br><span class="line">&#125;, (err) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(err)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">let</span> promise <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  wx<span class="token punctuation">.</span><span class="token function">getSystemInfo</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token function-variable function">success</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 修改成已成功的状态</span>
+      <span class="token function">resolve</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token function-variable function">fail</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token comment">// 修改成已失败的状态</span>
+      <span class="token function">reject</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+promise<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">res</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">err</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li><p>promise.then()方法获取结果，接收两个参数，两个参数不可以更换位置</p>
 <ol>
 <li>第一个是已成功的回调函数</li>
@@ -418,17 +449,56 @@
 </li>
 </ol>
 <p>上面代码简写</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  wx.getSystemInfo(&#123;</span><br><span class="line">    <span class="comment">// 修改成已成功的状态</span></span><br><span class="line">    success: <span class="function"><span class="params">res</span> =&gt;</span> resolve(res),</span><br><span class="line">    <span class="comment">// 修改成已失败的状态</span></span><br><span class="line">    fail: <span class="function"><span class="params">err</span> =&gt;</span> reject(err)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">console</span>.log(res), err =&gt; <span class="built_in">console</span>.log(err))</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  wx<span class="token punctuation">.</span><span class="token function">getSystemInfo</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    <span class="token comment">// 修改成已成功的状态</span>
+    <span class="token function-variable function">success</span><span class="token operator">:</span> <span class="token parameter">res</span> <span class="token operator">=&gt;</span> <span class="token function">resolve</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token comment">// 修改成已失败的状态</span>
+    <span class="token function-variable function">fail</span><span class="token operator">:</span> <span class="token parameter">err</span> <span class="token operator">=&gt;</span> <span class="token function">reject</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span> <span class="token operator">=&gt;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token parameter">err</span> <span class="token operator">=&gt;</span> console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 <h2 id="Promise正确写法"><a href="#Promise正确写法" class="headerlink" title="Promise正确写法"></a>Promise正确写法</h2><p>如果出现几个Promise一起使用，则可以在Promise函数中return另外一个Promise对象，避免回调地狱。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">bookModel.getHotList().then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"1."</span> + <span class="built_in">JSON</span>.stringify(res))</span><br><span class="line">  <span class="comment">// 如果需要在回调中发起另外的请求，则返回一个Promise</span></span><br><span class="line">  <span class="keyword">return</span> bookModel.getMyBookCount()</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"2."</span> + <span class="built_in">JSON</span>.stringify(res))</span><br><span class="line">  <span class="keyword">return</span> bookModel.getMyBookCount()</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"3."</span> + <span class="built_in">JSON</span>.stringify(res))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">bookModel<span class="token punctuation">.</span><span class="token function">getHotList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"1."</span> <span class="token operator">+</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token comment">// 如果需要在回调中发起另外的请求，则返回一个Promise</span>
+  <span class="token keyword">return</span> bookModel<span class="token punctuation">.</span><span class="token function">getMyBookCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"2."</span> <span class="token operator">+</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> bookModel<span class="token punctuation">.</span><span class="token function">getMyBookCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"3."</span> <span class="token operator">+</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="Promise-all使用"><a href="#Promise-all使用" class="headerlink" title="Promise.all使用"></a>Promise.all使用</h2><p>如果用三个请求发送，串行的</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">bookModel.getDetail(bid).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">    book: res</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">bookModel.getCommons(bid).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">    comments: res.comments</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">bookModel.getLikeStatus(bid).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">    likeStatus: res.like_status,</span><br><span class="line">    likeCount: res.fav_nums</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">bookModel<span class="token punctuation">.</span><span class="token function">getDetail</span><span class="token punctuation">(</span>bid<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    book<span class="token operator">:</span> res
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+bookModel<span class="token punctuation">.</span><span class="token function">getCommons</span><span class="token punctuation">(</span>bid<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    comments<span class="token operator">:</span> res<span class="token punctuation">.</span>comments
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+bookModel<span class="token punctuation">.</span><span class="token function">getLikeStatus</span><span class="token punctuation">(</span>bid<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    likeStatus<span class="token operator">:</span> res<span class="token punctuation">.</span>like_status<span class="token punctuation">,</span>
+    likeCount<span class="token operator">:</span> res<span class="token punctuation">.</span>fav_nums
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>用Promise.all方法改写</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.all([bookModel.getDetail(bid), bookModel.getCommons(bid), bookModel.getLikeStatus(bid)]).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">  wx.hideLoding()</span><br><span class="line">  <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">    book: res[<span class="number">0</span>],</span><br><span class="line">    comments: res[<span class="number">1</span>].comments,</span><br><span class="line">    likeStatus: res[<span class="number">2</span>].like_status,</span><br><span class="line">    likeCount: res[<span class="number">2</span>].fav_nums</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">Promise<span class="token punctuation">.</span><span class="token function">all</span><span class="token punctuation">(</span><span class="token punctuation">[</span>bookModel<span class="token punctuation">.</span><span class="token function">getDetail</span><span class="token punctuation">(</span>bid<span class="token punctuation">)</span><span class="token punctuation">,</span> bookModel<span class="token punctuation">.</span><span class="token function">getCommons</span><span class="token punctuation">(</span>bid<span class="token punctuation">)</span><span class="token punctuation">,</span> bookModel<span class="token punctuation">.</span><span class="token function">getLikeStatus</span><span class="token punctuation">(</span>bid<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">res</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  wx<span class="token punctuation">.</span><span class="token function">hideLoding</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    book<span class="token operator">:</span> res<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    comments<span class="token operator">:</span> res<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>comments<span class="token punctuation">,</span>
+    likeStatus<span class="token operator">:</span> res<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span>like_status<span class="token punctuation">,</span>
+    likeCount<span class="token operator">:</span> res<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span>fav_nums
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>res返回的是数组，数组的顺序就是all的参数数组的数据。</p>
 
                 
@@ -812,6 +882,9 @@
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;Total Words:&nbsp;<span
+                        class="white-color">84.3k</span>
             
             
             

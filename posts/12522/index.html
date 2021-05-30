@@ -40,7 +40,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -382,7 +384,17 @@
                 
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    1.7k
+                </div>
+                
 
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
+                    6 Min
+                </div>
                 
 
                 
@@ -391,13 +403,16 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>MVC 全称是 Model-View-Controller（模型 - 视图 - 控制器） ，是一种软件设计典范，用一种业务逻辑、数据、界面进行分离的开发模式。<br>MVC 模式是一种经典的设计模式，被广泛地应用在程序开发当中，例如，目前比较知名的经典框架：Spring MVC、ASP.NET MVC、Struts2 等，都是基于 MVC 模式实现的。</p>
-<a id="more"></a>
+<span id="more"></span>
 
 
 <h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p>MVC 模式包含如下角色：</p>
@@ -408,15 +423,44 @@
 </ul>
 <p>角色之间的执行流程图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/4516q.jpg"></p>
 <h2 id="MVC-模式代码实现"><a href="#MVC-模式代码实现" class="headerlink" title="MVC 模式代码实现"></a>MVC 模式代码实现</h2><p>本文并不打算使用现成的 MVC 框架来做演示，比如 Spring MVC 框架等，因为本身框架太重，且已经是封装好的，不便于读者理解，所以本文会用代码的方式，手动实现 MVC 模式。</p>
-<h3 id="模型层"><a href="#模型层" class="headerlink" title="模型层"></a>模型层</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模型层（伪代码）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Model</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">method</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"I'm Model."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="模型层"><a href="#模型层" class="headerlink" title="模型层"></a>模型层</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 模型层（伪代码）
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name">Model</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">method</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"I'm Model."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="视图层"><a href="#视图层" class="headerlink" title="视图层"></a>视图层</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 视图层（伪代码）</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">View</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"I'm View."</span>);</span><br><span class="line">        Controller.doController();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="视图层"><a href="#视图层" class="headerlink" title="视图层"></a>视图层</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 视图层（伪代码）
+ **/</span>
+<span class="token keyword">class</span> <span class="token class-name">View</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"I'm View."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Controller</span><span class="token punctuation">.</span><span class="token function">doController</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h3 id="客户端调用"><a href="#客户端调用" class="headerlink" title="客户端调用"></a>客户端调用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 客户端调用（伪代码）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 打开页面</span></span><br><span class="line">        View view = <span class="keyword">new</span> View();</span><br><span class="line">        <span class="comment">// 执行查询，并展现结果</span></span><br><span class="line">        view.show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="客户端调用"><a href="#客户端调用" class="headerlink" title="客户端调用"></a>客户端调用</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 客户端调用（伪代码）
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 打开页面</span>
+        <span class="token class-name">View</span> view <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">View</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 执行查询，并展现结果</span>
+        view<span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>程序执行结果如下:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">I’m View.</span><br><span class="line"></span><br><span class="line">I’m Controller.</span><br><span class="line"></span><br><span class="line">I’m Model.</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">I</span>’m <span class="token class-name">View<span class="token punctuation">.</span>
+
+I</span>’m <span class="token class-name">Controller<span class="token punctuation">.</span>
+
+I</span>’m <span class="token class-name">Model</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>以上模型层、视图层、客户端调用都是伪代码，模拟的是用户打开页面，再执行查询、展示的流程，程序的实际执行流程是：用户先调用视图层（页面），视图层再调用控制器，控制器再调用模型层，最终再把结果返回给用户的过程。</p>
 <h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>MVC 模式的优点：</p>
@@ -431,19 +475,113 @@
 <li>实用型工具类程序：与前两种开发不同，实用型工具类程序，更多修改的是展示层之外的代码，这种在不更改用户操作习惯的方式下，静默地调整和升级代码的方式，也比较适合用 MVC 设计模式。</li>
 </ul>
 <h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2><p>以图书馆中查询书籍简介为例，比如，我们在图书馆的电脑上，输入书名再点击查询，就会在数据库中查询书籍信息，并展示给用户，具体实现代码如下。</p>
-<h3 id="模型层-1"><a href="#模型层-1" class="headerlink" title="模型层"></a>模型层</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 模型层</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MvcModel</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String desc;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getDesc</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> desc;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDesc</span><span class="params">(String desc)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.desc = desc;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="模型层-1"><a href="#模型层-1" class="headerlink" title="模型层"></a>模型层</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 模型层
+ **/</span>
+<span class="token keyword">class</span> <span class="token class-name">MvcModel</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> desc<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getDesc</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> desc<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setDesc</span><span class="token punctuation">(</span><span class="token class-name">String</span> desc<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>desc <span class="token operator">=</span> desc<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="前端页面（视图层）"><a href="#前端页面（视图层）" class="headerlink" title="前端页面（视图层）"></a>前端页面（视图层）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 视图层</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MvcView</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MvcView</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"页面展示"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 接收用户请求，调用控制器</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">find</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 调用控制器，输出结果</span></span><br><span class="line">        System.out.println(<span class="string">"输出结果："</span> + <span class="keyword">new</span> MvcController().getDesc(name));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="前端页面（视图层）"><a href="#前端页面（视图层）" class="headerlink" title="前端页面（视图层）"></a>前端页面（视图层）</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 视图层
+ **/</span>
+<span class="token keyword">class</span> <span class="token class-name">MvcView</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">MvcView</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"页面展示"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// 接收用户请求，调用控制器</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">find</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 调用控制器，输出结果</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"输出结果："</span> <span class="token operator">+</span> <span class="token keyword">new</span> <span class="token class-name">MvcController</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getDesc</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 控制器（层）</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MvcController</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 简介内容</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Description</span> 根据名称获取简介</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Param</span> name 名称</span></span><br><span class="line"><span class="comment">     **/</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getDesc</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 最终返回的结果</span></span><br><span class="line">        String result = <span class="string">"暂无"</span>;</span><br><span class="line">        <span class="comment">// 以模型层为基础，通过数据层，查询到相关的数据</span></span><br><span class="line">        MvcModel mvcModel = MvcDB.findByName(name);</span><br><span class="line">        <span class="keyword">if</span> (mvcModel != <span class="keyword">null</span>) &#123;</span><br><span class="line">            result = mvcModel.getDesc();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 控制器（层）
+ **/</span>
+<span class="token keyword">class</span> <span class="token class-name">MvcController</span> <span class="token punctuation">{</span>
+    <span class="token comment">/**
+     * @return 简介内容
+     * @Description 根据名称获取简介
+     * @Param name 名称
+     **/</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getDesc</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 最终返回的结果</span>
+        <span class="token class-name">String</span> result <span class="token operator">=</span> <span class="token string">"暂无"</span><span class="token punctuation">;</span>
+        <span class="token comment">// 以模型层为基础，通过数据层，查询到相关的数据</span>
+        <span class="token class-name">MvcModel</span> mvcModel <span class="token operator">=</span> <span class="token class-name">MvcDB</span><span class="token punctuation">.</span><span class="token function">findByName</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>mvcModel <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            result <span class="token operator">=</span> mvcModel<span class="token punctuation">.</span><span class="token function">getDesc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h3 id="数据层（提供数据）"><a href="#数据层（提供数据）" class="headerlink" title="数据层（提供数据）"></a>数据层（提供数据）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">**</span><br><span class="line"> * 数据层</span><br><span class="line"> **/</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MvcDB</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Description</span> 根据书名返回数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@Param</span> name 书名</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 模型对象数据</span></span><br><span class="line"><span class="comment">     **/</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> MvcModel <span class="title">findByName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        MvcModel model = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">switch</span> (name) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"Java"</span>:</span><br><span class="line">                model = <span class="keyword">new</span> MvcModel();</span><br><span class="line">                model.setName(<span class="string">"Java面试全解析"</span>);</span><br><span class="line">                model.setDesc(<span class="string">"这是一本包含了 505 道面试题的 Java 书籍。"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"MySQL"</span>:</span><br><span class="line">                model = <span class="keyword">new</span> MvcModel();</span><br><span class="line">                model.setName(<span class="string">"MySQL面试金典"</span>);</span><br><span class="line">                model.setDesc(<span class="string">"这是一本包含了 208 道面试题的 MySQL 书籍。"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> model;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="数据层（提供数据）"><a href="#数据层（提供数据）" class="headerlink" title="数据层（提供数据）"></a>数据层（提供数据）</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token operator">*</span><span class="token operator">*</span>
+ <span class="token operator">*</span> 数据层
+ <span class="token operator">*</span><span class="token operator">*</span><span class="token operator">/</span>
+<span class="token keyword">class</span> <span class="token class-name">MvcDB</span> <span class="token punctuation">{</span>
+    <span class="token comment">/**
+     * @Description 根据书名返回数据
+     * @Param name 书名
+     * @return 模型对象数据
+     **/</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">MvcModel</span> <span class="token function">findByName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">MvcModel</span> model <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token keyword">switch</span> <span class="token punctuation">(</span>name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">case</span> <span class="token string">"Java"</span><span class="token operator">:</span>
+                model <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MvcModel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                model<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"Java面试全解析"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                model<span class="token punctuation">.</span><span class="token function">setDesc</span><span class="token punctuation">(</span><span class="token string">"这是一本包含了 505 道面试题的 Java 书籍。"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">case</span> <span class="token string">"MySQL"</span><span class="token operator">:</span>
+                model <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MvcModel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                model<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"MySQL面试金典"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                model<span class="token punctuation">.</span><span class="token function">setDesc</span><span class="token punctuation">(</span><span class="token string">"这是一本包含了 208 道面试题的 MySQL 书籍。"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token keyword">default</span><span class="token operator">:</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> model<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="客户端调用-1"><a href="#客户端调用-1" class="headerlink" title="客户端调用"></a>客户端调用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 打开页面</span></span><br><span class="line">        MvcView mvcView = <span class="keyword">new</span> MvcView();</span><br><span class="line">        <span class="comment">// 输入书名：Java</span></span><br><span class="line">        mvcView.name = <span class="string">"Java"</span>;</span><br><span class="line">        <span class="comment">// 点击查询，执行相关流程并展示结果</span></span><br><span class="line">        mvcView.find();</span><br><span class="line">        <span class="comment">// 输入书名：MySQL</span></span><br><span class="line">        mvcView.name = <span class="string">"MySQL"</span>;</span><br><span class="line">        <span class="comment">// 点击查询，执行相关流程并展示结果</span></span><br><span class="line">        mvcView.find();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="客户端调用-1"><a href="#客户端调用-1" class="headerlink" title="客户端调用"></a>客户端调用</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 打开页面</span>
+        <span class="token class-name">MvcView</span> mvcView <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MvcView</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 输入书名：Java</span>
+        mvcView<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Java"</span><span class="token punctuation">;</span>
+        <span class="token comment">// 点击查询，执行相关流程并展示结果</span>
+        mvcView<span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 输入书名：MySQL</span>
+        mvcView<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"MySQL"</span><span class="token punctuation">;</span>
+        <span class="token comment">// 点击查询，执行相关流程并展示结果</span>
+        mvcView<span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>程序执行结果如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">页面展示</span><br><span class="line"></span><br><span class="line">输出结果：这是一本包含了 <span class="number">505</span> 道面试题的 Java 书籍。</span><br><span class="line"></span><br><span class="line">输出结果：这是一本包含了 <span class="number">208</span> 道面试题的 MySQL 书籍。</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">页面展示
+
+输出结果：这是一本包含了 <span class="token number">505</span> 道面试题的 <span class="token class-name">Java</span> 书籍。
+
+输出结果：这是一本包含了 <span class="token number">208</span> 道面试题的 <span class="token class-name">MySQL</span> 书籍。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>细心的读者可能会发现，这个实例中又多了一个数据层，其实它并没有特殊的含义，只是为整个实例提供数据来源而已。在这个实例中，模型层相对来说功能比较单一，只是一个数据载体（数据容器）而已，但广义上来说 MVC 模式中的模型层，也可以是业务模型层，并带有逻辑判断代码，就相当于这个例子中的 MvcModel 类 + MvcDB 类的合体。但设计模式只是一种思想，并没有严格的实现标准，这同时也是学习设计模式的精髓，读者可以根据实际情况，灵活变通，只要符合程序设计的七大经典原则即可。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>MVC 模式 Model-View-Controller（模型 - 视图 - 控制器），可以有效地将程序分层，提高了开发效率，让专业的人干专业的事，同时降低了代码间的耦合，提升了代码的复用性，但也因此减低了程序的执行性能，拉长了程序调试的流程，增加了开发的难度。所以对于中小型系统来说，要谨慎地使用 MVC 模式，不要死记硬套，要学会变通地使用各种设计模式。</p>
@@ -831,6 +969,9 @@ Represent an operation to be performed on the elements of an object structure. V
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;Total Words:&nbsp;<span
+                        class="white-color">84.3k</span>
             
             
             

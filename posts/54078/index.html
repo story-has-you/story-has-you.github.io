@@ -40,7 +40,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -382,7 +384,17 @@
                 
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    1.3k
+                </div>
+                
 
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
+                    4 Min
+                </div>
                 
 
                 
@@ -391,13 +403,16 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>本小节我们要学习的设计模式叫做外观模式，也叫做门面模式 Facade。想象一下，我们系统随着时间的推移，系统复杂性、类之间的相互调用会变得越来越多，相比较客户角度而言，客户往往关注的是某个单一接口 API，而不会关心该 API 内部的复杂性或者内部子系统是如何运作的。</p>
-<a id="more"></a>
+<span id="more"></span>
 
 <p>举个栗子，我们都玩过射击类游戏，游戏玩家对战的时候，需要进行射击操作，而射击牵扯到一连串的动作，比如：上子弹、瞄准、发射子弹、掉血、加分等等一系列动作，这些动作我们可以理解为各个子系统的某个接口 API，比如上子弹、发射子弹可能是武器子系统的 API，掉血、加分可能是用户子系统的 API，客户角度需要调用的接口其实只有一个，那就是射击 API，这就是具体的门面接口，门面内部的各个子系统的动作对客户是透明的，这种客户只需要调用门面接口 API 就实现了一连串内部动作（上子弹、瞄准、发射子弹、掉血、加分等）的模式其实就叫做外观模式，也叫做门面模式。</p>
 <p>外观模式的定义是：<strong>为各个子系统的一组接口提供一致的调用窗口或门面，使得子系统更容易使用，使得复杂的子系统与客户端分离解耦。</strong></p>
@@ -405,23 +420,80 @@
 <h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2><p>这里还是以上面的射击游戏为例，先来看下不使用外观模式时候的类图设计</p>
 <h3 id="不使用外观模式"><a href="#不使用外观模式" class="headerlink" title="不使用外观模式"></a>不使用外观模式</h3><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/ycz1m.jpeg"></p>
 <p>这里代码比较简单，我们直接列出武器系统和用户系统的示例代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FireSystem</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fire</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"开火...."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">useBullet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"上子弹...."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserSystem</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loseBlood</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"掉血..."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addScore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"得分..."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">FireSystem</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">fire</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"开火...."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">useBullet</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"上子弹...."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">UserSystem</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">loseBlood</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"掉血..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addScore</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"得分..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>测试类 Client 角色如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">FireSystem fireSystem = <span class="keyword">new</span> FireSystem();</span><br><span class="line">UserSystem userSystem = <span class="keyword">new</span> UserSystem();</span><br><span class="line"></span><br><span class="line">fireSystem.useBullet(); <span class="comment">// 上子弹</span></span><br><span class="line">fireSystem.fire(); <span class="comment">// 开火</span></span><br><span class="line">userSystem.loseBlood(); <span class="comment">// 掉血</span></span><br><span class="line">userSystem.addScore(); <span class="comment">// 加分</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">FireSystem</span> fireSystem <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FireSystem</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">UserSystem</span> userSystem <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">UserSystem</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+fireSystem<span class="token punctuation">.</span><span class="token function">useBullet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 上子弹</span>
+fireSystem<span class="token punctuation">.</span><span class="token function">fire</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 开火</span>
+userSystem<span class="token punctuation">.</span><span class="token function">loseBlood</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 掉血</span>
+userSystem<span class="token punctuation">.</span><span class="token function">addScore</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 加分</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>测试结果如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">上子弹…</span><br><span class="line">开火…</span><br><span class="line">掉血…</span><br><span class="line">得分…</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">上子弹…
+开火…
+掉血…
+得分…<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h3 id="使用外观模式"><a href="#使用外观模式" class="headerlink" title="使用外观模式"></a>使用外观模式</h3><p>上面不使用外观模式时，可以看到客户端需要自己去直接调用各个子系统 API，系统模块多的时候对客户端十分不友好，下面我们看下使用外观模式如何解决这种问题，外观模式的类图设计如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/kfq0a.png"></p>
 <p>这里我们引入 Facade 角色，该角色内部包含各个子系统的被委托的对象，客户端的所有请求经过 Facade 角色中转，简化了客户端操作的复杂性，Facade 代码示例如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Facade</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 被委托的对象</span></span><br><span class="line">    <span class="keyword">private</span> FireSystem fireSystem;</span><br><span class="line">    <span class="keyword">private</span> UserSystem userSystem;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Facade</span><span class="params">(FireSystem fireSystem, UserSystem userSystem)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.fireSystem = fireSystem;</span><br><span class="line">        <span class="keyword">this</span>.userSystem = userSystem;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 模拟射击的门面接口 API</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">shooting</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        fireSystem.useBullet(); <span class="comment">// 上子弹</span></span><br><span class="line">        fireSystem.fire(); <span class="comment">// 开火</span></span><br><span class="line">        userSystem.loseBlood(); <span class="comment">// 敌人掉血</span></span><br><span class="line">        userSystem.addScore(); <span class="comment">// 自己加分</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Facade</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// 被委托的对象</span>
+    <span class="token keyword">private</span> <span class="token class-name">FireSystem</span> fireSystem<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">UserSystem</span> userSystem<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">Facade</span><span class="token punctuation">(</span><span class="token class-name">FireSystem</span> fireSystem<span class="token punctuation">,</span> <span class="token class-name">UserSystem</span> userSystem<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>fireSystem <span class="token operator">=</span> fireSystem<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>userSystem <span class="token operator">=</span> userSystem<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// 模拟射击的门面接口 API</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">shooting</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        fireSystem<span class="token punctuation">.</span><span class="token function">useBullet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 上子弹</span>
+        fireSystem<span class="token punctuation">.</span><span class="token function">fire</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 开火</span>
+        userSystem<span class="token punctuation">.</span><span class="token function">loseBlood</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 敌人掉血</span>
+        userSystem<span class="token punctuation">.</span><span class="token function">addScore</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 自己加分</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>测试 Client 调整如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FireSystem fireSystem = <span class="keyword">new</span> FireSystem();</span><br><span class="line">UserSystem userSystem = <span class="keyword">new</span> UserSystem();</span><br><span class="line"></span><br><span class="line">Facade facade = <span class="keyword">new</span> Facade(fireSystem, userSystem);</span><br><span class="line">facade.shooting(); <span class="comment">// 射击</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">FireSystem</span> fireSystem <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FireSystem</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">UserSystem</span> userSystem <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">UserSystem</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">Facade</span> facade <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Facade</span><span class="token punctuation">(</span>fireSystem<span class="token punctuation">,</span> userSystem<span class="token punctuation">)</span><span class="token punctuation">;</span>
+facade<span class="token punctuation">.</span><span class="token function">shooting</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 射击</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>结果输出如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">上子弹…</span><br><span class="line">开火…</span><br><span class="line">掉血…</span><br><span class="line">得分…</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">上子弹…
+开火…
+掉血…
+得分…<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>可以看出，门面模式下，客户端接口调用的复杂性有所降低，并且内部系统和客户端之间解耦，使用门面模式下的“接待员”接口即可完成功能操作。</p>
 <h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/3v5wl.png"></p>
@@ -823,6 +895,9 @@
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;Total Words:&nbsp;<span
+                        class="white-color">84.3k</span>
             
             
             

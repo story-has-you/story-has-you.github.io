@@ -40,7 +40,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 4.2.1"></head>
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -382,7 +384,17 @@
                 
 
                 
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    1.2k
+                </div>
+                
 
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
+                    4 Min
+                </div>
                 
 
                 
@@ -391,13 +403,16 @@
         <hr class="clearfix">
 
         
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
 
         
 
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>今天在家水群的时候，发现群里在讨论关于注册中心的选择，Zookeeper，Nacos，Eureka到底是用哪个。有人说用Zookeeper好，有人说Nacos好，各有各的说法。具体怎么好，也没人说上来。其实说来说去，就是在CAP定理中，选择AP还是CP。只要仔细想想注册中心的职责，就该知道如何选择了。</p>
-<a id="more"></a>
+<span id="more"></span>
 
 
 <h2 id="注册中心是-CP-还是-AP-系统"><a href="#注册中心是-CP-还是-AP-系统" class="headerlink" title="注册中心是 CP 还是 AP 系统"></a>注册中心是 CP 还是 AP 系统</h2><p>CAP 和 BASE 理论已经耳熟能详，其业已成了指导分布式系统及互联网应用构建的关键原则之一，在此不再赘述其理论。<br>注册中心的本质功能可以当成一个函数 <code>Si = F(service-name)</code>。service-name是查询参数，ip和port(以下简称endpoints)是返回值。</p>
@@ -407,7 +422,7 @@
 <p>在分布式系统中，即使对等部署的服务，因为请求到达的时间，硬件的状态，操作系统的调度，虚拟机的GC等，都会导致在任一时间点这些对等的服务状态也不可能完全一致。注册中心都会有一个SLA承诺时间，比如1S内将数据完全同步，即最终一致性，这一点我们可以完全接受。</p>
 <h3 id="A不满足"><a href="#A不满足" class="headerlink" title="A不满足"></a>A不满足</h3><p>下面分析一下注册中心不可用对服务调用产生的影响，即CAP中A不满足时带来的后果。</p>
 <p>一个典型的Zookeeper3机房3节点(zk1, zk2, zk3)部署，其中zk1是leader。假设其中一个节点机房zk3出现网络分区，虽然Zookeeper服务是可用的，但是zk3是不可写的，因为联系不上leader。也就是说，这时候部署在机房3的服务是不可以重新部署，扩容的。站在服务调用的角度上看，机房3的服务虽然无法调用机房1和机房2的服务，但是与自己本机房的服务网络明明是通的啊。为什么在同一个机房内的服务却不能调用？？？</p>
-<p>熟悉Zookeeper的人应该都知道Zookeeper中有个脑裂的概念，Zookeeper自身为了保脑裂(CAP中的P)下的数据一致性(C)而放弃了可用性(A)，导致了同一个机房的服务无法相互调用。可以说，这是绝对不允许的。**<em>在实践中，注册中心不能因为自身的任何原因破坏服务之间本身的可连通性，这是注册中心设计应该遵循的铁律！**</em></p>
+<p>熟悉Zookeeper的人应该都知道Zookeeper中有个脑裂的概念，Zookeeper自身为了保脑裂(CAP中的P)下的数据一致性(C)而放弃了可用性(A)，导致了同一个机房的服务无法相互调用。可以说，这是绝对不允许的。<em><strong>在实践中，注册中心不能因为自身的任何原因破坏服务之间本身的可连通性，这是注册中心设计应该遵循的铁律！</strong></em></p>
 <p>同时我们再考虑一下这种情况下的数据不一致性(AP)，如果机房1，2，3之间都成了孤岛，那么如果每个机房的服务都只拿到本机房的服务的ip列表，也即在各机房的服务列表数据完全不一致，影响是什么？在这种情况下，会全部变成同机房调用。设计注册中心的时候，有时候甚至会主动利用这种注册中心的数据可以不一致性，来帮助应用主动做到同机房调用。</p>
 <h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>通过以上分析，可以看到，注册中心的可用性比数据强一致性更宝贵，所以整体设计更应该偏向 AP，而非 CP，数据不一致在可接受范围，而P下舍弃A却完全违反了注册中心不能因为自身的任何原因破坏服务本身的可连通性的原则。</p>
 <p>这篇文章并不是全盘否定Zookeeper，Zookeeper本职是分布式协调服务器，注册中心只是他的功能之一，在粗粒度分布式锁，分布式选主，主备高可用切换等不需要高TPS 支持的场景下有不可替代的作用。</p>
@@ -797,6 +812,9 @@ Keepalived：LVS基础之上，实现心跳检测、监控服务器实现故障�
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
+            
+                &nbsp;<i class="fas fa-chart-area"></i>&nbsp;Total Words:&nbsp;<span
+                        class="white-color">84.3k</span>
             
             
             
