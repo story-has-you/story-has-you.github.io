@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="责任链模式, java,spring,多线程,设计模式,spring boot,故事有你,[故事有你],story-has-you">
+    <meta name="keywords" content="Redis 实现用户签到功能, java,spring,多线程,设计模式,spring boot,故事有你,[故事有你],story-has-you">
     <meta name="description" content="略懂Java">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -27,7 +27,7 @@
 </script>
 
 
-    <title>责任链模式 | story-has-you</title>
+    <title>Redis 实现用户签到功能 | story-has-you</title>
     <link rel="icon" type="image/gif" href="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/zwqen.gif">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -235,12 +235,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">责任链模式</h1>
+                    <h1 class="description center-align post-title">Redis 实现用户签到功能</h1>
                 </div>
             </div>
         </div>
@@ -364,8 +364,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
-                                设计模式
+                            <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="post-category">
+                                中间件
                             </a>
                         
                     </div>
@@ -377,7 +377,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2020-03-05
+                    2021-05-31
                 </div>
                 
 
@@ -386,14 +386,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    2.1k
+                    1.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    7 Min
+                    4 Min
                 </div>
                 
 
@@ -411,176 +411,135 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>什么是责任链模式？生活中我们经常遇到这样的问题，比如请假审批需要层层上报处理、遇到问题各个部门甩赖扯皮，像这种，在事情没有被处理之前，会经过一系列阶段，类似于“踢皮球”似的。同样地，当一个请求到达时，在程序无法直接决定由哪个对象负责处理时，客户的请求就会形成一种链式传递，在链上的各个处理对象如果无法直接决定是否由其处理时，就会将请求再传递至下一个链对象，直到请求被处理或者被丢弃等等。这种处理链我们形象称其为“责任链”。</p>
+                <p>签到功能对应的逻辑很常见，主要有以下几种场景</p>
+<ul>
+<li>签到 1 天送 10 积分，连续签到 2 天送 20 积分，3 天送 30 积分，4 天以上均送 50 积分等</li>
+<li>如果连续签到中断，则重置计数，每月初重置计数</li>
+<li>在日历控件上展示用户每月签到情况，可以切换年月显示</li>
+</ul>
 <span id="more"></span>
 
 
-<p>责任链模式的定义是：<strong>使多个对象都有机会处理请求，从而避免了请求的发送者和接受者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，直到有对象处理它为止。</strong></p>
-<h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2><p>举个例子，初级、中级、高级开发工程师分别处理问题的能力不同，我们假设初级工程师只能处理难度级别为 1 的问题，中级工程师能处理难度为 1、2 的问题，高级工程师能处理难度级别为 1、2、3 的问题，另外我们有一个 Request 请求代表要处理的请求，内部包含一个难度级别和要请求的内容，我们先来看下类图的设计：</p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/1w1vo.png"></p>
-<p>首先我们先定义一个请求接口：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">interface</span> <span class="token class-name">IRequest</span> <span class="token punctuation">{</span>
-    <span class="token comment">// 获取请求级别</span>
-    <span class="token keyword">int</span> <span class="token function">getRequestLevel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<p>最简单的就是使用数据库保存，假设数据签到表设计如下</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">table</span> user_sign<span class="token punctuation">(</span>
+  id <span class="token keyword">int</span> <span class="token keyword">primary</span> <span class="token keyword">key</span> <span class="token keyword">AUTO_INCREMENT</span><span class="token punctuation">,</span>
+  user_id <span class="token keyword">int</span> <span class="token operator">not</span> <span class="token boolean">null</span> <span class="token keyword">comment</span> <span class="token string">'用户id'</span><span class="token punctuation">,</span>
+  sign_date <span class="token keyword">datetime</span> <span class="token operator">not</span> <span class="token boolean">null</span> <span class="token keyword">comment</span> <span class="token string">'签到日期'</span><span class="token punctuation">,</span>
+  amount <span class="token keyword">int</span> <span class="token operator">not</span> <span class="token boolean">null</span> <span class="token keyword">comment</span> <span class="token string">'连续签到次数'</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-    <span class="token comment">// 获取要请求的内容</span>
-    <span class="token class-name">String</span> <span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>如果这样存数据，对于用户量大的应用，db可能扛不住，比如 1000W 用户，一天一条，那么一个月就是 3 亿数据，非常庞大。</p>
+<h2 id="使用bitmap"><a href="#使用bitmap" class="headerlink" title="使用bitmap"></a>使用bitmap</h2><p>就是通过一个bit位来表示某个元素对应的值或者状态,其中的key就是对应元素本身。我们知道8个bit可以组成一个Byte，所以bitmap本身会极大的节省储存空间。</p>
+<p>Redis从2.2.0版本开始新增了setbit,getbit,bitcount等几个bitmap相关命令。虽然是新命令，但是并没有新增新的数据类型，因为setbit等命令只不过是在set上的扩展。</p>
+<p>内存开销小、效率高且操作简单，很适合用于签到这类场景。比如按月进行存储，一个月最多 31 天，那么我们将该月用户的签到缓存二进制就是 00000000000000000000000000000000，当某天签到将 0 改成 1 即可，而且 Redis 提供对 bitmap 的很多操作比如存储、获取、统计等指令，使用起来非常方便。</p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>功能</th>
+<th>参数</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>setbit</td>
+<td>指定偏移量 bit 位置设置值</td>
+<td>key offset value【0=&lt; offset&lt; 2^32】</td>
+<td>setbit user:sign:202105 0 1</td>
+</tr>
+<tr>
+<td>getbit</td>
+<td>查询指定偏移位置的 bit 值</td>
+<td>key offset</td>
+<td>getbit user:sign:202105 0</td>
+</tr>
+<tr>
+<td>bitcount</td>
+<td>统计指定字节区间 bit 为 1 的数量</td>
+<td>key [start end]</td>
+<td>bitcount user:sign:202105 0 31</td>
+</tr>
+<tr>
+<td>bitfield</td>
+<td>操作多字节位域</td>
+<td>key [GET type offset] [SET type offset value] [INCRBY type offset increment] [OVERFLOW WRAP/SAT/FAIL]</td>
+<td>user:sign:202105 get u31 0</td>
+</tr>
+</tbody></table>
+<h2 id="设置签到"><a href="#设置签到" class="headerlink" title="设置签到"></a>设置签到</h2><p>假设需要设置2021年5月份的签到数据</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">setbit user:sign:202105 <span class="token number">0</span> <span class="token number">1</span> <span class="token comment"># key: user:sign:202105, 0 代表1号，1 代表已签到</span>
+setbit user:sign:202105 <span class="token number">1</span> <span class="token number">1</span>
+setbit user:sign:202105 <span class="token number">2</span> <span class="token number">1</span>
+<span class="token comment"># 第三天断签了</span>
+setbit user:sign:202105 <span class="token number">4</span> <span class="token number">1</span>
+setbit user:sign:202105 <span class="token number">5</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>该接口包括一个难度级别和要请求的内容，这就是我们需要链式处理的请求，链上的处理对象根据请求难度级别获取请求内容选择是否进行处理，接下来是 IRequest 的实现类：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Request</span> <span class="token keyword">implements</span> <span class="token class-name">IRequest</span> <span class="token punctuation">{</span>
-    <span class="token comment">/**
-     * 难度级别1--初级工程师解决
-     * 难度级别2--中级工程师解决
-     * 难度级别3--高级工程师解决
-     */</span>
-    <span class="token keyword">private</span> <span class="token keyword">int</span> level<span class="token punctuation">;</span>
-    <span class="token comment">// 要请求的内容或要解决的问题</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> request <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">;</span>
 
-    <span class="token class-name">Request</span><span class="token punctuation">(</span><span class="token keyword">int</span> _level<span class="token punctuation">,</span> <span class="token class-name">String</span> _request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>level <span class="token operator">=</span> _level<span class="token punctuation">;</span>
-        <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>level<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">case</span> <span class="token number">1</span><span class="token operator">:</span>
-                <span class="token keyword">this</span><span class="token punctuation">.</span>request <span class="token operator">=</span> <span class="token string">"难度级别为1的请求是："</span> <span class="token operator">+</span> _request<span class="token punctuation">;</span>
-                <span class="token keyword">break</span><span class="token punctuation">;</span>
-            <span class="token keyword">case</span> <span class="token number">2</span><span class="token operator">:</span>
-                <span class="token keyword">this</span><span class="token punctuation">.</span>request <span class="token operator">=</span> <span class="token string">"难度级别为2的请求是："</span> <span class="token operator">+</span> _request<span class="token punctuation">;</span>
-                <span class="token keyword">break</span><span class="token punctuation">;</span>
-            <span class="token keyword">case</span> <span class="token number">3</span><span class="token operator">:</span>
-                <span class="token keyword">this</span><span class="token punctuation">.</span>request <span class="token operator">=</span> <span class="token string">"难度级别为3的请求是："</span> <span class="token operator">+</span> _request<span class="token punctuation">;</span>
-                <span class="token keyword">break</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+
+<p>Redis中数据为</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token number">11101100</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<p><strong>统计这个月签到天数</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">bitcount user:sign:202105 <span class="token number">0</span> <span class="token number">31</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>范围指定从0-31，一个月最多就31天</p>
+<p><strong>连续签到次数</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">bitfield user:sign:202105 get u31 <span class="token number">0</span> <span class="token comment"># 1979711488</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>从 <code>user:sign:202105</code>这个key 中获取<code>31</code>位，u代表无符号，<code>1979711488</code>代表获取到的十进制数字</p>
+<h2 id="位运算判断是否签到"><a href="#位运算判断是否签到" class="headerlink" title="位运算判断是否签到"></a>位运算判断是否签到</h2><p>假设获取到连续31天签到次数为 : <code>1979711488</code>，如何判断某天是否已经签到</p>
+<p><code>1979711488</code>的二进制为</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token number">1110110000000000000000000000000</span>
+<span class="token comment"># 先右移一位</span>
+0111011000000000000000000000000
+<span class="token comment"># 再左移一位， 和原数字一样</span>
+<span class="token number">1110110000000000000000000000000</span>
+
+<span class="token comment"># 假设当天最后一天签到了，则最后一位会是1</span>
+<span class="token number">1110110000000000000000000000001</span>
+<span class="token comment"># 先右移一位</span>
+0111011000000000000000000000000
+<span class="token comment"># 再左移一位，和原数字不一样</span>
+<span class="token number">1110110000000000000000000000000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>所以，如果右移再左移等于之前的数字，则代表没有签到。如果右移再左移不等于之前的数字，则代表已经签到了。</p>
+<p>按照上面逻辑，可以计算用户这个月连续签到的次数</p>
+<p>Java代码实现计算用户这个月连续签到的次数</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">private</span> <span class="token keyword">int</span> <span class="token function">continuousSignIn</span><span class="token punctuation">(</span><span class="token keyword">long</span> userId<span class="token punctuation">,</span> <span class="token class-name">LocalDate</span> date<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 统计连续签到次数, 假设今天是31号</span>
+    <span class="token keyword">int</span> dayOfMonth <span class="token operator">=</span> date<span class="token punctuation">.</span><span class="token function">getDayOfMonth</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">ValueOperations</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">&gt;</span></span> opsForValue <span class="token operator">=</span> redisTemplate<span class="token punctuation">.</span><span class="token function">opsForValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// bitfield user:sign:202105 get u31 0</span>
+    <span class="token class-name">BitFieldSubCommands</span> bitFieldSubCommands <span class="token operator">=</span> <span class="token class-name">BitFieldSubCommands</span><span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token class-name">BitFieldSubCommands<span class="token punctuation">.</span>BitFieldType</span><span class="token punctuation">.</span><span class="token function">unsigned</span><span class="token punctuation">(</span>dayOfMonth<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">valueAt</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">String</span> signKey <span class="token operator">=</span> <span class="token string">"user:sign:202105"</span><span class="token punctuation">;</span>
+    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Long</span><span class="token punctuation">&gt;</span></span> bitFields <span class="token operator">=</span> opsForValue<span class="token punctuation">.</span><span class="token function">bitField</span><span class="token punctuation">(</span>signKey<span class="token punctuation">,</span> bitFieldSubCommands<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token class-name">CollectionUtils</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>bitFields<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getRequestLevel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>level<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>request<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>实现类比较简单，类中的难度级别和请求内容从构造中传入，接下来是我们的核心类 Handler 抽象类：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Handler</span> <span class="token punctuation">{</span>
-    <span class="token keyword">final</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token class-name">Difficulty_LEVEL_1_REQUEST</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment">// 难度级别为1</span>
-    <span class="token keyword">final</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token class-name">Difficulty_LEVEL_2_REQUEST</span> <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token comment">// 难度级别为2</span>
-    <span class="token keyword">final</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token class-name">Difficulty_LEVEL_3_REQUEST</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span> <span class="token comment">// 难度级别为3</span>
-    <span class="token comment">// 能处理的级别</span>
-    <span class="token keyword">private</span> <span class="token keyword">int</span> level <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token comment">// 责任传递，下一个责任人是谁</span>
-    <span class="token keyword">private</span> <span class="token class-name">Handler</span> nextHandler<span class="token punctuation">;</span>
-
-    <span class="token comment">// 每个类都要说明一下自己能处理哪些请求</span>
-    <span class="token class-name">Handler</span><span class="token punctuation">(</span><span class="token keyword">int</span> level<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>level <span class="token operator">=</span> level<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token comment">// 负责Request的请求处理，final关键字声明不允许被子类覆盖</span>
-    <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token class-name">HandleMessage</span><span class="token punctuation">(</span><span class="token class-name">IRequest</span> request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment">// 如果请求级别小于可以处理的级别就直接处理，比如：高级工程师也可以处理难度级别为1的请求</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">getRequestLevel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>level<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">response</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>nextHandler <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// 有后续环节，请求传递</span>
-                <span class="token class-name"><span class="token namespace">this<span class="token punctuation">.</span>nextHandler<span class="token punctuation">.</span></span>HandleMessage</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span> <span class="token comment">// 无后续环节了，按照不同意处理</span>
-                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"--------难度级别为"</span> <span class="token operator">+</span> request<span class="token punctuation">.</span><span class="token function">getRequestLevel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"的请求-------"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"---抱歉，没有工程师可以处理---\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">AtomicInteger</span> continuousSignInCount <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicInteger</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    bitFields<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">findFirst</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">ifPresent</span><span class="token punctuation">(</span>v <span class="token operator">-&gt;</span> <span class="token punctuation">{</span>
+            <span class="token comment">// i: 操作多少次位移, 今天是多少号，则有多少次</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> dayOfMonth<span class="token punctuation">;</span> i <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment">// 右移再左移等于自己, 代表移动的是0，表示未签到。也有可能今天是第一天签到，也要排除</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>v <span class="token operator">&gt;&gt;</span> <span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token number">1</span> <span class="token operator">==</span> v<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>i <span class="token operator">!=</span> dayOfMonth<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token comment">// 低位是0且非当天签到</span>
+                    <span class="token keyword">break</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                    continuousSignInCount<span class="token punctuation">.</span><span class="token function">getAndIncrement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token comment">// 右移一位，开始前一天的判断</span>
+                v <span class="token operator">&gt;&gt;=</span> <span class="token number">1</span><span class="token punctuation">;</span>
             <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> continuousSignInCount<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-    <span class="token comment">/*
-     * 如果不属于你处理的请求，你应该让请求路由到下一个环节的责任人
-     */</span>
-    <span class="token keyword">void</span> <span class="token function">setNextHandler</span><span class="token punctuation">(</span><span class="token class-name">Handler</span> nextHandler<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>nextHandler <span class="token operator">=</span> nextHandler<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token comment">// 有请示那当然要回应</span>
-    <span class="token keyword">protected</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">response</span><span class="token punctuation">(</span><span class="token class-name">IRequest</span> request<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>Handler 类是链中对象的抽象类，链上的所有的责任对象都需要继承该对象，我们定义 HandleMessage 方法来进行请求的链式处理，可以看到：如果请求的难度级别不高于链对象可处理的难度级别时，由链对象直接负责处理，也就实现了前面讲到的高级工程师也可以处理难度级别为1的初级问题；如果请求难度级别过高超出可处理级别则请求继续向下传递，直至没有责任人可以处理为止，这就是责任链模式的核心。最后是 Handler 类的三个具体实现类，分别代表三个责任人对象：初级工程师、中级工程师及高级工程师，来看下怎么写的：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">// 初级难度的责任人</span>
-<span class="token keyword">class</span> <span class="token class-name">Primary</span> <span class="token keyword">extends</span> <span class="token class-name">Handler</span> <span class="token punctuation">{</span>
-    <span class="token comment">// 初级工程师可以处理难度等级为1的请求</span>
-    <span class="token class-name">Primary</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token class-name">Handler<span class="token punctuation">.</span>Difficulty_LEVEL_1_REQUEST</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token comment">// 处理结果</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">response</span><span class="token punctuation">(</span><span class="token class-name">IRequest</span> request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"--------难度级别为1的请求-------"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"初级工程师处理结果: 已处理\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">class</span> <span class="token class-name">Middle</span> <span class="token keyword">extends</span> <span class="token class-name">Handler</span> <span class="token punctuation">{</span>
-    <span class="token comment">// 中级工程师可以处理难度等级为2的请求</span>
-    <span class="token class-name">Middle</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token class-name">Handler<span class="token punctuation">.</span>Difficulty_LEVEL_2_REQUEST</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token comment">// 处理结果</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">response</span><span class="token punctuation">(</span><span class="token class-name">IRequest</span> request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"--------难度级别为2的请求-------"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"中级工程师处理结果: 已处理\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">class</span> <span class="token class-name">Senior</span> <span class="token keyword">extends</span> <span class="token class-name">Handler</span> <span class="token punctuation">{</span>
-    <span class="token comment">// 高级工程师可以处理难度级别为3的请求</span>
-    <span class="token class-name">Senior</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">super</span><span class="token punctuation">(</span><span class="token class-name">Handler<span class="token punctuation">.</span>Difficulty_LEVEL_3_REQUEST</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token comment">// 处理结果</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">response</span><span class="token punctuation">(</span><span class="token class-name">IRequest</span> request<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"--------难度级别为3的请求-------"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"高级工程师处理结果: 已处理\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>这里，我们定义四个难度级别不同的请求，请求进入处理链后，各个责任对象就会根据难度级别选择处理，直至不能处理为止，测试结果输出如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">--------难度级别为1的请求-------
-难度级别为1的请求是：1+1=？
-初级工程师处理结果: 已处理
-
---------难度级别为2的请求-------
-难度级别为2的请求是：3*4=？
-中级工程师处理结果: 已处理
-
---------难度级别为3的请求-------
-难度级别为3的请求是：87834*765=？
-高级工程师处理结果: 已处理
-
---------难度级别为4的请求-------
----抱歉，没有工程师可以处理---<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>可以看到，对于难度级别不同的请求，责任链上各个对象可以根据难度级别自行处理，对于不能处理的级别，也可以按照预期正常响应，责任链模式的魅力就在于此：_客户端不需要关心请求被谁处理，链上的各个责任人会根据预先设定的链的顺序依次处理，直至不能处理为止。_</p>
-<h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p>通过上面的实例，想必我们已经了解了什么是责任链模式，责任链模式的通用类图如下：</p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/uiut1.png"></p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/1713p.png"></p>
-<p>责任链模式的核心就是 Handler 链抽象对象，该对象包含一个指向下一个链对象的私有属性，“链”是责任链的核心，就是使用该属性进行链式调用实现的。责任链模式的包含的角色如下：</p>
-<ul>
-<li>请求者（Client）：Client 角色就是向链发送请求的角色，在上面的例子中，Main 函数扮演这个角色；</li>
-<li>责任人的抽象类角色（Handler）：Handler 角色是模式的核心，Handler 知道下一个责任人是谁，并根据责任人的处理能力选择是否将请求转发至下一个责任人。上面例子中，由 Handler 类扮演该角色；</li>
-<li>具体责任人对象（ConcreteHandler）：该角色是具体处理请求的对象，上面例子中，由 Primary、Middle、Senior 类扮演。</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本节介绍了责任链模式的概念、示例，责任链模式很好的降低了请求者和处理者的耦合度，弱化了前后关系，使得请求者不必关心请求真正是被哪个环节的哪个责任人处理，另外责任链模式下，链的调用顺序也是可控的，这也很好的实现了有序性。</p>
-<p>责任人链模式的链式调用，有个非常明显的缺点就是：每个请求可能都是从头到尾走一遍，特别是调用链比较长时，这就加剧了系统的响应时间及导致调试的复杂性。</p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/638c2.png"></p>
 
                 
             </div>
@@ -607,7 +566,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.story-has-you.top/posts/60015/">https://www.story-has-you.top/posts/60015/</a>
+                    <a href="https://www.story-has-you.top/posts/23518/">https://www.story-has-you.top/posts/23518/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -688,42 +647,47 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/posts/6013/">
+                <a href="/posts/23518/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="工厂模式">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Redis 实现用户签到功能">
                         
-                        <span class="card-title">工厂模式</span>
+                        <span class="card-title">Redis 实现用户签到功能</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            定义工厂模式，是设计模式中最为常见的模式之一。属于创建型模式，提供创建对象的最佳方式。
-工厂模式，顾名思义，一个模型，用来大规模的生产同类产品。该模式将对象的具体实例过程抽象化，并不关心具体的创建过程。通常，工厂模式被用来定义一个对象模型，
+                            签到功能对应的逻辑很常见，主要有以下几种场景
+
+签到 1 天送 10 积分，连续签到 2 天送 20 积分，3 天送 30 积分，4 天以上均送 50 积分等
+如果连续签到中断，则重置计数，每月初重置计数
+在日历控件上展示用户每月签到情况，
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-07
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-31
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
-                                    设计模式
+                            <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="post-category">
+                                    中间件
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -734,31 +698,31 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/54078/">
+                <a href="/posts/33884/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="外观模式(门面模式)">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="使用Spring实现观察者模式">
                         
-                        <span class="card-title">外观模式(门面模式)</span>
+                        <span class="card-title">使用Spring实现观察者模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            定义本小节我们要学习的设计模式叫做外观模式，也叫做门面模式 Facade。想象一下，我们系统随着时间的推移，系统复杂性、类之间的相互调用会变得越来越多，相比较客户角度而言，客户往往关注的是某个单一接口 API，而不会关心该 API 内部的复
+                            观察者模式定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新，其主要解决一个对象状态改变给其他关联对象通知的问题，保证易用和低耦合。更多观察者模式的资料：观察者模式
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-05
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-08
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
-                                    设计模式
+                            <a href="/categories/Spring/" class="post-category">
+                                    Spring
                                 </a>
                             
                             
