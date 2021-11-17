@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.story-has-you.top/posts/0/</loc>
+    
+    <lastmod>2021-11-17</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.story-has-you.top/posts/23518/</loc>
     
     <lastmod>2021-05-31</lastmod>
@@ -433,14 +440,14 @@
   </url>
   
   <url>
-    <loc>https://www.story-has-you.top/categories/%E5%B0%8F%E5%B7%A5%E5%85%B7/</loc>
+    <loc>https://www.story-has-you.top/categories/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/</loc>
     <lastmod>2021-11-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://www.story-has-you.top/categories/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/</loc>
+    <loc>https://www.story-has-you.top/categories/%E5%B0%8F%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2021-11-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
