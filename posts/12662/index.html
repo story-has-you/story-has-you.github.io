@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="PropertyMapper使用, java,spring,多线程,设计模式,spring boot,故事有你,[故事有你],story-has-you">
+    <meta name="keywords" content="Spring Boot整合kafka, java,spring,多线程,设计模式,spring boot,故事有你,[故事有你],story-has-you">
     <meta name="description" content="略懂Java">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -27,7 +27,7 @@
 </script>
 
 
-    <title>PropertyMapper使用 | story-has-you</title>
+    <title>Spring Boot整合kafka | story-has-you</title>
     <link rel="icon" type="image/png" href="https://story-has-you.oss-accelerate.aliyuncs.com/blog/2021-05-31-QmYCf8.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -235,12 +235,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">PropertyMapper使用</h1>
+                    <h1 class="description center-align post-title">Spring Boot整合kafka</h1>
                 </div>
             </div>
         </div>
@@ -364,8 +364,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%B0%8F%E5%B7%A5%E5%85%B7/" class="post-category">
-                                小工具
+                            <a href="/categories/Spring-Boot/" class="post-category">
+                                Spring Boot
                             </a>
                         
                     </div>
@@ -377,7 +377,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2020-03-01
+                    2022-01-21
                 </div>
                 
 
@@ -386,14 +386,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    859
+                    672
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
-                    4 Min
+                    3 Min
                 </div>
                 
 
@@ -411,119 +411,168 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><code>PropertyMapper</code>是Spring提供的一个工具类，主要用于重新赋值，转换等操作，位于<code>org.springframework.boot.context.properties.PropertyMapper</code>下。</p>
+                <h1 id="Spring-Boot整合kafka"><a href="#Spring-Boot整合kafka" class="headerlink" title="Spring Boot整合kafka"></a>Spring Boot整合kafka</h1><p>此处简单记录一下 SpringBoot 和 Kafka 的整合。<br>先初始化一个SpringBoot工程</p>
 <span id="more"></span>
 
-<p>我第一次发现这个类是在<code>spring-boot-starter-amqp</code>中，配置<code>RabbitTemplate</code>中看到的</p>
-<p>代码位于<code>org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration.RabbitTemplateConfiguration</code></p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Bean</span>
-<span class="token annotation punctuation">@ConditionalOnSingleCandidate</span><span class="token punctuation">(</span><span class="token class-name">ConnectionFactory</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
-<span class="token annotation punctuation">@ConditionalOnMissingBean</span><span class="token punctuation">(</span><span class="token class-name">RabbitOperations</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
-<span class="token keyword">public</span> <span class="token class-name">RabbitTemplate</span> <span class="token function">rabbitTemplate</span><span class="token punctuation">(</span><span class="token class-name">RabbitProperties</span> properties<span class="token punctuation">,</span>
-                                     <span class="token class-name">ObjectProvider</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">MessageConverter</span><span class="token punctuation">&gt;</span></span> messageConverter<span class="token punctuation">,</span>
-                                     <span class="token class-name">ObjectProvider</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">RabbitRetryTemplateCustomizer</span><span class="token punctuation">&gt;</span></span> retryTemplateCustomizers<span class="token punctuation">,</span>
-                                     <span class="token class-name">ConnectionFactory</span> connectionFactory<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token class-name">PropertyMapper</span> map <span class="token operator">=</span> <span class="token class-name">PropertyMapper</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token class-name">RabbitTemplate</span> template <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RabbitTemplate</span><span class="token punctuation">(</span>connectionFactory<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    messageConverter<span class="token punctuation">.</span><span class="token function">ifUnique</span><span class="token punctuation">(</span>template<span class="token operator">::</span><span class="token function">setMessageConverter</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    template<span class="token punctuation">.</span><span class="token function">setMandatory</span><span class="token punctuation">(</span><span class="token function">determineMandatoryFlag</span><span class="token punctuation">(</span>properties<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token class-name">RabbitProperties<span class="token punctuation">.</span>Template</span> templateProperties <span class="token operator">=</span> properties<span class="token punctuation">.</span><span class="token function">getTemplate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>templateProperties<span class="token punctuation">.</span><span class="token function">getRetry</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">isEnabled</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        template<span class="token punctuation">.</span><span class="token function">setRetryTemplate</span><span class="token punctuation">(</span>
-            <span class="token keyword">new</span> <span class="token class-name">RetryTemplateFactory</span><span class="token punctuation">(</span>retryTemplateCustomizers<span class="token punctuation">.</span><span class="token function">orderedStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span><span class="token class-name">Collectors</span><span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-            <span class="token punctuation">.</span><span class="token function">createRetryTemplate</span><span class="token punctuation">(</span>templateProperties<span class="token punctuation">.</span><span class="token function">getRetry</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-                                 <span class="token class-name">RabbitRetryTemplateCustomizer<span class="token punctuation">.</span>Target</span><span class="token punctuation">.</span>SENDER<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    map<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span>templateProperties<span class="token operator">::</span><span class="token function">getReceiveTimeout</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">whenNonNull</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">as</span><span class="token punctuation">(</span><span class="token class-name">Duration</span><span class="token operator">::</span><span class="token function">toMillis</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token keyword">to</span><span class="token punctuation">(</span>template<span class="token operator">::</span><span class="token function">setReceiveTimeout</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    map<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span>templateProperties<span class="token operator">::</span><span class="token function">getReplyTimeout</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">whenNonNull</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">as</span><span class="token punctuation">(</span><span class="token class-name">Duration</span><span class="token operator">::</span><span class="token function">toMillis</span><span class="token punctuation">)</span>
-        <span class="token punctuation">.</span><span class="token keyword">to</span><span class="token punctuation">(</span>template<span class="token operator">::</span><span class="token function">setReplyTimeout</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    map<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span>templateProperties<span class="token operator">::</span><span class="token function">getExchange</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">to</span><span class="token punctuation">(</span>template<span class="token operator">::</span><span class="token function">setExchange</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    map<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span>templateProperties<span class="token operator">::</span><span class="token function">getRoutingKey</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">to</span><span class="token punctuation">(</span>template<span class="token operator">::</span><span class="token function">setRoutingKey</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    map<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span>templateProperties<span class="token operator">::</span><span class="token function">getDefaultReceiveQueue</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">whenNonNull</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">to</span><span class="token punctuation">(</span>template<span class="token operator">::</span><span class="token function">setDefaultReceiveQueue</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> template<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="搭建kafka环境"><a href="#搭建kafka环境" class="headerlink" title="搭建kafka环境"></a>搭建kafka环境</h2><p>这里从用docker方式搭建kafka，kafka需要注册到注册中心上，所以要先安装zookeeper<br>zookeeper的docker-compose.yaml文件</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3.1'</span>
 
-<p>那一个个的 from….to…让我很好奇，于是便研究了一下他的用法。</p>
-<p>在实际工作中，经常会遇到将数据库的实体类Entity转成DTO类的操作，通常情况。我们有可以将属性一个个get出来，在set进去。还有一种就是用BeanUtils工具类将对应类型的属性一个个copy进去。</p>
-<p>了解了<code>PropertyMapper</code>之后，我们有多了一种方法转换了。</p>
-<p>先建立两个类，Order和OrderDTO</p>
-<p>Order.java</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Data</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Order</span> <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token class-name">Long</span> id<span class="token punctuation">;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">BigDecimal</span> totalAmout<span class="token punctuation">;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">Integer</span> status<span class="token punctuation">;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">Long</span> userId<span class="token punctuation">;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">LocalDateTime</span> createTime<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>OrderDTO.java</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Data</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">OrderDTO</span> <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token class-name">Long</span> id<span class="token punctuation">;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">BigDecimal</span> totalAmout<span class="token punctuation">;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">Integer</span> status<span class="token punctuation">;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">Long</span> userId<span class="token punctuation">;</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">String</span> createTime<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">zookeeper</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> zookeeper
+    <span class="token key atrule">container_name</span><span class="token punctuation">:</span> zookeeper
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> ./config<span class="token punctuation">:</span>/conf
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span> 
+      <span class="token punctuation">-</span> <span class="token string">"2181:2181"</span>
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">ZOO_MY_ID</span><span class="token punctuation">:</span> <span class="token number">1</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<p>接下来是kafka的docker-compose.yaml文件</p>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'3.7'</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">zookeeper</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> wurstmeister/zookeeper
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> ./data<span class="token punctuation">:</span>/data
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 2182<span class="token punctuation">:</span><span class="token number">2181</span>
+       
+  <span class="token key atrule">kafka</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> wurstmeister/kafka
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 9092<span class="token punctuation">:</span><span class="token number">9092</span>
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">KAFKA_BROKER_ID</span><span class="token punctuation">:</span> <span class="token number">0</span>
+      <span class="token key atrule">KAFKA_ADVERTISED_LISTENERS</span><span class="token punctuation">:</span> PLAINTEXT<span class="token punctuation">:</span>//0.0.0.0<span class="token punctuation">:</span><span class="token number">9092</span>
+      <span class="token key atrule">KAFKA_CREATE_TOPICS</span><span class="token punctuation">:</span> <span class="token string">"kafeidou:2:0"</span>   <span class="token comment">#kafka启动后初始化一个有2个partition(分区)0个副本名叫kafeidou的topic </span>
+      <span class="token key atrule">KAFKA_ZOOKEEPER_CONNECT</span><span class="token punctuation">:</span> zookeeper<span class="token punctuation">:</span><span class="token number">2181</span>
+      <span class="token key atrule">KAFKA_LISTENERS</span><span class="token punctuation">:</span> PLAINTEXT<span class="token punctuation">:</span>//0.0.0.0<span class="token punctuation">:</span><span class="token number">9092</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> ./kafka<span class="token punctuation">-</span>logs<span class="token punctuation">:</span>/kafka
+    <span class="token key atrule">depends_on</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> zookeeper<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h2><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.springframework.kafka<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>spring-kafka<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<p>使用<code>PropertyMapper</code>转换</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Order</span> order <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Order</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-order<span class="token punctuation">.</span><span class="token function">setId</span><span class="token punctuation">(</span><span class="token number">1L</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-order<span class="token punctuation">.</span><span class="token function">setStatus</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-order<span class="token punctuation">.</span><span class="token function">setTotalAmout</span><span class="token punctuation">(</span><span class="token class-name">BigDecimal</span><span class="token punctuation">.</span>ONE<span class="token punctuation">)</span><span class="token punctuation">;</span>
-order<span class="token punctuation">.</span><span class="token function">setUserId</span><span class="token punctuation">(</span><span class="token number">100L</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-order<span class="token punctuation">.</span><span class="token function">setCreateTime</span><span class="token punctuation">(</span><span class="token class-name">LocalDateTime</span><span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<p>在<code>application.properties</code>中添加配置</p>
+<pre class="line-numbers language-Propreties" data-language="Propreties"><code class="language-Propreties"># 生产者配置
+spring.kafka.bootstrap-servers=127.0.0.1:14993
+spring.kafka.producer.batch-size=16384
+spring.kafka.producer.buffer-memory=33554432
+spring.kafka.producer.acks=1
+# key的序列化方式为String
+spring.kafka.producer.key-serializer=org.apache.kafka.common.serialization.StringSerializer
+# value的序列化方式为字节数组
+spring.kafka.producer.value-serializer=org.apache.kafka.common.serialization.ByteArraySerializer
+# 消费者配置
+spring.kafka.consumer.key-deserializer=org.apache.kafka.common.serialization.StringDeserializer
+spring.kafka.consumer.value-deserializer=org.apache.kafka.common.serialization.ByteArrayDeserializer
+spring.kafka.consumer.group-id=story-has-you
+# 自动偏移量设置
+spring.kafka.consumer.auto-offset-reset=earliest
+# 消费者改成手动提交
+spring.kafka.consumer.enable-auto-commit=false
+# 手动ack
+spring.kafka.advertised.listener.ack-mode=manual
+spring.kafka.listener.ack-mode=manual
+spring.kafka.listener.missing-topics-fatal=false<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<span class="token class-name">PropertyMapper</span> propertyMapper <span class="token operator">=</span> <span class="token class-name">PropertyMapper</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token class-name">OrderDTO</span> orderDTO <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">OrderDTO</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-propertyMapper<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span>order<span class="token operator">::</span><span class="token function">getId</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">to</span><span class="token punctuation">(</span>orderDTO<span class="token operator">::</span><span class="token function">setId</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 如果from获取到的元素不是null，则执行to里面的动作</span>
-propertyMapper<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span>order<span class="token operator">::</span><span class="token function">getStatus</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">whenNonNull</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">to</span><span class="token punctuation">(</span>orderDTO<span class="token operator">::</span><span class="token function">setStatus</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-propertyMapper<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span>order<span class="token operator">::</span><span class="token function">getUserId</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">to</span><span class="token punctuation">(</span>orderDTO<span class="token operator">::</span><span class="token function">setUserId</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-propertyMapper<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span>order<span class="token operator">::</span><span class="token function">getTotalAmout</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">to</span><span class="token punctuation">(</span>orderDTO<span class="token operator">::</span><span class="token function">setTotalAmout</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">// 因为Order里面的createTime是LocalDateTime类型，OrderDTO里面则是String类型，需要转换一下</span>
-propertyMapper<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span>order<span class="token operator">::</span><span class="token function">getCreateTime</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">as</span><span class="token punctuation">(</span>createTime <span class="token operator">-&gt;</span> <span class="token punctuation">{</span>
-    <span class="token class-name">DateTimeFormatter</span> formatter <span class="token operator">=</span> <span class="token class-name">DateTimeFormatter</span><span class="token punctuation">.</span><span class="token function">ofPattern</span><span class="token punctuation">(</span><span class="token string">"yyyy-MM-dd HH:mm:ss"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> createTime<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span>formatter<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">to</span><span class="token punctuation">(</span>orderDTO<span class="token operator">::</span><span class="token function">setCreateTime</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="新增配置类"><a href="#新增配置类" class="headerlink" title="新增配置类"></a>新增配置类</h2><p>kafkaConfig.java</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>kafka<span class="token punctuation">.</span>clients<span class="token punctuation">.</span>admin<span class="token punctuation">.</span></span><span class="token class-name">NewTopic</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">Autowired</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token punctuation">.</span>autoconfigure<span class="token punctuation">.</span>kafka<span class="token punctuation">.</span></span><span class="token class-name">ConcurrentKafkaListenerContainerFactoryConfigurer</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">Bean</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>context<span class="token punctuation">.</span>annotation<span class="token punctuation">.</span></span><span class="token class-name">Configuration</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>kafka<span class="token punctuation">.</span>config<span class="token punctuation">.</span></span><span class="token class-name">ConcurrentKafkaListenerContainerFactory</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>kafka<span class="token punctuation">.</span>core<span class="token punctuation">.</span></span><span class="token class-name">ConsumerFactory</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>kafka<span class="token punctuation">.</span>core<span class="token punctuation">.</span></span><span class="token class-name">KafkaTemplate</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>kafka<span class="token punctuation">.</span>listener<span class="token punctuation">.</span></span><span class="token class-name">ContainerProperties</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>kafka<span class="token punctuation">.</span>listener<span class="token punctuation">.</span></span><span class="token class-name">DeadLetterPublishingRecoverer</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>kafka<span class="token punctuation">.</span>listener<span class="token punctuation">.</span></span><span class="token class-name">SeekToCurrentErrorHandler</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>util<span class="token punctuation">.</span>backoff<span class="token punctuation">.</span></span><span class="token class-name">FixedBackOff</span><span class="token punctuation">;</span>
 
-<p>这样一来就可以通过<code>PropertyMapper</code>将Order对象的值set到OrderDTO对象中。</p>
-<p><code>PropertyMapper</code>常用方法</p>
-<ul>
-<li><code>&lt;T&gt; Source&lt;T&gt; from(Supplier&lt;T&gt; supplier)</code>：提供值的来源，入参为<code>Supplier</code></li>
-<li><code>&lt;T&gt; Source&lt;T&gt; from(T value)</code>：一种重载形式，入参可以为一个对象</li>
-<li><code>void to(Consumer&lt;T&gt; consumer)</code>：通过将任何未过滤的值传递给指定的使用者来完成映射</li>
-<li><code>&lt;R&gt; R toInstance(Function&lt;T, R&gt; factory)</code>：通过从未过滤的值创建新实例来完成映射</li>
-<li><code>void toCall(Runnable runnable)</code>：当值还没有时，通过调用指定的方法来完成映射</li>
-<li><code>&lt;R&gt; Source&lt;R&gt; as(Function&lt;T, R&gt; adapter)</code>：将T类型的入参转成R类型的出参，类似于Stream中的map</li>
-<li><code>Source&lt;T&gt; when...</code>：这一系列方法，都是过滤用的。在<code>from</code>后面调用，如果满足条件，就直接<code>to</code>方法</li>
-<li><code>static PropertyMapper get()</code>：提供<code>PropertyMapper</code>实例</li>
-<li><code>PropertyMapper alwaysApplyingWhenNonNull()</code>：提供实例时，当前实例就过滤掉<code>from</code>之后是null的元素。<code>PropertyMapper.get().alwaysApplyingWhenNonNull();</code></li>
-<li><code>PropertyMapper alwaysApplying(SourceOperator operator)</code>：自定义过滤规则，参考代码</li>
-</ul>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">PropertyMapper</span> propertyMapper <span class="token operator">=</span> <span class="token class-name">PropertyMapper</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">alwaysApplying</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">PropertyMapper<span class="token punctuation">.</span>SourceOperator</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token annotation punctuation">@Override</span>
-            <span class="token keyword">public</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> <span class="token class-name">PropertyMapper<span class="token punctuation">.</span>Source</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> <span class="token function">apply</span><span class="token punctuation">(</span><span class="token class-name">PropertyMapper<span class="token punctuation">.</span>Source</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> source<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token keyword">return</span> source<span class="token punctuation">.</span><span class="token function">when</span><span class="token punctuation">(</span>t <span class="token operator">-&gt;</span> t <span class="token keyword">instanceof</span> <span class="token class-name">LocalDateTime</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token comment">/**
+ * The type Kafka config.
+ *
+ * @author fangxi created by 2021/6/15
+ */</span>
+<span class="token annotation punctuation">@Configuration</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">KafkaConfig</span> <span class="token punctuation">{</span>
 
-<p>就好比，当前 <code>PropertyMapper</code>只会映射 <code>LocalDateTime</code>类型的字段。</p>
-<p>注意：如果<code>from</code>方法后面有<code>when</code>条件，则<code>alwaysApplying</code>中设置的初始化提交将会失效。</p>
-<p>Spring里面还有各式各样的类似这样的高逼格，方便使用的小工具。多多阅读Spring源码，就可以发现好多。</p>
+    <span class="token comment">/**
+     * The Kafka template.
+     */</span>
+    <span class="token annotation punctuation">@Autowired</span>
+    <span class="token keyword">private</span> <span class="token class-name">KafkaTemplate</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">&gt;</span></span> kafkaTemplate<span class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * 初始化topic
+     *
+     * @return the new topic
+     */</span>
+    <span class="token annotation punctuation">@Bean</span>
+    <span class="token keyword">public</span> <span class="token class-name">NewTopic</span> <span class="token function">changChunFawRealFaultInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">NewTopic</span><span class="token punctuation">(</span><span class="token string">"story-has-you"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">short</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token comment">/**
+     * 配置kafka的重试次数
+     *
+     * @param configurer           the configurer
+     * @param kafkaConsumerFactory the kafka consumer factory
+     * @return the concurrent kafka listener container factory
+     */</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span><span class="token string">"kafkaListenerContainerFactory"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">ConcurrentKafkaListenerContainerFactory</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">&gt;</span></span> <span class="token function">kafkaListenerContainerFactory</span><span class="token punctuation">(</span>
+        <span class="token class-name">ConcurrentKafkaListenerContainerFactoryConfigurer</span> configurer<span class="token punctuation">,</span>
+        <span class="token class-name">ConsumerFactory</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">&gt;</span></span> kafkaConsumerFactory<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">ConcurrentKafkaListenerContainerFactory</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">,</span> <span class="token class-name">Object</span><span class="token punctuation">&gt;</span></span> factory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConcurrentKafkaListenerContainerFactory</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        configurer<span class="token punctuation">.</span><span class="token function">configure</span><span class="token punctuation">(</span>factory<span class="token punctuation">,</span> kafkaConsumerFactory<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 最大重试次数3次</span>
+        factory<span class="token punctuation">.</span><span class="token function">setErrorHandler</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SeekToCurrentErrorHandler</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">DeadLetterPublishingRecoverer</span><span class="token punctuation">(</span>kafkaTemplate<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">FixedBackOff</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        factory<span class="token punctuation">.</span><span class="token function">getContainerProperties</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setAckMode</span><span class="token punctuation">(</span><span class="token class-name">ContainerProperties<span class="token punctuation">.</span>AckMode</span><span class="token punctuation">.</span>MANUAL<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> factory<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="生产者发送"><a href="#生产者发送" class="headerlink" title="生产者发送"></a>生产者发送</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Autowired</span>
+<span class="token keyword">private</span> <span class="token class-name">KafkaTemplate</span><span class="token operator">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> kafkaTemplate<span class="token punctuation">;</span>
+
+kafkaTemplate<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"story-has-you"</span><span class="token punctuation">,</span> <span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="消费者监听"><a href="#消费者监听" class="headerlink" title="消费者监听"></a>消费者监听</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java">
+<span class="token comment">/**
+    * On message.
+    *
+    * @param records the records
+    */</span>
+<span class="token annotation punctuation">@KafkaListener</span><span class="token punctuation">(</span>topics <span class="token operator">=</span> <span class="token string">"story-has-you"</span><span class="token punctuation">,</span> groupId <span class="token operator">=</span> <span class="token string">"story-has-you"</span><span class="token punctuation">,</span> containerFactory <span class="token operator">=</span> <span class="token string">"kafkaListenerContainerFactory"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">qingDaoMessage</span><span class="token punctuation">(</span><span class="token class-name">ConsumerRecord</span><span class="token operator">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">&gt;</span> records<span class="token punctuation">,</span> <span class="token class-name">Acknowledgment</span> ack<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+		<span class="token class-name">String</span> data <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>records<span class="token punctuation">.</span><span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>data <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+		<span class="token comment">// 打印hello</span>
+        log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"从kafka接收到消息, {}"</span><span class="token punctuation">,</span> data<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        log<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token string">"kafka处理消息异常"</span><span class="token punctuation">,</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+		<span class="token comment">// 手动ack, 通知kafka已经消费</span>
+        ack<span class="token punctuation">.</span><span class="token function">acknowledge</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -550,7 +599,7 @@ propertyMapper<span class="token punctuation">.</span><span class="token functio
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.story-has-you.top/posts/42061/">https://www.story-has-you.top/posts/42061/</a>
+                    <a href="https://www.story-has-you.top/posts/12662/">https://www.story-has-you.top/posts/12662/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -631,41 +680,43 @@ propertyMapper<span class="token punctuation">.</span><span class="token functio
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/posts/54078/">
+                <a href="/posts/12662/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="外观模式(门面模式)">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Spring Boot整合kafka">
                         
-                        <span class="card-title">外观模式(门面模式)</span>
+                        <span class="card-title">Spring Boot整合kafka</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            定义本小节我们要学习的设计模式叫做外观模式，也叫做门面模式 Facade。想象一下，我们系统随着时间的推移，系统复杂性、类之间的相互调用会变得越来越多，相比较客户角度而言，客户往往关注的是某个单一接口 API，而不会关心该 API 内部的复
+                            Spring Boot整合kafka此处简单记录一下 SpringBoot 和 Kafka 的整合。先初始化一个SpringBoot工程
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-05
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-21
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
-                                    设计模式
+                            <a href="/categories/Spring-Boot/" class="post-category">
+                                    Spring Boot
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -676,32 +727,31 @@ propertyMapper<span class="token punctuation">.</span><span class="token functio
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/216/">
+                <a href="/posts/13555/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Spring Boot国际化">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="基于RPC框架的通用代码实现">
                         
-                        <span class="card-title">Spring Boot国际化</span>
+                        <span class="card-title">基于RPC框架的通用代码实现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            让国际友人也能快乐的访问的你的服务
-spring-boot-starter-web里面有国际化需要的API，因此我们不需要引入其他的API了。
+                            基于RPC框架的通用代码实现在业务代码中，会经常有大量的CRUD这种枯燥无味我代码需要我们去编写。当然，也有现成的工具，比如mybatis generator等工具，让我们脱离手动编写这些代码。但这些仅仅只是针对mapper层，虽然Serv
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-01-19
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Spring-Boot/" class="post-category">
-                                    Spring Boot
+                            <a href="/categories/%E5%B0%8F%E5%B7%A5%E5%85%B7/" class="post-category">
+                                    小工具
                                 </a>
                             
                             
