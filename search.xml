@@ -4952,55 +4952,6 @@ propertyMapper<span class="token punctuation">.</span><span class="token functio
       </categories>
   </entry>
   <entry>
-    <title>软件架构基础</title>
-    <url>/posts/50660/</url>
-    <content><![CDATA[<h2 id="“架构”到底指什么"><a href="#“架构”到底指什么" class="headerlink" title="“架构”到底指什么"></a>“架构”到底指什么</h2><p>对于开发人员来说，架构是一个最常见不过的名词了: 给新员工介绍软件整体架构，参加架构设计评审，学习优秀的架构设计。那么深究一下架构是什么，很多人都回答不上来。</p>
-<p>我们先理清以下的几个概念，再来回答架构是什么。</p>
-<span id="more"></span>
-
-<h3 id="系统与子系统"><a href="#系统与子系统" class="headerlink" title="系统与子系统"></a>系统与子系统</h3><blockquote>
-<p>系统（英语：system；德语：system；法语：système；西班牙语：sistema）泛指由一群有关联的个体组成，根据某种规则运作，能完成个别元件不能单独完成的工作的群体。——维基百科</p>
-</blockquote>
-<p>提炼一下关键字</p>
-<ol>
-<li>关联: 一群有关联的个体组成，没有关联的个体不能成为一个系统。</li>
-<li>规则: 系统内部按照指定的规则运作，而不是个个各自为政。规则规定了系统内的个体分工和协作方式。</li>
-<li>能力: 系统能力与个体能力有本质的差别，系统能力不是个体能力之和，而是产生了新的能力。</li>
-</ol>
-<p>子系统的定义与系统是一样的，只是观察角度不同。一个系统可能是另外更大的系统的子系统。</p>
-<h3 id="模块与组件"><a href="#模块与组件" class="headerlink" title="模块与组件"></a>模块与组件</h3><p>模块和组件容易混淆，先看看维基百科的定义。<br>【模块】</p>
-<blockquote>
-<p>软件模块（Software Module）是一套一致而互相有紧密关连的软件组织。包含了程序和数据结构两个部分。</p>
-</blockquote>
-<p>【组件】</p>
-<blockquote>
-<p>定义为自包含的、可编程的、可重用的、与语言无关的软件单元。</p>
-</blockquote>
-<p>这两个定义看起来毫不关联，因为软件模块和软件组件都是系统的组成部分，他们只是从不同的角度拆分系统而已。</p>
-<p>从逻辑角度上拆分后得到的是“模块”，从物理角度上拆分后得到的是“组件”。</p>
-<p>假设一个电商项目，从逻辑角度上拆分，可以分为“订单模块”，“商品模块”，“购物车模块”。从物理角度上拆分，可以分为“Nignx”，“Web服务器”，“MySQL”，“Redis”等。</p>
-<h3 id="框架与架构"><a href="#框架与架构" class="headerlink" title="框架与架构"></a>框架与架构</h3><p>还是先看维基百科上对框架的定义</p>
-<blockquote>
-<p>软件框架（software framework），通常指的是为了实现某个业界标准或完成特定基本任务的软件组件规范，也指为了实现某个软件组件规范时，提供规范所要求之基础功能的软件产品。</p>
-</blockquote>
-<p>提炼一下关键字</p>
-<ol>
-<li>软件组件规范。例如MVC规范，MVP，MVVM之类的。</li>
-<li>提供基础功能。例如Spring框架中的SpringMVC满足了MVC开发规范，Spring还提供了很多功能帮助我们实现功能。</li>
-</ol>
-<p>再看看维基百科对架构的定义</p>
-<blockquote>
-<p>软件架构是有关软件整体结构与组件的抽象描述，用于指导大型软件系统各个方面的设计。</p>
-</blockquote>
-<p>从定义上看，框架和架构还是有区别的，框架关注的是“规范”，架构关注的是“结构”。</p>
-<h2 id="重新定义架构"><a href="#重新定义架构" class="headerlink" title="重新定义架构"></a>重新定义架构</h2><p>我们可以将软件架构重新定义: 软件架构是软件系统的顶层结构。</p>
-<p>系统是有一群关联的个体组成，这些“个体”可以是“子系统”，“模块”，“组件”等，架构需要明确系统包含哪些“个体”；系统个体需要“根据某种规则”运作，架构需要明确个体之间写作文的规则；整体结构换成“顶层结构”，可以更好的区分系统和子系统。</p>
-]]></content>
-      <categories>
-        <category>架构设计</category>
-      </categories>
-  </entry>
-  <entry>
     <title>MVC模式</title>
     <url>/posts/12522/</url>
     <content><![CDATA[<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>MVC 全称是 Model-View-Controller（模型 - 视图 - 控制器） ，是一种软件设计典范，用一种业务逻辑、数据、界面进行分离的开发模式。<br>MVC 模式是一种经典的设计模式，被广泛地应用在程序开发当中，例如，目前比较知名的经典框架：Spring MVC、ASP.NET MVC、Struts2 等，都是基于 MVC 模式实现的。</p>
@@ -5180,6 +5131,55 @@ I</span>’m <span class="token class-name">Model</span><span class="token punct
 ]]></content>
       <categories>
         <category>设计模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>软件架构基础</title>
+    <url>/posts/50660/</url>
+    <content><![CDATA[<h2 id="“架构”到底指什么"><a href="#“架构”到底指什么" class="headerlink" title="“架构”到底指什么"></a>“架构”到底指什么</h2><p>对于开发人员来说，架构是一个最常见不过的名词了: 给新员工介绍软件整体架构，参加架构设计评审，学习优秀的架构设计。那么深究一下架构是什么，很多人都回答不上来。</p>
+<p>我们先理清以下的几个概念，再来回答架构是什么。</p>
+<span id="more"></span>
+
+<h3 id="系统与子系统"><a href="#系统与子系统" class="headerlink" title="系统与子系统"></a>系统与子系统</h3><blockquote>
+<p>系统（英语：system；德语：system；法语：système；西班牙语：sistema）泛指由一群有关联的个体组成，根据某种规则运作，能完成个别元件不能单独完成的工作的群体。——维基百科</p>
+</blockquote>
+<p>提炼一下关键字</p>
+<ol>
+<li>关联: 一群有关联的个体组成，没有关联的个体不能成为一个系统。</li>
+<li>规则: 系统内部按照指定的规则运作，而不是个个各自为政。规则规定了系统内的个体分工和协作方式。</li>
+<li>能力: 系统能力与个体能力有本质的差别，系统能力不是个体能力之和，而是产生了新的能力。</li>
+</ol>
+<p>子系统的定义与系统是一样的，只是观察角度不同。一个系统可能是另外更大的系统的子系统。</p>
+<h3 id="模块与组件"><a href="#模块与组件" class="headerlink" title="模块与组件"></a>模块与组件</h3><p>模块和组件容易混淆，先看看维基百科的定义。<br>【模块】</p>
+<blockquote>
+<p>软件模块（Software Module）是一套一致而互相有紧密关连的软件组织。包含了程序和数据结构两个部分。</p>
+</blockquote>
+<p>【组件】</p>
+<blockquote>
+<p>定义为自包含的、可编程的、可重用的、与语言无关的软件单元。</p>
+</blockquote>
+<p>这两个定义看起来毫不关联，因为软件模块和软件组件都是系统的组成部分，他们只是从不同的角度拆分系统而已。</p>
+<p>从逻辑角度上拆分后得到的是“模块”，从物理角度上拆分后得到的是“组件”。</p>
+<p>假设一个电商项目，从逻辑角度上拆分，可以分为“订单模块”，“商品模块”，“购物车模块”。从物理角度上拆分，可以分为“Nignx”，“Web服务器”，“MySQL”，“Redis”等。</p>
+<h3 id="框架与架构"><a href="#框架与架构" class="headerlink" title="框架与架构"></a>框架与架构</h3><p>还是先看维基百科上对框架的定义</p>
+<blockquote>
+<p>软件框架（software framework），通常指的是为了实现某个业界标准或完成特定基本任务的软件组件规范，也指为了实现某个软件组件规范时，提供规范所要求之基础功能的软件产品。</p>
+</blockquote>
+<p>提炼一下关键字</p>
+<ol>
+<li>软件组件规范。例如MVC规范，MVP，MVVM之类的。</li>
+<li>提供基础功能。例如Spring框架中的SpringMVC满足了MVC开发规范，Spring还提供了很多功能帮助我们实现功能。</li>
+</ol>
+<p>再看看维基百科对架构的定义</p>
+<blockquote>
+<p>软件架构是有关软件整体结构与组件的抽象描述，用于指导大型软件系统各个方面的设计。</p>
+</blockquote>
+<p>从定义上看，框架和架构还是有区别的，框架关注的是“规范”，架构关注的是“结构”。</p>
+<h2 id="重新定义架构"><a href="#重新定义架构" class="headerlink" title="重新定义架构"></a>重新定义架构</h2><p>我们可以将软件架构重新定义: 软件架构是软件系统的顶层结构。</p>
+<p>系统是有一群关联的个体组成，这些“个体”可以是“子系统”，“模块”，“组件”等，架构需要明确系统包含哪些“个体”；系统个体需要“根据某种规则”运作，架构需要明确个体之间写作文的规则；整体结构换成“顶层结构”，可以更好的区分系统和子系统。</p>
+]]></content>
+      <categories>
+        <category>架构设计</category>
       </categories>
   </entry>
   <entry>
@@ -6114,210 +6114,6 @@ caiya 正在购票
       </categories>
   </entry>
   <entry>
-    <title>传输对象模式</title>
-    <url>/posts/8935/</url>
-    <content><![CDATA[<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>传输对象模式（Transfer Object Pattern）是指客户端到服务器一次性传递具有多个属性的数据，以避免多次调用远程服务器。传输对象是一个具有 getter/setter 方法的简单的实体类，可被序列化。服务器端业务类通常从数据库读取数据，然后填充到实体类，并把它发送到客户端。</p>
-<span id="more"></span>
-
-
-<h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><ul>
-<li>传输对象（Transfer Object）：简单的实体类，只有 getter/setter 方法；</li>
-<li>业务对象（Business Object）：为客户端提供业务数据，用于数据处理和构建传输对象；</li>
-<li>客户端（Client）：发送请求或者发送传输对象到业务对象。</li>
-</ul>
-<p>角色之间的 UML 关系图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/r3hnj.jpg"></p>
-<h2 id="传输对象模式代码实现"><a href="#传输对象模式代码实现" class="headerlink" title="传输对象模式代码实现"></a>传输对象模式代码实现</h2><h3 id="传输对象"><a href="#传输对象" class="headerlink" title="传输对象"></a>传输对象</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
- * 传输对象，只提供传输对象的 getter/setter 方法
- */</span>
-<span class="token keyword">class</span> <span class="token class-name">TransferObject</span> <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token keyword">int</span> id<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token class-name">TransferObject</span><span class="token punctuation">(</span><span class="token keyword">int</span> id<span class="token punctuation">,</span> <span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> id<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setId</span><span class="token punctuation">(</span><span class="token keyword">int</span> id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> name<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="业务对象"><a href="#业务对象" class="headerlink" title="业务对象"></a>业务对象</h3><p>给系统提供业务数据。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
- * 业务对象，提供业务数据
- */</span>
-<span class="token keyword">class</span> <span class="token class-name">BusinessObject</span> <span class="token punctuation">{</span>
-    <span class="token comment">// 数据来源的存储容器</span>
-    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TransferObject</span><span class="token punctuation">&gt;</span></span> list<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token class-name">BusinessObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment">// 填充业务数据（伪代码，模拟数据产生）</span>
-        list <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TransferObject</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"Java"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TransferObject</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"SQL"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token comment">/**
-     * 获取所有业务数据
-     */</span>
-    <span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TransferObject</span><span class="token punctuation">&gt;</span></span> <span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> list<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token comment">/**
-     * 根据下标查询相应的数据
-     * @param index 下标
-     * @return 返回单条数据
-     */</span>
-    <span class="token keyword">public</span> <span class="token class-name">TransferObject</span> <span class="token function">getDataById</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> list<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token comment">/**
-     * 修改业务数据
-     * @param transferObject
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">update</span><span class="token punctuation">(</span><span class="token class-name">TransferObject</span> transferObject<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        list<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>transferObject<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span>transferObject<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="客户端调用"><a href="#客户端调用" class="headerlink" title="客户端调用"></a>客户端调用</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment">// 创建业务对象，获取到数据（伪代码，初始化业务对象时会填充数据）</span>
-        <span class="token class-name">BusinessObject</span> businessObject <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BusinessObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">// 循环打印所有业务数据</span>
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">TransferObject</span> t <span class="token operator">:</span> businessObject<span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Id="</span> <span class="token operator">+</span> t<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" | "</span> <span class="token operator">+</span> <span class="token string">"Name="</span> <span class="token operator">+</span> t<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token comment">// 更新数据</span>
-        <span class="token class-name">TransferObject</span> transferObject <span class="token operator">=</span> businessObject<span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"原名称："</span> <span class="token operator">+</span> transferObject<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        transferObject<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"LaoWang"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        businessObject<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span>transferObject<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">// 打印修改的数据</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"修改后的名称："</span> <span class="token operator">+</span> businessObject<span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-<p>程序执行结果如下：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Id</span><span class="token operator">=</span><span class="token number">0</span> <span class="token operator">|</span> <span class="token class-name">Name</span><span class="token operator">=</span><span class="token class-name">Java</span>
-
-<span class="token class-name">Id</span><span class="token operator">=</span><span class="token number">1</span> <span class="token operator">|</span> <span class="token class-name">Name</span><span class="token operator">=</span>SQL
-
-原名称：<span class="token class-name">Java</span>
-
-修改后的名称：<span class="token class-name">LaoWang</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>传输对象模式的优点：</p>
-<ul>
-<li>减少了远程调用次数：通过在单个远程调用中传输更多的数据，应用程序可以减少远程调用次数；</li>
-<li>提高了性能：远程调用可以使应用程序的运行速度大大降低，减少调用次数是提高性能的最佳方法之一；</li>
-<li>简化了程序代码：使用传输对象的模式使代码可读性更高，让程序看起来更简单。<br>传输对象模式的缺点：</li>
-<li>增加了复杂性：由于要兼容多个版本的程序，可能需要创建更多的实体类来适用各个版本的程序，这会让程序变得更加复杂。</li>
-</ul>
-<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>传输对象模式典型的应用场景如下：</p>
-<ul>
-<li>希望减少程序中远程调用次数；</li>
-<li>希望提高程序获取资源的性能；</li>
-<li>程序需要传输多个数据时。</li>
-</ul>
-<h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2><h3 id="创建物品表"><a href="#创建物品表" class="headerlink" title="创建物品表"></a>创建物品表</h3><p>快递的物品表。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
- * 物品表
- */</span>
-<span class="token keyword">class</span> <span class="token class-name">GoodsInfo</span> <span class="token punctuation">{</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> mobile<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token class-name">GoodsInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token class-name">GoodsInfo</span><span class="token punctuation">(</span><span class="token class-name">String</span> mobile<span class="token punctuation">,</span> <span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>mobile <span class="token operator">=</span> mobile<span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getMobile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> mobile<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setMobile</span><span class="token punctuation">(</span><span class="token class-name">String</span> mobile<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>mobile <span class="token operator">=</span> mobile<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> name<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="快递业务类"><a href="#快递业务类" class="headerlink" title="快递业务类"></a>快递业务类</h3><p>查询所有的快递和新增快递。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
- * 快递业务类
- */</span>
-<span class="token keyword">class</span> <span class="token class-name">Express</span> <span class="token punctuation">{</span>
-    <span class="token comment">// 所有的快递物品存储容器</span>
-    <span class="token keyword">private</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> goods<span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token class-name">Express</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment">// 模拟数据</span>
-        goods <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        goods<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"18000000001"</span><span class="token punctuation">,</span> <span class="token string">"Java面试全解析"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        goods<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"18000000002"</span><span class="token punctuation">,</span> <span class="token string">"MySQL面试金典"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token comment">/**
-     * 邮寄物品（添加订单）
-     * @param goodsInfo 邮寄的物品
-     */</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">insert</span><span class="token punctuation">(</span><span class="token class-name">GoodsInfo</span> goodsInfo<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        goods<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>goodsInfo<span class="token punctuation">.</span><span class="token function">getMobile</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> goodsInfo<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    <span class="token comment">/**
-     * 查询所有的邮件
-     */</span>
-    <span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">GoodsInfo</span><span class="token punctuation">&gt;</span></span> <span class="token function">getAllGoods</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">GoodsInfo</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">GoodsInfo</span> goodsInfo<span class="token punctuation">;</span>
-        goods<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span>k<span class="token punctuation">,</span> v<span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token punctuation">{</span>
-            list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">GoodsInfo</span><span class="token punctuation">(</span>k<span class="token punctuation">,</span> v<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> list<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="客户端调用-1"><a href="#客户端调用-1" class="headerlink" title="客户端调用"></a>客户端调用</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Lesson29</span> <span class="token punctuation">{</span>
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token class-name">Client</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment">// 创建快递业务类</span>
-        <span class="token class-name">Express</span> express <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Express</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">// 创建快递物品</span>
-        <span class="token class-name">GoodsInfo</span> goodsInfo <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GoodsInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        goodsInfo<span class="token punctuation">.</span><span class="token function">setMobile</span><span class="token punctuation">(</span><span class="token string">"18000000008"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        goodsInfo<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"设计模式34讲"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">// 添加快递</span>
-        express<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>goodsInfo<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment">// 打印所有快递信息</span>
-        express<span class="token punctuation">.</span><span class="token function">getAllGoods</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span>goods<span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token punctuation">{</span>
-            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"手机号："</span> <span class="token operator">+</span> goods<span class="token punctuation">.</span><span class="token function">getMobile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" | 快递物品："</span> <span class="token operator">+</span> goods<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>程序执行结果如下：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java">手机号：<span class="token number">18000000008</span> <span class="token operator">|</span> 快递物品：设计模式<span class="token number">34</span>讲
-
-手机号：<span class="token number">18000000001</span> <span class="token operator">|</span> 快递物品：<span class="token class-name">Java</span>面试全解析
-
-手机号：<span class="token number">18000000002</span> <span class="token operator">|</span> 快递物品：<span class="token class-name">MySQL</span>面试金典<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>传输对象模式是客户端每次对业务对象进行相关的业务操作，而客户端和业务对象之间通过传输对象（一个只包含 getter/setter 的实体类）进行信息传递的模式。</p>
-]]></content>
-      <categories>
-        <category>设计模式</category>
-      </categories>
-  </entry>
-  <entry>
     <title>单例模式</title>
     <url>/posts/46132/</url>
     <content><![CDATA[<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>大家都知道，一个对象的产生都是通过 new 关键字实现的（当然也存在其它方式，比如反射、复制等），new 的实现又是依托于构造函数的，默认一个类会自动生成一个无参的构造函数在不指定构造函数的情况下。构造函数一般都是 public 权限修饰的，想象一下，如果我们将类的构造函数的访问修饰符改为 private 不就可以禁止外部创建该对象了吗？这个时候外部想要实例化该类怎么办呢？</p>
@@ -7061,6 +6857,210 @@ facade<span class="token punctuation">.</span><span class="token function">shoot
 <li>外观类并没有阻断子系统被外部使用的可能性。</li>
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这节我们介绍了什么是外观模式，以及外观模式的代码示例，总结下外观模式的特点及本节内容如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/7pp82.png"></p>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>传输对象模式</title>
+    <url>/posts/8935/</url>
+    <content><![CDATA[<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>传输对象模式（Transfer Object Pattern）是指客户端到服务器一次性传递具有多个属性的数据，以避免多次调用远程服务器。传输对象是一个具有 getter/setter 方法的简单的实体类，可被序列化。服务器端业务类通常从数据库读取数据，然后填充到实体类，并把它发送到客户端。</p>
+<span id="more"></span>
+
+
+<h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><ul>
+<li>传输对象（Transfer Object）：简单的实体类，只有 getter/setter 方法；</li>
+<li>业务对象（Business Object）：为客户端提供业务数据，用于数据处理和构建传输对象；</li>
+<li>客户端（Client）：发送请求或者发送传输对象到业务对象。</li>
+</ul>
+<p>角色之间的 UML 关系图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/r3hnj.jpg"></p>
+<h2 id="传输对象模式代码实现"><a href="#传输对象模式代码实现" class="headerlink" title="传输对象模式代码实现"></a>传输对象模式代码实现</h2><h3 id="传输对象"><a href="#传输对象" class="headerlink" title="传输对象"></a>传输对象</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 传输对象，只提供传输对象的 getter/setter 方法
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name">TransferObject</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> id<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">TransferObject</span><span class="token punctuation">(</span><span class="token keyword">int</span> id<span class="token punctuation">,</span> <span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> id<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setId</span><span class="token punctuation">(</span><span class="token keyword">int</span> id<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="业务对象"><a href="#业务对象" class="headerlink" title="业务对象"></a>业务对象</h3><p>给系统提供业务数据。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 业务对象，提供业务数据
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name">BusinessObject</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 数据来源的存储容器</span>
+    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TransferObject</span><span class="token punctuation">&gt;</span></span> list<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">BusinessObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 填充业务数据（伪代码，模拟数据产生）</span>
+        list <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TransferObject</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token string">"Java"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TransferObject</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">"SQL"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">/**
+     * 获取所有业务数据
+     */</span>
+    <span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">TransferObject</span><span class="token punctuation">&gt;</span></span> <span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> list<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">/**
+     * 根据下标查询相应的数据
+     * @param index 下标
+     * @return 返回单条数据
+     */</span>
+    <span class="token keyword">public</span> <span class="token class-name">TransferObject</span> <span class="token function">getDataById</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> list<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">/**
+     * 修改业务数据
+     * @param transferObject
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">update</span><span class="token punctuation">(</span><span class="token class-name">TransferObject</span> transferObject<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        list<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>transferObject<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span>transferObject<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="客户端调用"><a href="#客户端调用" class="headerlink" title="客户端调用"></a>客户端调用</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 创建业务对象，获取到数据（伪代码，初始化业务对象时会填充数据）</span>
+        <span class="token class-name">BusinessObject</span> businessObject <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BusinessObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 循环打印所有业务数据</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">TransferObject</span> t <span class="token operator">:</span> businessObject<span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Id="</span> <span class="token operator">+</span> t<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" | "</span> <span class="token operator">+</span> <span class="token string">"Name="</span> <span class="token operator">+</span> t<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// 更新数据</span>
+        <span class="token class-name">TransferObject</span> transferObject <span class="token operator">=</span> businessObject<span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"原名称："</span> <span class="token operator">+</span> transferObject<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        transferObject<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"LaoWang"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        businessObject<span class="token punctuation">.</span><span class="token function">update</span><span class="token punctuation">(</span>transferObject<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 打印修改的数据</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"修改后的名称："</span> <span class="token operator">+</span> businessObject<span class="token punctuation">.</span><span class="token function">getList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<p>程序执行结果如下：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">Id</span><span class="token operator">=</span><span class="token number">0</span> <span class="token operator">|</span> <span class="token class-name">Name</span><span class="token operator">=</span><span class="token class-name">Java</span>
+
+<span class="token class-name">Id</span><span class="token operator">=</span><span class="token number">1</span> <span class="token operator">|</span> <span class="token class-name">Name</span><span class="token operator">=</span>SQL
+
+原名称：<span class="token class-name">Java</span>
+
+修改后的名称：<span class="token class-name">LaoWang</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>传输对象模式的优点：</p>
+<ul>
+<li>减少了远程调用次数：通过在单个远程调用中传输更多的数据，应用程序可以减少远程调用次数；</li>
+<li>提高了性能：远程调用可以使应用程序的运行速度大大降低，减少调用次数是提高性能的最佳方法之一；</li>
+<li>简化了程序代码：使用传输对象的模式使代码可读性更高，让程序看起来更简单。<br>传输对象模式的缺点：</li>
+<li>增加了复杂性：由于要兼容多个版本的程序，可能需要创建更多的实体类来适用各个版本的程序，这会让程序变得更加复杂。</li>
+</ul>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>传输对象模式典型的应用场景如下：</p>
+<ul>
+<li>希望减少程序中远程调用次数；</li>
+<li>希望提高程序获取资源的性能；</li>
+<li>程序需要传输多个数据时。</li>
+</ul>
+<h2 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h2><h3 id="创建物品表"><a href="#创建物品表" class="headerlink" title="创建物品表"></a>创建物品表</h3><p>快递的物品表。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 物品表
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name">GoodsInfo</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> mobile<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">GoodsInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token class-name">GoodsInfo</span><span class="token punctuation">(</span><span class="token class-name">String</span> mobile<span class="token punctuation">,</span> <span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>mobile <span class="token operator">=</span> mobile<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getMobile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> mobile<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setMobile</span><span class="token punctuation">(</span><span class="token class-name">String</span> mobile<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>mobile <span class="token operator">=</span> mobile<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="快递业务类"><a href="#快递业务类" class="headerlink" title="快递业务类"></a>快递业务类</h3><p>查询所有的快递和新增快递。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/**
+ * 快递业务类
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name">Express</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 所有的快递物品存储容器</span>
+    <span class="token keyword">private</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> goods<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">Express</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 模拟数据</span>
+        goods <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        goods<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"18000000001"</span><span class="token punctuation">,</span> <span class="token string">"Java面试全解析"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        goods<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"18000000002"</span><span class="token punctuation">,</span> <span class="token string">"MySQL面试金典"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">/**
+     * 邮寄物品（添加订单）
+     * @param goodsInfo 邮寄的物品
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">insert</span><span class="token punctuation">(</span><span class="token class-name">GoodsInfo</span> goodsInfo<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        goods<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>goodsInfo<span class="token punctuation">.</span><span class="token function">getMobile</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> goodsInfo<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">/**
+     * 查询所有的邮件
+     */</span>
+    <span class="token keyword">public</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">GoodsInfo</span><span class="token punctuation">&gt;</span></span> <span class="token function">getAllGoods</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">GoodsInfo</span><span class="token punctuation">&gt;</span></span> list <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">GoodsInfo</span> goodsInfo<span class="token punctuation">;</span>
+        goods<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span>k<span class="token punctuation">,</span> v<span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token punctuation">{</span>
+            list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">GoodsInfo</span><span class="token punctuation">(</span>k<span class="token punctuation">,</span> v<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> list<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="客户端调用-1"><a href="#客户端调用-1" class="headerlink" title="客户端调用"></a>客户端调用</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Lesson29</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token class-name">Client</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 创建快递业务类</span>
+        <span class="token class-name">Express</span> express <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Express</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 创建快递物品</span>
+        <span class="token class-name">GoodsInfo</span> goodsInfo <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GoodsInfo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        goodsInfo<span class="token punctuation">.</span><span class="token function">setMobile</span><span class="token punctuation">(</span><span class="token string">"18000000008"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        goodsInfo<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"设计模式34讲"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 添加快递</span>
+        express<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>goodsInfo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 打印所有快递信息</span>
+        express<span class="token punctuation">.</span><span class="token function">getAllGoods</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span>goods<span class="token punctuation">)</span> <span class="token operator">-&gt;</span> <span class="token punctuation">{</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"手机号："</span> <span class="token operator">+</span> goods<span class="token punctuation">.</span><span class="token function">getMobile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" | 快递物品："</span> <span class="token operator">+</span> goods<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>程序执行结果如下：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">手机号：<span class="token number">18000000008</span> <span class="token operator">|</span> 快递物品：设计模式<span class="token number">34</span>讲
+
+手机号：<span class="token number">18000000001</span> <span class="token operator">|</span> 快递物品：<span class="token class-name">Java</span>面试全解析
+
+手机号：<span class="token number">18000000002</span> <span class="token operator">|</span> 快递物品：<span class="token class-name">MySQL</span>面试金典<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>传输对象模式是客户端每次对业务对象进行相关的业务操作，而客户端和业务对象之间通过传输对象（一个只包含 getter/setter 的实体类）进行信息传递的模式。</p>
 ]]></content>
       <categories>
         <category>设计模式</category>
@@ -10338,163 +10338,6 @@ Rubbish{name='玻璃', isHarm=false, isRecycled=true, isDry=false, isWet=false}<
       </categories>
   </entry>
   <entry>
-    <title>适配器模式</title>
-    <url>/posts/39554/</url>
-    <content><![CDATA[<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>适配器，其实很好理解，生活中也随处可见，比如电源适配器、usb 适配器等等，那么适配器模式，也被称为Wrapper 模式。</p>
-<span id="more"></span>
-
-
-<p>Wrapper 有“包装器”的意思，适配器模式的定义是：<strong>将一个接口转换成客户希望的另一个接口，使接口不兼容的那些类可以一起工作，解决的痛点便是因接口不兼容导致的类不能正常工作的问题。</strong></p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/y0bt7.png"></p>
-<p>如上图所示，A、B 代表已经塑模成型的物体 A 和 B，如果想将这两种物体安装在一起，因为两者的接口是不兼容的，不可能直接安装在一起，这个时候该怎么办？这里，我们可以引入物体 C，物体 C 既要适配 A 的接口，又要适配 B 的接口，经过 C 的无缝“衔接”，便将 A、B 完美结合在了一起。</p>
-<p>这里的物体 C 就是我们要说的适配器角色，起到了一定的角色转换的作用。再举个例子，如果想让直流 12v 的笔记本电脑工作在交流 220v 的电源下，就必须要一个电源适配器，该适配器的作用就是将 220v 的 AC 交流转为 12v 的 DC 直流，这就是适配器该干的工作，弥补两者之间的空白——承上启下。</p>
-<p>什么时候使用适配器模式，从上面的案例我们也可以看出一点端倪：</p>
-<ul>
-<li>现有的类或接口不能满足需求，且一般无法直接修改现有类或接口。比方该类为三方提供，就无法修改，亦或者像A、B 这种已经塑模成型的物件，可能已大规模在使用中，所以不允许修改。</li>
-<li>想要建立一个可以重复使用的类，用于与一些彼此之间没有太大关联的一些类，包括一些可能在将来引进的类一起工作，这些源类不一定有一致的接口。</li>
-</ul>
-<h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p>适配器模式，根据适配器类与适配者类的关系不同，适配器模式可分为对象适配器和类适配器两种，在对象适配器模式中，适配器与适配者之间是关联关系；在类适配器模式中，适配器与适配者之间是继承（或实现）关系。</p>
-<p>适配器模式的通用类图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/fl8kf.png"></p>
-<p>适配器模式包含的角色如下：</p>
-<ul>
-<li>目标角色（Target）：该角色定义把其它类转换为何种接口，也就是我们的期望接口，可以是一个抽象类或接口，也可以是具体类。以上文中笔记本电脑为例，即指让笔记本正常工作的直流 12v 电源；</li>
-<li>适配器角色（Adapter）：适配器可以调用另一个接口，作为一个转换器，对 Adaptee 和 Target 进行适配，适配器类是适配器模式的核心，通常都是一个具体的类。以上文中笔记本电脑为例，即指电源适配器；</li>
-<li>源角色（被适配 Adaptee ）：你想把谁转换成目标角色，这个“谁”就是源角色，它是已经存在的、运行良好的类或对象，经过适配器角色的包装，它会成为一个崭新、靓丽的角色。以上文中笔记本电脑为例，即指 220v 的 AC 电源；</li>
-<li>请求者（Client）：该角色负责使用 Target 定义的方法进行具体处理，以上文中笔记本电脑为例，即指使用 12v 电源驱动的笔记本电脑。</li>
-</ul>
-<p>总的一句话，Adapter 就是一个在 Client 中使用 Target 定义的接口来使用 Adaptee 角色（调用 Adaptee 中的方法）的存在。</p>
-<h2 id="类适配器（使用继承）"><a href="#类适配器（使用继承）" class="headerlink" title="类适配器（使用继承）"></a>类适配器（使用继承）</h2><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/nw66a.png"></p>
-<p>如上图为使用类适配器实现的适配器模式，具体代码如下：</p>
-<p>首先是 Target 接口，也就是我们要适配的目标接口：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Target</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">targetMethod1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">targetMethod2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>接下来是要被适配的“接口”，即 Adaptee：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Adaptee</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">methodA</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Adaptee methodA invoked."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">methodB</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Adaptee methodB invoked."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-<p>然后是我们的适配器，关键代码如下：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Adapter</span> <span class="token keyword">extends</span> <span class="token class-name">Adaptee</span> <span class="token keyword">implements</span> <span class="token class-name">Target</span><span class="token punctuation">{</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">targetMethod1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Adapter targetMethod1 inkoked."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">methodA</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">targetMethod2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Adapter targetMethod2 inkoked."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">methodB</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>最后是我们的 Client，在这里就是 Main 类：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Main</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-        <span class="token comment">// 通过Adapter继承Adaptee实现了Adaptee角色的调用</span>
-        <span class="token class-name">Target</span> target <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Adapter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        target<span class="token punctuation">.</span><span class="token function">targetMethod1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        target<span class="token punctuation">.</span><span class="token function">targetMethod2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>执行结果如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">Adapter targetMethod1 inkoked.
-Adaptee methodA invoked.
-Adapter targetMethod2 inkoked.
-Adaptee methodB invoked.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>这里，Client 使用者并不知道 Adaper 适配器是如何工作的，就好比笔记本电脑只需要在 12v 电压下正常工作即可，具体适配器如何适配实现电压转换，笔记本电脑无需关心。</p>
-<h2 id="对象适配器（使用委托）"><a href="#对象适配器（使用委托）" class="headerlink" title="对象适配器（使用委托）"></a>对象适配器（使用委托）</h2><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/mx21e.png"></p>
-<p>如上图为使用对象适配器实现的适配器模式，具体代码如下：<br>首先是我们要适配的目标类，这里不是接口了注意：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Target</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">targetMethod1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">targetMethod2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>因为 java 的类不支持多继承，但是在单继承模式下我们可以使用委托来实现方法的调用，修改后的 Adapter 适配器代码如下：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Adapter</span> <span class="token keyword">extends</span> <span class="token class-name">Target</span><span class="token punctuation">{</span>
-
-    <span class="token keyword">private</span> <span class="token class-name">Adaptee</span> adaptee<span class="token punctuation">;</span>
-
-    <span class="token keyword">public</span> <span class="token class-name">Adapter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>adaptee <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Adaptee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">targetMethod1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Adapter targetMethod1 inkoked."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        adaptee<span class="token punctuation">.</span><span class="token function">methodA</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">targetMethod2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Adapter targetMethod2 inkoked."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        adaptee<span class="token punctuation">.</span><span class="token function">methodB</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>Client 调用的时候没有变化，还是如下：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-    <span class="token comment">// 通过Adapter使用委托，实现了Adaptee角色的调用</span>
-    <span class="token class-name">Target</span> target <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Adapter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    target<span class="token punctuation">.</span><span class="token function">targetMethod1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    target<span class="token punctuation">.</span><span class="token function">targetMethod2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>输出结果：</p>
-<pre class="line-numbers language-none"><code class="language-none">Adapter targetMethod1 inkoked.
-Adaptee methodA invoked.
-Adapter targetMethod2 inkoked.
-Adaptee methodB invoked.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>主要优点：</p>
-<ul>
-<li>将目标类和适配者类解耦，通过引入一个适配器类来重用现有的适配者类，无须修改原有结构；</li>
-<li>增加了类的透明性和复用性，将具体的业务实现过程封装在适配者类中，对于客户端类而言是透明的，而且提高了适配者的复用性，同一个适配者类可以在多个不同的系统中复用；</li>
-<li>可以将两个互不相干的类关联在一起；</li>
-<li>增强系统灵活性。</li>
-</ul>
-<p>主要缺点：</p>
-<ul>
-<li>类适配器对于 Java、C# 等不支持多重类继承的语言，一次最多只能适配一个适配者类，不能同时适配多个适配者。</li>
-</ul>
-<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>类适配器与对象适配器的使用场景一致，主要应用于如下场景：</p>
-<ul>
-<li>系统需要使用一些现有的类，而这些类的接口（如方法名）不符合系统的需要，甚至没有这些类的源代码，这时创建一个适配器就能间接去改造这个类中的方法；</li>
-<li>想创建一个可以重复使用的类，用于与一些彼此之间没有太大关联的一些类，包括一些可能在将来引进的类一起工作。</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>适配器模式，本身属于一种结构型模式，用于在两个对象或者系统之间建立适配链接，使得前后系统衔接更加平滑，适配器模式的实现主要有继承方式的类适配器，和委托方式的对象适配器。</p>
-<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/etjgx.png"></p>
-]]></content>
-      <categories>
-        <category>设计模式</category>
-      </categories>
-  </entry>
-  <entry>
     <title>迭代器模式</title>
     <url>/posts/16036/</url>
     <content><![CDATA[<p>迭代器模式（Iterator Pattern）又称为游标（Cursor）模式，是最常被使用的几个模式之一，被广泛地应用到 Java 的 API 中。例如，Java 的集合（Collection）框架中，就广泛使用迭代器来遍历集合中的元素。</p>
@@ -10651,6 +10494,163 @@ ArrayList 3<span aria-hidden="true" class="line-numbers-rows"><span></span><span
 
 <p>从上面示例可以看出，集合都可以通过 iterator() 方法，获得统一的迭代器对象 java.util.Iterator，然后进行循环遍历。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>迭代器模式是最常用的设计模式之一，已经被广泛应用到 Java 的 API 中，比如在 Java 的集合中，使用 iterator() 方法就可以获得统一的迭代器对象 java.util.Iterator，使用这个对象就可以很方便地实现集合的遍历功能。迭代器包含四个角色（抽象迭代器、具体迭代器、抽象聚集和具体聚集）和两个重要的方法：hasNext() 方法用来判断是否还有下一个未遍历的元素，next() 方法用来获取此次遍历的对象。要注意的是，如果编程语言中已经提供了内置的迭代器，并且能满足现有需求的情况下，开发者就不必自己再写迭代器了。</p>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>适配器模式</title>
+    <url>/posts/39554/</url>
+    <content><![CDATA[<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>适配器，其实很好理解，生活中也随处可见，比如电源适配器、usb 适配器等等，那么适配器模式，也被称为Wrapper 模式。</p>
+<span id="more"></span>
+
+
+<p>Wrapper 有“包装器”的意思，适配器模式的定义是：<strong>将一个接口转换成客户希望的另一个接口，使接口不兼容的那些类可以一起工作，解决的痛点便是因接口不兼容导致的类不能正常工作的问题。</strong></p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/y0bt7.png"></p>
+<p>如上图所示，A、B 代表已经塑模成型的物体 A 和 B，如果想将这两种物体安装在一起，因为两者的接口是不兼容的，不可能直接安装在一起，这个时候该怎么办？这里，我们可以引入物体 C，物体 C 既要适配 A 的接口，又要适配 B 的接口，经过 C 的无缝“衔接”，便将 A、B 完美结合在了一起。</p>
+<p>这里的物体 C 就是我们要说的适配器角色，起到了一定的角色转换的作用。再举个例子，如果想让直流 12v 的笔记本电脑工作在交流 220v 的电源下，就必须要一个电源适配器，该适配器的作用就是将 220v 的 AC 交流转为 12v 的 DC 直流，这就是适配器该干的工作，弥补两者之间的空白——承上启下。</p>
+<p>什么时候使用适配器模式，从上面的案例我们也可以看出一点端倪：</p>
+<ul>
+<li>现有的类或接口不能满足需求，且一般无法直接修改现有类或接口。比方该类为三方提供，就无法修改，亦或者像A、B 这种已经塑模成型的物件，可能已大规模在使用中，所以不允许修改。</li>
+<li>想要建立一个可以重复使用的类，用于与一些彼此之间没有太大关联的一些类，包括一些可能在将来引进的类一起工作，这些源类不一定有一致的接口。</li>
+</ul>
+<h2 id="组成角色"><a href="#组成角色" class="headerlink" title="组成角色"></a>组成角色</h2><p>适配器模式，根据适配器类与适配者类的关系不同，适配器模式可分为对象适配器和类适配器两种，在对象适配器模式中，适配器与适配者之间是关联关系；在类适配器模式中，适配器与适配者之间是继承（或实现）关系。</p>
+<p>适配器模式的通用类图如下：<br><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/fl8kf.png"></p>
+<p>适配器模式包含的角色如下：</p>
+<ul>
+<li>目标角色（Target）：该角色定义把其它类转换为何种接口，也就是我们的期望接口，可以是一个抽象类或接口，也可以是具体类。以上文中笔记本电脑为例，即指让笔记本正常工作的直流 12v 电源；</li>
+<li>适配器角色（Adapter）：适配器可以调用另一个接口，作为一个转换器，对 Adaptee 和 Target 进行适配，适配器类是适配器模式的核心，通常都是一个具体的类。以上文中笔记本电脑为例，即指电源适配器；</li>
+<li>源角色（被适配 Adaptee ）：你想把谁转换成目标角色，这个“谁”就是源角色，它是已经存在的、运行良好的类或对象，经过适配器角色的包装，它会成为一个崭新、靓丽的角色。以上文中笔记本电脑为例，即指 220v 的 AC 电源；</li>
+<li>请求者（Client）：该角色负责使用 Target 定义的方法进行具体处理，以上文中笔记本电脑为例，即指使用 12v 电源驱动的笔记本电脑。</li>
+</ul>
+<p>总的一句话，Adapter 就是一个在 Client 中使用 Target 定义的接口来使用 Adaptee 角色（调用 Adaptee 中的方法）的存在。</p>
+<h2 id="类适配器（使用继承）"><a href="#类适配器（使用继承）" class="headerlink" title="类适配器（使用继承）"></a>类适配器（使用继承）</h2><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/nw66a.png"></p>
+<p>如上图为使用类适配器实现的适配器模式，具体代码如下：</p>
+<p>首先是 Target 接口，也就是我们要适配的目标接口：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Target</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">targetMethod1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">targetMethod2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>接下来是要被适配的“接口”，即 Adaptee：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Adaptee</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">methodA</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Adaptee methodA invoked."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">methodB</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Adaptee methodB invoked."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<p>然后是我们的适配器，关键代码如下：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Adapter</span> <span class="token keyword">extends</span> <span class="token class-name">Adaptee</span> <span class="token keyword">implements</span> <span class="token class-name">Target</span><span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">targetMethod1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Adapter targetMethod1 inkoked."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">methodA</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">targetMethod2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Adapter targetMethod2 inkoked."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">methodB</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>最后是我们的 Client，在这里就是 Main 类：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Main</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        <span class="token comment">// 通过Adapter继承Adaptee实现了Adaptee角色的调用</span>
+        <span class="token class-name">Target</span> target <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Adapter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        target<span class="token punctuation">.</span><span class="token function">targetMethod1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        target<span class="token punctuation">.</span><span class="token function">targetMethod2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>执行结果如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">Adapter targetMethod1 inkoked.
+Adaptee methodA invoked.
+Adapter targetMethod2 inkoked.
+Adaptee methodB invoked.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里，Client 使用者并不知道 Adaper 适配器是如何工作的，就好比笔记本电脑只需要在 12v 电压下正常工作即可，具体适配器如何适配实现电压转换，笔记本电脑无需关心。</p>
+<h2 id="对象适配器（使用委托）"><a href="#对象适配器（使用委托）" class="headerlink" title="对象适配器（使用委托）"></a>对象适配器（使用委托）</h2><p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/mx21e.png"></p>
+<p>如上图为使用对象适配器实现的适配器模式，具体代码如下：<br>首先是我们要适配的目标类，这里不是接口了注意：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Target</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">targetMethod1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">targetMethod2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>因为 java 的类不支持多继承，但是在单继承模式下我们可以使用委托来实现方法的调用，修改后的 Adapter 适配器代码如下：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Adapter</span> <span class="token keyword">extends</span> <span class="token class-name">Target</span><span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">Adaptee</span> adaptee<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">Adapter</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>adaptee <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Adaptee</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">targetMethod1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Adapter targetMethod1 inkoked."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        adaptee<span class="token punctuation">.</span><span class="token function">methodA</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">targetMethod2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Adapter targetMethod2 inkoked."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        adaptee<span class="token punctuation">.</span><span class="token function">methodB</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>Client 调用的时候没有变化，还是如下：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">// 通过Adapter使用委托，实现了Adaptee角色的调用</span>
+    <span class="token class-name">Target</span> target <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Adapter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    target<span class="token punctuation">.</span><span class="token function">targetMethod1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    target<span class="token punctuation">.</span><span class="token function">targetMethod2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>输出结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">Adapter targetMethod1 inkoked.
+Adaptee methodA invoked.
+Adapter targetMethod2 inkoked.
+Adaptee methodB invoked.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>主要优点：</p>
+<ul>
+<li>将目标类和适配者类解耦，通过引入一个适配器类来重用现有的适配者类，无须修改原有结构；</li>
+<li>增加了类的透明性和复用性，将具体的业务实现过程封装在适配者类中，对于客户端类而言是透明的，而且提高了适配者的复用性，同一个适配者类可以在多个不同的系统中复用；</li>
+<li>可以将两个互不相干的类关联在一起；</li>
+<li>增强系统灵活性。</li>
+</ul>
+<p>主要缺点：</p>
+<ul>
+<li>类适配器对于 Java、C# 等不支持多重类继承的语言，一次最多只能适配一个适配者类，不能同时适配多个适配者。</li>
+</ul>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>类适配器与对象适配器的使用场景一致，主要应用于如下场景：</p>
+<ul>
+<li>系统需要使用一些现有的类，而这些类的接口（如方法名）不符合系统的需要，甚至没有这些类的源代码，这时创建一个适配器就能间接去改造这个类中的方法；</li>
+<li>想创建一个可以重复使用的类，用于与一些彼此之间没有太大关联的一些类，包括一些可能在将来引进的类一起工作。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>适配器模式，本身属于一种结构型模式，用于在两个对象或者系统之间建立适配链接，使得前后系统衔接更加平滑，适配器模式的实现主要有继承方式的类适配器，和委托方式的对象适配器。</p>
+<p><img src="https://story-has-you.oss-cn-shanghai.aliyuncs.com/blog/etjgx.png"></p>
 ]]></content>
       <categories>
         <category>设计模式</category>
