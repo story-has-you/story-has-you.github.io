@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Kubernetes安装, java,spring,多线程,设计模式,spring boot,故事有你,[故事有你],story-has-you">
-    <meta name="description" content="略懂Java">
+    <meta name="keywords" content="Kubernetes安装, java,spring,多线程,设计模式,spring boot,Re:0,story-has-you">
+    <meta name="description" content="所有疯狂的行动，最终目的或许只是体验更多的奇妙。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -114,7 +114,7 @@
         <div class="logo-name">story-has-you</div>
         <div class="logo-desc">
             
-            略懂Java
+            所有疯狂的行动，最终目的或许只是体验更多的奇妙。
             
         </div>
     </div>
@@ -377,7 +377,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2020-06-03
+                    2022-06-03
                 </div>
                 
 
@@ -441,7 +441,7 @@ yum clean all
 yum makecache<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>将 SELinux 设置为 permissive 模式（相当于将其禁用）</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">setenforce <span class="token number">0</span> 
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">setenforce <span class="token number">0</span>
 <span class="token function">sed</span> -i <span class="token string">'s/^SELINUX=enforcing$/SELINUX=permissive/'</span> /etc/selinux/config<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>关闭swap</p>
@@ -519,7 +519,7 @@ k8s-node2    Ready    <span class="token operator">&lt;</span>none<span class="t
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">[故事有你]</a>
+                    <a href="/about" rel="external nofollow noreferrer">Re:0</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -529,7 +529,7 @@ k8s-node2    Ready    <span class="token operator">&lt;</span>none<span class="t
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.story-has-you.top/posts/7283/">https://www.story-has-you.top/posts/7283/</a>
+                    <a href="https://story-has-you.github.io/posts/7283/">https://story-has-you.github.io/posts/7283/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -542,7 +542,7 @@ k8s-node2    Ready    <span class="token operator">&lt;</span>none<span class="t
                     All articles in this blog are used except for special statements
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     reprint policy. If reproduced, please indicate source
-                    <a href="/about" target="_blank">[故事有你]</a>
+                    <a href="/about" target="_blank">Re:0</a>
                     !
                 </span>
             </div>
@@ -631,7 +631,7 @@ k8s-node2    Ready    <span class="token operator">&lt;</span>none<span class="t
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-18
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-08-18
                         </span>
                         <span class="publish-author">
                             
@@ -655,24 +655,28 @@ k8s-node2    Ready    <span class="token operator">&lt;</span>none<span class="t
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/10386/">
+                <a href="/posts/23518/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Redis GEO命令介绍">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="Redis 实现用户签到功能">
                         
-                        <span class="card-title">Redis GEO命令介绍</span>
+                        <span class="card-title">Redis 实现用户签到功能</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Redis 在 3.2版本之后，支持GEO类型的数据存储。可以计算两个经纬度之间的距离，也就是，可以利用GEO功能，实现类似滴滴打车附近的车辆，类似微信附近的人基于地理位置的功能。也可以计算两个城市之间的距离，两个位置之间的距离等。
+                            签到功能对应的逻辑很常见，主要有以下几种场景
+
+签到 1 天送 10 积分，连续签到 2 天送 20 积分，3 天送 30 积分，4 天以上均送 50 积分等
+如果连续签到中断，则重置计数，每月初重置计数
+在日历控件上展示用户每月签到情况，
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-17
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-31
                             </span>
                         <span class="publish-author">
                             
@@ -878,10 +882,10 @@ k8s-node2    Ready    <span class="token operator">&lt;</span>none<span class="t
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2020-2022</span>
+                <span id="year">2020-2023</span>
             
             <span id="year">2020</span>
-            <a href="/about" target="_blank">[故事有你]</a>
+            <a href="/about" target="_blank">Re:0</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>

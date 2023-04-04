@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="线程池详解, java,spring,多线程,设计模式,spring boot,故事有你,[故事有你],story-has-you">
-    <meta name="description" content="略懂Java">
+    <meta name="keywords" content="线程池详解, java,spring,多线程,设计模式,spring boot,Re:0,story-has-you">
+    <meta name="description" content="所有疯狂的行动，最终目的或许只是体验更多的奇妙。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -114,7 +114,7 @@
         <div class="logo-name">story-has-you</div>
         <div class="logo-desc">
             
-            略懂Java
+            所有疯狂的行动，最终目的或许只是体验更多的奇妙。
             
         </div>
     </div>
@@ -377,7 +377,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2020-03-30
+                    2022-03-30
                 </div>
                 
 
@@ -669,7 +669,7 @@
             <span class="token comment">// 通过cas操作添加工作线程数量，如果成功，直接退出执行for循环之后的操作。失败则重试。数量+1，线程还没创建</span>
             <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">compareAndIncrementWorkerCount</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">)</span>
                 <span class="token keyword">break</span> retry<span class="token punctuation">;</span>
-            
+
             <span class="token comment">// 再次获取运行状态</span>
             c <span class="token operator">=</span> ctl<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">// Re-read ctl</span>
             <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">runStateOf</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token operator">!=</span> rs<span class="token punctuation">)</span>
@@ -696,14 +696,14 @@
             <span class="token comment">// 加锁阻塞，避免并发</span>
             mainLock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
             <span class="token keyword">try</span> <span class="token punctuation">{</span>
-    
+
                 <span class="token comment">// 获取运行状态</span>
                 <span class="token keyword">int</span> rs <span class="token operator">=</span> <span class="token function">runStateOf</span><span class="token punctuation">(</span>ctl<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                
+
                 <span class="token comment">// 如果是运行状态，或者SHUTDOWN状态且firstTask是空(队列中有任务)，才能添加到workers集合中</span>
                 <span class="token keyword">if</span> <span class="token punctuation">(</span>rs <span class="token operator">&lt;</span> SHUTDOWN <span class="token operator">||</span>
                     <span class="token punctuation">(</span>rs <span class="token operator">==</span> SHUTDOWN <span class="token operator">&amp;&amp;</span> firstTask <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    
+
                     <span class="token comment">// 任务封装到worker里面，还没start</span>
                     <span class="token keyword">if</span> <span class="token punctuation">(</span>t<span class="token punctuation">.</span><span class="token function">isAlive</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
                         <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalThreadStateException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -814,7 +814,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">[故事有你]</a>
+                    <a href="/about" rel="external nofollow noreferrer">Re:0</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -824,7 +824,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.story-has-you.top/posts/18252/">https://www.story-has-you.top/posts/18252/</a>
+                    <a href="https://story-has-you.github.io/posts/18252/">https://story-has-you.github.io/posts/18252/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -837,7 +837,7 @@
                     All articles in this blog are used except for special statements
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     reprint policy. If reproduced, please indicate source
-                    <a href="/about" target="_blank">[故事有你]</a>
+                    <a href="/about" target="_blank">Re:0</a>
                     !
                 </span>
             </div>
@@ -926,7 +926,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-31
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-31
                         </span>
                         <span class="publish-author">
                             
@@ -950,31 +950,32 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/posts/5623/">
+                <a href="/posts/16764/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="数据访问对象模式">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Promise基本用法">
                         
-                        <span class="card-title">数据访问对象模式</span>
+                        <span class="card-title">Promise基本用法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            定义数据访问对象模式（Data Access Object Pattern）又称为 DAO 模式，是一种面向对象的数据访问接口，DAO 一般都是和数据库打交道，属于业务逻辑和数据库中间的环节，负责业务逻辑数据的持久化。
+                            Promise基本概念Pormise是JS的异步编程的一种解决方案，在ES6将其写进了语言标准，提供了原生的Promise对象。
+Promise简单来理解就是一个容器，里面存放着某个未来才会结束的事件结果。Promise是一个对象，从它可以
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-18
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-28
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
-                                    设计模式
+                            <a href="/categories/%E5%89%8D%E7%AB%AF/" class="post-category">
+                                    前端
                                 </a>
                             
                             
@@ -1173,10 +1174,10 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2020-2022</span>
+                <span id="year">2020-2023</span>
             
             <span id="year">2020</span>
-            <a href="/about" target="_blank">[故事有你]</a>
+            <a href="/about" target="_blank">Re:0</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>

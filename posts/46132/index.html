@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="单例模式, java,spring,多线程,设计模式,spring boot,故事有你,[故事有你],story-has-you">
-    <meta name="description" content="略懂Java">
+    <meta name="keywords" content="单例模式, java,spring,多线程,设计模式,spring boot,Re:0,story-has-you">
+    <meta name="description" content="所有疯狂的行动，最终目的或许只是体验更多的奇妙。">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -114,7 +114,7 @@
         <div class="logo-name">story-has-you</div>
         <div class="logo-desc">
             
-            略懂Java
+            所有疯狂的行动，最终目的或许只是体验更多的奇妙。
             
         </div>
     </div>
@@ -377,7 +377,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2020-03-07
+                    2022-03-07
                 </div>
                 
 
@@ -499,66 +499,66 @@
 </ul>
 <p>Spring 的单例模式又分为饿汉模式和懒汉模式，其中饿汉模式是缺省模式，懒汉模式则需要在 bean 的定义处使用 default-lazy-init=“true” 来声明为懒汉模式。</p>
 <p>那么 Spring 对单例的底层实现，到底是饿汉式单例还是懒汉式单例呢？其实，都不是，Spring 对单例的实现是通过单例注册表的方式实现的，其源码如下：</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">AbstractBeanFactory</span> <span class="token keyword">implements</span> <span class="token class-name">ConfigurableBeanFactory</span><span class="token punctuation">{</span>  
-       <span class="token comment">/** 
-        * 充当了Bean实例的缓存，实现方式和单例注册表相同 
-        */</span>  
-       <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Map</span> singletonCache<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-       <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">getBean</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span><span class="token keyword">throws</span> <span class="token class-name">BeansException</span><span class="token punctuation">{</span>  
-           <span class="token keyword">return</span> <span class="token function">getBean</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span><span class="token keyword">null</span><span class="token punctuation">,</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-       <span class="token punctuation">}</span>  
-    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  
-       <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">getBean</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">,</span><span class="token class-name">Class</span> requiredType<span class="token punctuation">,</span><span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span><span class="token keyword">throws</span> <span class="token class-name">BeansException</span><span class="token punctuation">{</span>  
-          <span class="token comment">//对传入的Bean name稍做处理，防止传入的Bean name名有非法字符(或则做转码)  </span>
-          <span class="token class-name">String</span> beanName<span class="token operator">=</span><span class="token function">transformedBeanName</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>  
-          <span class="token class-name">Object</span> bean<span class="token operator">=</span><span class="token keyword">null</span><span class="token punctuation">;</span>  
-          <span class="token comment">//手工检测单例注册表  </span>
-          <span class="token class-name">Object</span> sharedInstance<span class="token operator">=</span><span class="token keyword">null</span><span class="token punctuation">;</span>  
-          <span class="token comment">//使用了代码锁定同步块，原理和同步方法相似，但是这种写法效率更高  </span>
-          <span class="token keyword">synchronized</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>singletonCache<span class="token punctuation">)</span><span class="token punctuation">{</span>  
-             sharedInstance<span class="token operator">=</span><span class="token keyword">this</span><span class="token punctuation">.</span>singletonCache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>beanName<span class="token punctuation">)</span><span class="token punctuation">;</span>  
-           <span class="token punctuation">}</span>  
-          <span class="token keyword">if</span><span class="token punctuation">(</span>sharedInstance<span class="token operator">!=</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">{</span>  
-             <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  
-             <span class="token comment">//返回合适的缓存Bean实例  </span>
-             bean<span class="token operator">=</span><span class="token function">getObjectForSharedInstance</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span>sharedInstance<span class="token punctuation">)</span><span class="token punctuation">;</span>  
-          <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>  
-            <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  
-            <span class="token comment">//取得Bean的定义  </span>
-            <span class="token class-name">RootBeanDefinition</span> mergedBeanDefinition<span class="token operator">=</span><span class="token function">getMergedBeanDefinition</span><span class="token punctuation">(</span>beanName<span class="token punctuation">,</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-             <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  
-            <span class="token comment">//根据Bean定义判断，此判断依据通常来自于组件配置文件的单例属性开关  </span>
-            <span class="token comment">//&lt;bean id="date" class="java.util.Date" scope="singleton"/&gt;  </span>
-            <span class="token comment">//如果是单例，做如下处理  </span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span>mergedBeanDefinition<span class="token punctuation">.</span><span class="token function">isSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>  
-               <span class="token keyword">synchronized</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>singletonCache<span class="token punctuation">)</span><span class="token punctuation">{</span>  
-                <span class="token comment">//再次检测单例注册表  </span>
-                 sharedInstance<span class="token operator">=</span><span class="token keyword">this</span><span class="token punctuation">.</span>singletonCache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>beanName<span class="token punctuation">)</span><span class="token punctuation">;</span>  
-                 <span class="token keyword">if</span><span class="token punctuation">(</span>sharedInstance<span class="token operator">==</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">{</span>  
-                    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  
-                   <span class="token keyword">try</span> <span class="token punctuation">{</span>  
-                      <span class="token comment">//真正创建Bean实例  </span>
-                      sharedInstance<span class="token operator">=</span><span class="token function">createBean</span><span class="token punctuation">(</span>beanName<span class="token punctuation">,</span>mergedBeanDefinition<span class="token punctuation">,</span>args<span class="token punctuation">)</span><span class="token punctuation">;</span>  
-                      <span class="token comment">//向单例注册表注册Bean实例  </span>
-                       <span class="token function">addSingleton</span><span class="token punctuation">(</span>beanName<span class="token punctuation">,</span>sharedInstance<span class="token punctuation">)</span><span class="token punctuation">;</span>  
-                   <span class="token punctuation">}</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> ex<span class="token punctuation">)</span> <span class="token punctuation">{</span>  
-                      <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  
-                   <span class="token punctuation">}</span><span class="token keyword">finally</span><span class="token punctuation">{</span>  
-                      <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  
-                  <span class="token punctuation">}</span>  
-                 <span class="token punctuation">}</span>  
-               <span class="token punctuation">}</span>  
-              bean<span class="token operator">=</span><span class="token function">getObjectForSharedInstance</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span>sharedInstance<span class="token punctuation">)</span><span class="token punctuation">;</span>  
-            <span class="token punctuation">}</span>  
-           <span class="token comment">//如果是非单例，即prototpye，每次都要新创建一个Bean实例  </span>
-           <span class="token comment">//&lt;bean id="date" class="java.util.Date" scope="prototype"/&gt;  </span>
-           <span class="token keyword">else</span><span class="token punctuation">{</span>  
-              bean<span class="token operator">=</span><span class="token function">createBean</span><span class="token punctuation">(</span>beanName<span class="token punctuation">,</span>mergedBeanDefinition<span class="token punctuation">,</span>args<span class="token punctuation">)</span><span class="token punctuation">;</span>  
-           <span class="token punctuation">}</span>  
-    <span class="token punctuation">}</span>  
-    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  
-       <span class="token keyword">return</span> bean<span class="token punctuation">;</span>  
-    <span class="token punctuation">}</span>  
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">AbstractBeanFactory</span> <span class="token keyword">implements</span> <span class="token class-name">ConfigurableBeanFactory</span><span class="token punctuation">{</span>
+       <span class="token comment">/**
+        * 充当了Bean实例的缓存，实现方式和单例注册表相同
+        */</span>
+       <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token class-name">Map</span> singletonCache<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">getBean</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span><span class="token keyword">throws</span> <span class="token class-name">BeansException</span><span class="token punctuation">{</span>
+           <span class="token keyword">return</span> <span class="token function">getBean</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span><span class="token keyword">null</span><span class="token punctuation">,</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token punctuation">}</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+       <span class="token keyword">public</span> <span class="token class-name">Object</span> <span class="token function">getBean</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">,</span><span class="token class-name">Class</span> requiredType<span class="token punctuation">,</span><span class="token class-name">Object</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span><span class="token keyword">throws</span> <span class="token class-name">BeansException</span><span class="token punctuation">{</span>
+          <span class="token comment">//对传入的Bean name稍做处理，防止传入的Bean name名有非法字符(或则做转码)</span>
+          <span class="token class-name">String</span> beanName<span class="token operator">=</span><span class="token function">transformedBeanName</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token class-name">Object</span> bean<span class="token operator">=</span><span class="token keyword">null</span><span class="token punctuation">;</span>
+          <span class="token comment">//手工检测单例注册表</span>
+          <span class="token class-name">Object</span> sharedInstance<span class="token operator">=</span><span class="token keyword">null</span><span class="token punctuation">;</span>
+          <span class="token comment">//使用了代码锁定同步块，原理和同步方法相似，但是这种写法效率更高</span>
+          <span class="token keyword">synchronized</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>singletonCache<span class="token punctuation">)</span><span class="token punctuation">{</span>
+             sharedInstance<span class="token operator">=</span><span class="token keyword">this</span><span class="token punctuation">.</span>singletonCache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>beanName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+           <span class="token punctuation">}</span>
+          <span class="token keyword">if</span><span class="token punctuation">(</span>sharedInstance<span class="token operator">!=</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+             <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+             <span class="token comment">//返回合适的缓存Bean实例</span>
+             bean<span class="token operator">=</span><span class="token function">getObjectForSharedInstance</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span>sharedInstance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+            <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+            <span class="token comment">//取得Bean的定义</span>
+            <span class="token class-name">RootBeanDefinition</span> mergedBeanDefinition<span class="token operator">=</span><span class="token function">getMergedBeanDefinition</span><span class="token punctuation">(</span>beanName<span class="token punctuation">,</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+             <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+            <span class="token comment">//根据Bean定义判断，此判断依据通常来自于组件配置文件的单例属性开关</span>
+            <span class="token comment">//&lt;bean id="date" class="java.util.Date" scope="singleton"/&gt;</span>
+            <span class="token comment">//如果是单例，做如下处理</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>mergedBeanDefinition<span class="token punctuation">.</span><span class="token function">isSingleton</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+               <span class="token keyword">synchronized</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>singletonCache<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token comment">//再次检测单例注册表</span>
+                 sharedInstance<span class="token operator">=</span><span class="token keyword">this</span><span class="token punctuation">.</span>singletonCache<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>beanName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                 <span class="token keyword">if</span><span class="token punctuation">(</span>sharedInstance<span class="token operator">==</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+                   <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                      <span class="token comment">//真正创建Bean实例</span>
+                      sharedInstance<span class="token operator">=</span><span class="token function">createBean</span><span class="token punctuation">(</span>beanName<span class="token punctuation">,</span>mergedBeanDefinition<span class="token punctuation">,</span>args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                      <span class="token comment">//向单例注册表注册Bean实例</span>
+                       <span class="token function">addSingleton</span><span class="token punctuation">(</span>beanName<span class="token punctuation">,</span>sharedInstance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                   <span class="token punctuation">}</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> ex<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                      <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+                   <span class="token punctuation">}</span><span class="token keyword">finally</span><span class="token punctuation">{</span>
+                      <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+                  <span class="token punctuation">}</span>
+                 <span class="token punctuation">}</span>
+               <span class="token punctuation">}</span>
+              bean<span class="token operator">=</span><span class="token function">getObjectForSharedInstance</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span>sharedInstance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+           <span class="token comment">//如果是非单例，即prototpye，每次都要新创建一个Bean实例</span>
+           <span class="token comment">//&lt;bean id="date" class="java.util.Date" scope="prototype"/&gt;</span>
+           <span class="token keyword">else</span><span class="token punctuation">{</span>
+              bean<span class="token operator">=</span><span class="token function">createBean</span><span class="token punctuation">(</span>beanName<span class="token punctuation">,</span>mergedBeanDefinition<span class="token punctuation">,</span>args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+           <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+       <span class="token keyword">return</span> bean<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这种使用 Map 对象（登记薄）来维护一组单例类的实例又称为登记式单例，不管是饿汉式还是懒汉式，因为其构造函数都是私有不可继承的，Spring 为实现单例类可继承，就使用了单例注册表（登记薄）形式。</p>
@@ -585,7 +585,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">[故事有你]</a>
+                    <a href="/about" rel="external nofollow noreferrer">Re:0</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -595,7 +595,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://www.story-has-you.top/posts/46132/">https://www.story-has-you.top/posts/46132/</a>
+                    <a href="https://story-has-you.github.io/posts/46132/">https://story-has-you.github.io/posts/46132/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -608,7 +608,7 @@
                     All articles in this blog are used except for special statements
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     reprint policy. If reproduced, please indicate source
-                    <a href="/about" target="_blank">[故事有你]</a>
+                    <a href="/about" target="_blank">Re:0</a>
                     !
                 </span>
             </div>
@@ -697,7 +697,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-07
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-03-07
                         </span>
                         <span class="publish-author">
                             
@@ -739,7 +739,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-07
                             </span>
                         <span class="publish-author">
                             
@@ -945,10 +945,10 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2020-2022</span>
+                <span id="year">2020-2023</span>
             
             <span id="year">2020</span>
-            <a href="/about" target="_blank">[故事有你]</a>
+            <a href="/about" target="_blank">Re:0</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
